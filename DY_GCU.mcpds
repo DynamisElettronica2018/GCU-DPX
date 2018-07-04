@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=modules\gcu_rio.h
+Value=modules\gearshift.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -39,7 +39,7 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=8
+Count=9
 File0=DY_GCU.c
 File1=libs\dspic.c
 File2=libs\can.h
@@ -48,6 +48,7 @@ File4=modules\gearshift.c
 File5=modules\gearshift.h
 File6=modules\input-output\gearmotor.c
 File7=modules\gcu_rio.h
+File8=modules\clutch.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -55,21 +56,26 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=12
+Count=17
 Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\defs\
 Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\uses\
-Path2=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\
-Path3=C:\Users\nicol\Desktop\git\GCU-DPX\
-Path4=C:\Users\nicol\Desktop\git\GCU-DPX\modules\
-Path5=C:\Users\nicol\Desktop\git\GCU-DPX\modules\input-output\
-Path6=C:\Users\nicol\Desktop\git\GCU-DPX\libs\
-Path7=C:\Users\nicol\Desktop\git\GCU-DPX\modules\aac\
-Path8=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\
-Path9=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\input-output\
-Path10=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\libs\
-Path11=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\aac\
+Path2=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\
+Path3=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\
+Path4=C:\Users\nicol\Desktop\git\GCU-DPX\
+Path5=C:\Users\nicol\Desktop\git\GCU-DPX\modules\
+Path6=C:\Users\nicol\Desktop\git\GCU-DPX\modules\input-output\
+Path7=C:\Users\nicol\Desktop\git\GCU-DPX\libs\
+Path8=C:\Users\nicol\Desktop\git\GCU-DPX\modules\aac\
+Path9=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\
+Path10=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\input-output\
+Path11=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\libs\
+Path12=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\aac\
+Path13=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\
+Path14=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\input-output\
+Path15=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\libs\
+Path16=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\aac\
 [HEADER_PATH]
-Count=8
+Count=12
 Path0=C:\Users\nicol\Desktop\git\GCU-DPX\modules\
 Path1=C:\Users\nicol\Desktop\git\GCU-DPX\modules\input-output\
 Path2=C:\Users\nicol\Desktop\git\GCU-DPX\modules\aac\
@@ -78,6 +84,10 @@ Path4=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\
 Path5=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\input-output\
 Path6=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\aac\
 Path7=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\libs\
+Path8=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\
+Path9=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\input-output\
+Path10=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\aac\
+Path11=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\libs\
 [HEADERS]
 Count=17
 File0=modules\clutch.h
