@@ -1,7 +1,7 @@
-#line 1 "C:/Users/sofia/Desktop/GIT REPO/GCU-DPX/modules/stoplight.c"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/stoplight.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 16 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "C:/Users/nicol/Desktop/git/GCU-DPX/modules/stoplight.c"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/stoplight.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 16 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
 
 void signedIntToString(int number, char *text);
@@ -9,9 +9,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 177 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 177 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -69,13 +69,13 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 17 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/stoplight.h"
+#line 17 "c:/users/nicol/desktop/git/gcu-dpx/modules/stoplight.h"
 void StopLight_init(void);
 
 void StopLight_setupPWM(void);
 
 void StopLight_setBrightness(unsigned char percentage);
-#line 7 "C:/Users/sofia/Desktop/GIT REPO/GCU-DPX/modules/stoplight.c"
+#line 7 "C:/Users/nicol/Desktop/git/GCU-DPX/modules/stoplight.c"
 unsigned int STOPLIGHT_PWM_PERIOD_VALUE;
 double STOPLIGHT_PERCENTAGE_STEP;
 unsigned int STOPLIGHT_PWM_VALUE;

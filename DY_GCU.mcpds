@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=DY_GCU.c
+Value=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\enginecontrol.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -39,11 +39,12 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=4
+Count=5
 File0=DY_GCU.c
 File1=libs\dspic.c
 File2=libs\can.h
 File3=libs\d_can.h
+File4=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\enginecontrol.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -51,52 +52,20 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=27
-Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\defs\
+Count=7
+Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\Defs\
 Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\uses\
-Path2=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\
-Path3=C:\Users\sofia\Desktop\GIT REPO\GCU\
-Path4=C:\Users\Salvatore\Desktop\git Repo\GCU\
-Path5=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\
-Path6=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\
-Path7=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\
-Path8=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\input-output\
-Path9=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\libs\
-Path10=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\aac\
-Path11=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\
-Path12=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\input-output\
-Path13=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\libs\
-Path14=D:\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\aac\
-Path15=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\
-Path16=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\input-output\
-Path17=C:\Users\Salvatore\Desktop\git Repo\GCU\libs\
-Path18=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\aac\
-Path19=C:\Users\sofia\Desktop\GIT REPO\GCU\modules\
-Path20=C:\Users\sofia\Desktop\GIT REPO\GCU\modules\input-output\
-Path21=C:\Users\sofia\Desktop\GIT REPO\GCU\libs\
-Path22=C:\Users\sofia\Desktop\GIT REPO\GCU\modules\aac\
-Path23=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\
-Path24=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\input-output\
-Path25=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\libs\
-Path26=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\aac\
+Path2=C:\Users\nicol\Desktop\git\GCU-DPX\
+Path3=C:\Users\nicol\Desktop\git\GCU-DPX\modules\
+Path4=C:\Users\nicol\Desktop\git\GCU-DPX\modules\input-output\
+Path5=C:\Users\nicol\Desktop\git\GCU-DPX\libs\
+Path6=C:\Users\nicol\Desktop\git\GCU-DPX\modules\aac\
 [HEADER_PATH]
-Count=16
-Path0=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\libs\
-Path1=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\
-Path2=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\aac\
-Path3=C:\Users\ElettroDynamisPRC\Google Drive\REPARTO ELETTRONICA 2017\GCU\DY_GCU_AUSTRIA_2017\modules\input-output\
-Path4=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\
-Path5=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\input-output\
-Path6=C:\Users\Salvatore\Desktop\git Repo\GCU\libs\
-Path7=C:\Users\Salvatore\Desktop\git Repo\GCU\modules\aac\
-Path8=C:\Users\sofia\Desktop\GIT REPO\GCU\modules\
-Path9=C:\Users\sofia\Desktop\GIT REPO\GCU\modules\input-output\
-Path10=C:\Users\sofia\Desktop\GIT REPO\GCU\modules\aac\
-Path11=C:\Users\sofia\Desktop\GIT REPO\GCU\libs\
-Path12=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\
-Path13=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\input-output\
-Path14=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\aac\
-Path15=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\libs\
+Count=4
+Path0=C:\Users\nicol\Desktop\git\GCU-DPX\modules\
+Path1=C:\Users\nicol\Desktop\git\GCU-DPX\modules\input-output\
+Path2=C:\Users\nicol\Desktop\git\GCU-DPX\modules\aac\
+Path3=C:\Users\nicol\Desktop\git\GCU-DPX\libs\
 [HEADERS]
 Count=17
 File0=modules\clutch.h
