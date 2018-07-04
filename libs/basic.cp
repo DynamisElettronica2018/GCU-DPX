@@ -1,7 +1,7 @@
-#line 1 "C:/Users/nicol/Desktop/git/GCU-DPX/libs/basic.c"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/GCU-DPX/libs/basic.c"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/stdio.h"
-#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
-#line 16 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 16 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
 
 void signedIntToString(int number, char *text);
@@ -9,7 +9,7 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 8 "C:/Users/nicol/Desktop/git/GCU-DPX/libs/basic.c"
+#line 8 "C:/Users/sofia/Desktop/GIT REPO/GCU-DPX/libs/basic.c"
 void unsignedIntToString(unsigned int number, char *text) {
  emptyString(text);
  sprintf(text, "%u", number);
@@ -22,7 +22,7 @@ void signedIntToString(int number, char *text) {
 
 void emptyString(char *myString) {
  myString[0] = '\0';
-#line 23 "C:/Users/nicol/Desktop/git/GCU-DPX/libs/basic.c"
+#line 23 "C:/Users/sofia/Desktop/GIT REPO/GCU-DPX/libs/basic.c"
 }
 
 unsigned char getNumberDigitCount(unsigned char number) {

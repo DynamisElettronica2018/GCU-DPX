@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=modules\input-output\sensors_2.c
+Value=DY_GCU.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -39,7 +39,7 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=7
+Count=8
 File0=DY_GCU.c
 File1=libs\dspic.c
 File2=libs\can.h
@@ -47,6 +47,7 @@ File3=libs\d_can.h
 File4=modules\aac\aac.h
 File5=modules\aac\aac.c
 File6=modules\input-output\sensors_2.c
+File7=modules\input-output\sensors_2.h
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -54,22 +55,31 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=7
+Count=12
 Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\defs\
 Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\uses\
-Path2=C:\Users\nicol\Desktop\git\GCU-DPX\
-Path3=C:\Users\nicol\Desktop\git\GCU-DPX\modules\
-Path4=C:\Users\nicol\Desktop\git\GCU-DPX\modules\input-output\
-Path5=C:\Users\nicol\Desktop\git\GCU-DPX\libs\
-Path6=C:\Users\nicol\Desktop\git\GCU-DPX\modules\aac\
+Path2=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\
+Path3=C:\Users\nicol\Desktop\git\GCU-DPX\
+Path4=C:\Users\nicol\Desktop\git\GCU-DPX\modules\
+Path5=C:\Users\nicol\Desktop\git\GCU-DPX\modules\input-output\
+Path6=C:\Users\nicol\Desktop\git\GCU-DPX\libs\
+Path7=C:\Users\nicol\Desktop\git\GCU-DPX\modules\aac\
+Path8=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\
+Path9=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\input-output\
+Path10=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\libs\
+Path11=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\aac\
 [HEADER_PATH]
-Count=4
+Count=8
 Path0=C:\Users\nicol\Desktop\git\GCU-DPX\modules\
 Path1=C:\Users\nicol\Desktop\git\GCU-DPX\modules\input-output\
 Path2=C:\Users\nicol\Desktop\git\GCU-DPX\modules\aac\
 Path3=C:\Users\nicol\Desktop\git\GCU-DPX\libs\
+Path4=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\
+Path5=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\input-output\
+Path6=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\modules\aac\
+Path7=C:\Users\sofia\Desktop\GIT REPO\GCU-DPX\libs\
 [HEADERS]
-Count=16
+Count=17
 File0=modules\clutch.h
 File1=modules\enginecontrol.h
 File2=modules\gearshift.h
@@ -86,6 +96,7 @@ File12=libs\can.h
 File13=libs\d_can.h
 File14=libs\dspic.h
 File15=libs\eeprom.h
+File16=modules\input-output\sensors_2.h
 [PLDS]
 Count=0
 [Useses]

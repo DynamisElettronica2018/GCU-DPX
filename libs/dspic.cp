@@ -1,7 +1,7 @@
-#line 1 "C:/Users/nicol/Desktop/git/GCU-DPX/libs/dspic.c"
-#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
-#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
-#line 16 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/GCU-DPX/libs/dspic.c"
+#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 16 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
 
 void signedIntToString(int number, char *text);
@@ -9,7 +9,7 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 177 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
+#line 177 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -67,7 +67,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 7 "C:/Users/nicol/Desktop/git/GCU-DPX/libs/dspic.c"
+#line 7 "C:/Users/sofia/Desktop/GIT REPO/GCU-DPX/libs/dspic.c"
 const double INSTRUCTION_PERIOD = 4.0 /  80 ;
 const unsigned int PRESCALER_VALUES[] = {1, 8, 64, 256};
 
