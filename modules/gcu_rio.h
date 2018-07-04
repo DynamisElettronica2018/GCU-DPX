@@ -16,7 +16,7 @@
 #define DEFAULT_UP_BRAKE    20
 #define DEFAULT_UP_PUSH_1_2 115
 #define DEFAULT_UP_PUSH_2_3 100
-#define DEFAULT_UP_PUSH_3_4 100
+#define DEFAULT_UP_PUSH_3_4 170
 #define DEFAULT_UP_PUSH_4_5 100
      //down
 #define DEFAULT_CLUTCH      70
