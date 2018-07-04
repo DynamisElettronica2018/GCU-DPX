@@ -18,7 +18,10 @@
 #include "stoplight.h"
 #include "sensors_2.h"
 #include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
+#include "traction.h"
+
 //*/
+//int tractionTemp = 0;
 
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
@@ -33,11 +36,24 @@ char isSteeringWheelAvailable;
   int timer1_aac_counter = 0;
 #endif
 
+#ifdef TRACTION_H
+  unsigned int traction_state = 0;
+#endif
+
 unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� spazio e cos� possiamo fare fino a 30 step di cambiata, molto powa
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
+void sendControlsSW(void)
+{
+    Can_resetWritePacket();
+    Can_addIntToWritePacket(tractionFb);
+    Can_addIntToWritePacket(accelerationFb);
+    Can_addIntToWritePacket(0);
+    Can_addIntToWritePacket(0);
+    Can_write(GCU_AUX_ID);
 
+}
 
 void GCU_isAlive(void) {
     Can_resetWritePacket();
@@ -62,6 +78,8 @@ void init(void) {
     GearShift_init();
     StopLight_init();
     Buzzer_init();
+    initTraction();
+    sendControlsSW();
     //Sensors_init();
 
 
@@ -73,6 +91,8 @@ void init(void) {
     setTimer(TIMER1_DEVICE, 0.001);
     setInterruptPriority(TIMER1_DEVICE, MEDIUM_PRIORITY);
 }
+
+
 
 void main() {
     init();
@@ -118,6 +138,15 @@ onTimer1Interrupt{
         dSignalLed_switch(DSIGNAL_LED_RG14);
         //Sensors_send();
         sendTempSensor();
+        
+        /*Efi_setTraction(tractionTemp);
+        tractionFb = (int)(tractionTemp/100.0);
+        sendControlsSW();
+        tractionTemp += 100;
+        if (tractionTemp > 700)
+        {
+           tractionTemp = 0;
+        }*/
         
         timer1_counter2 = 0;
       }
@@ -251,17 +280,37 @@ onCanInterrupt{
             if(aac_currentState == OFF && firstInt == 1                                 //FOR TESTING
  //             && gearShift_currentGear == GEARSHIFT_NEUTRAL
  //             && aac_externValues[WHEEL_SPEED] <= 1
-              ){
-                aac_currentState = START; //comment to disable AAC
-            }
+              )
+              {
+                aac_currentState = START;   //comment to disable AAC
+                sendControlsSW();
+              }
             else if(aac_currentState == READY && firstInt == 2){
                 aac_currentState = START_RELEASE; //comment to disable AAC
+                sendControlsSW();
             }
             //If none of the previous conditions are met, the aac is stopped
             else if(firstInt == 0)
+            {
                 aac_stop();
+                sendControlsSW();
+            }
           #endif
             break;
+
+          case SW_TRACTION_CONTROL_GCU_ID:
+            #ifdef TRACTION_H
+               //set traction to EFI
+               tractionFb = firstInt;
+               //traction_state = tractionVariable[tractionFb];
+               traction_State = tractionFb * 100;
+               Efi_setTraction(traction_state);
+               sendControlsSW();
+               Buzzer_Bip();
+            #endif
+
+
+          
         default:
             break;
     }

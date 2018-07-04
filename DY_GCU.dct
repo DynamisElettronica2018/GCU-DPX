@@ -2530,6 +2530,7 @@ efi_init
 efi_setblip
 efi_setcut
 efi_setrpmlimiter
+efi_settraction
 efi_unsetblip
 efi_unsetcut
 efi_unsetrpmlimiter
@@ -4591,6 +4592,7 @@ ilr2
 ilr3
 imagefileasarray
 init
+inittraction
 instruction_period
 int0ep
 int0ep
@@ -7432,6 +7434,7 @@ seg2phts_c2cfg2_bit
 sen
 sen
 sen_bit
+sendcontrolssw
 sendtempsensor
 setallpinasdigital
 setanalogdataoutputformat
@@ -9376,7 +9379,9 @@ tp_tft_rotate_180
 tp_tft_set_adc_threshold
 tp_tft_set_calibration_consts
 tp_tft_set_default_mode
+traction_state
 tractionfb
+tractionvariable
 trapr
 trapr
 trapr_bit

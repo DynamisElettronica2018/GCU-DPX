@@ -29,12 +29,7 @@ void aac_execute(void){
         case START:
             Efi_setRPMLimiter();
             accelerationFb = 1;
-            Can_resetWritePacket();
-            Can_addIntToWritePacket(tractionFb);
-            Can_addIntToWritePacket(accelerationFb);
-            Can_addIntToWritePacket(0);
-            Can_addIntToWritePacket(0);
-            Can_write(GCU_AUX_ID);
+
 //            Activate acceleration
             aac_currentState = READY;
             aac_clutchValue = 100;
@@ -45,12 +40,6 @@ void aac_execute(void){
             return;
         case START_RELEASE:
             accelerationFb = 2;
-            Can_resetWritePacket();
-            Can_addIntToWritePacket(tractionFb);
-            Can_addIntToWritePacket(accelerationFb);
-            Can_addIntToWritePacket(0);
-            Can_addIntToWritePacket(0);
-            Can_write(GCU_AUX_ID);
             aac_clutchValue = aac_parameters[RAMP_START];
             Clutch_set(aac_clutchValue);
             aac_dtRelease = aac_parameters[RAMP_TIME] / AAC_WORK_RATE_ms;
@@ -86,12 +75,6 @@ void aac_execute(void){
         case STOPPING:
             aac_currentState = OFF;
             accelerationFb = 0;
-            Can_resetWritePacket();
-            Can_addIntToWritePacket(tractionFb);
-            Can_addIntToWritePacket(accelerationFb);
-            Can_addIntToWritePacket(0);
-            Can_addIntToWritePacket(0);
-            Can_write(GCU_AUX_ID);
             return;
         //gearshift check
         default: return;

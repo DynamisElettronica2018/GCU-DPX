@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=modules\aac\aac.c
+Value=DY_GCU.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -40,7 +40,7 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=13
+Count=17
 File0=DY_GCU.c
 File1=libs\dspic.c
 File2=libs\can.h
@@ -54,6 +54,10 @@ File9=modules\aac\aac.h
 File10=modules\traction\traction.c
 File11=modules\traction\traction.h
 File12=modules\aac\aac_defaults.h
+File13=modules\traction\traction_settings.h
+File14=modules\enginecontrol.c
+File15=modules\input-output\clutchmotor.c
+File16=modules\clutch.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
