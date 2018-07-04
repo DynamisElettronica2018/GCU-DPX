@@ -1,7 +1,7 @@
-#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
-#line 16 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
+#line 1 "C:/Users/nicol/Desktop/git/GCU-DPX/DY_GCU.c"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 16 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
 
 void signedIntToString(int number, char *text);
@@ -9,7 +9,7 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 177 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
+#line 177 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -67,10 +67,10 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 22 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/d_signalled.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
+#line 22 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);
@@ -78,7 +78,7 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/eeprom.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/eeprom.h"
 
 
 
@@ -93,10 +93,10 @@ unsigned int EEPROM_readInt(unsigned int address);
 void EEPROM_writeArray(unsigned int address, unsigned int *values);
 
 void EEPROM_readArray(unsigned int address, unsigned int *values);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/gearmotor.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 26 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/gearmotor.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/gearmotor.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
+#line 26 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/gearmotor.h"
 void GearMotor_init(void);
 
 void GearMotor_turnLeft(void);
@@ -106,18 +106,18 @@ void GearMotor_turnRight(void);
 void GearMotor_brake(void);
 
 void GearMotor_release(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/clutchmotor.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 16 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/clutchmotor.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/clutchmotor.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
+#line 16 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/clutchmotor.h"
 void ClutchMotor_init(void);
 
 void ClutchMotor_setupPWM(void);
 
 void ClutchMotor_setPosition(unsigned char percentage);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/efi.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 23 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/efi.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/efi.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
+#line 23 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/efi.h"
 void Efi_init(void);
 
 void Efi_setCut(void);
@@ -135,19 +135,19 @@ void Efi_unsetRPMLimiter(void);
 void Efi_setRPMLimiter_CAN(unsigned int limit);
 
 void Efi_unsetRPMLimiter_CAN(unsigned int limit);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/buzzer.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 17 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/buzzer.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/buzzer.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
+#line 17 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/buzzer.h"
 void Buzzer_init(void);
 
 void Buzzer_tick(void);
 
 void Buzzer_Bip(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/sensors.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/d_can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 23 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/sensors.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/sensors.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/d_can.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
+#line 23 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/sensors.h"
 void Sensors_init(void);
 
 void Sensors_tick(void);
@@ -165,9 +165,9 @@ void Sensors_sampleH2OPumpCurrent(unsigned int value);
 void Sensors_sampleFuelPumpCurrent(unsigned int value);
 
 void Sensors_sampleGCUTemp(unsigned int value);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/clutch.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/clutchmotor.h"
-#line 14 "c:/users/salvatore/desktop/git repo/gcu/modules/clutch.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/clutch.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/clutchmotor.h"
+#line 14 "c:/users/nicol/desktop/git/gcu-dpx/modules/clutch.h"
 void Clutch_insert(void);
 
 void Clutch_release(void);
@@ -177,11 +177,11 @@ void Clutch_set(unsigned char percentage);
 unsigned char Clutch_get(void);
 
 void Clutch_setBiased(unsigned char value);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/enginecontrol.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
-#line 25 "c:/users/salvatore/desktop/git repo/gcu/modules/enginecontrol.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/enginecontrol.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/d_signalled.h"
+#line 25 "c:/users/nicol/desktop/git/gcu-dpx/modules/enginecontrol.h"
 void EngineControl_init(void);
 
 void EngineControl_keyOn(void);
@@ -195,18 +195,18 @@ void EngineControl_stop(void);
 void EngineControl_resetStartCheck(void);
 
 char EngineControl_isStarting(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/gearshift.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/gearmotor.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/efi.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/buzzer.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/clutch.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/d_can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/gcu_rio.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/d_can.h"
-#line 60 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/gearshift.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/gearmotor.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/efi.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/buzzer.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/clutch.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/d_can.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/gcu_rio.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/can.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/d_signalled.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/d_can.h"
+#line 60 "c:/users/nicol/desktop/git/gcu-dpx/libs/can.h"
 void Can_init(void);
 
 void Can_read(unsigned long int *id, char dataBuffer[], unsigned int *dataLength, unsigned int *inFlags);
@@ -238,8 +238,8 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/buzzer.h"
-#line 41 "c:/users/salvatore/desktop/git repo/gcu/modules/gcu_rio.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/buzzer.h"
+#line 41 "c:/users/nicol/desktop/git/gcu-dpx/modules/gcu_rio.h"
 typedef enum {
 
  NT_PUSH_1_N,
@@ -311,7 +311,7 @@ extern void rio_sendAllTimes(void);
 extern void rio_sendTimes(void);
 
 extern void rio_send(void);
-#line 17 "c:/users/salvatore/desktop/git repo/gcu/modules/gearshift.h"
+#line 17 "c:/users/nicol/desktop/git/gcu-dpx/modules/gearshift.h"
 typedef enum {
  STEP_UP_START,
 
@@ -326,7 +326,7 @@ typedef enum {
  STEP_UP_END,
  STEP_DOWN_END
  }shiftStep;
-#line 71 "c:/users/salvatore/desktop/git repo/gcu/modules/gearshift.h"
+#line 71 "c:/users/nicol/desktop/git/gcu-dpx/modules/gearshift.h"
 extern unsigned int gearShift_timings[ TIMES_LAST ];
 
 
@@ -365,32 +365,117 @@ void GearShift_loadDefaultTimings(void);
 void GearShift_loadNeutralTimings(void);
 
 int Gearshift_get_time(shiftStep step);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/stoplight.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 17 "c:/users/salvatore/desktop/git repo/gcu/modules/stoplight.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/stoplight.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
+#line 17 "c:/users/nicol/desktop/git/gcu-dpx/modules/stoplight.h"
 void StopLight_init(void);
 
 void StopLight_setupPWM(void);
 
 void StopLight_setBrightness(unsigned char percentage);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/sensors_2.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 13 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/sensors_2.h"
-unsigned int getTempSensor();
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/aac/aac.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/aac/aac_defaults.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/clutch.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/gearshift.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/efi.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/can.h"
+#line 30 "c:/users/nicol/desktop/git/gcu-dpx/modules/aac/aac.h"
+extern unsigned int accelerationFb;
 
-void sendTempSensor(void);
-#line 23 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+unsigned int getAccelerationFb();
+
+typedef enum{
+ OFF,
+ START,
+ READY,
+ START_RELEASE,
+ RELEASING,
+ RUNNING,
+ STOPPING
+}aac_states;
+
+
+typedef enum{
+ RAMP_START,
+ RAMP_END,
+ RAMP_TIME,
+
+ RPM_LIMIT_1_2,
+ RPM_LIMIT_2_3,
+ RPM_LIMIT_3_4,
+ SPEED_LIMIT_1_2,
+ SPEED_LIMIT_2_3,
+ SPEED_LIMIT_3_4
+}aac_params;
+
+typedef enum{
+ MEX_ON,
+ MEX_READY,
+ MEX_GO,
+ MEX_OFF,
+}aac_notifications;
+
+
+typedef enum{
+ RPM,
+ WHEEL_SPEED,
+ APPS
+}aac_values;
+
+extern unsigned int gearShift_currentGear;
+
+void aac_init(void);
+
+
+void aac_execute(void);
+
+
+void aac_checkAndPrepare(void);
+
+void aac_stop(void);
+
+void aac_loadDefaultParams(void);
+
+void aac_updateParam(const aac_params id, const int value);
+
+void aac_updateExternValue(const aac_values id, const int value);
+
+int aac_getParam(const aac_params id);
+
+int aac_getExternValue(const aac_values id);
+
+void aac_forceState(const aac_states newState);
+
+void aac_sendTimes(void);
+
+void aac_sendOneTime(time_id pos);
+
+void aac_sendAllTimes(void);
+#line 26 "C:/Users/nicol/Desktop/git/GCU-DPX/DY_GCU.c"
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
-#line 36 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
+
+
+
+
+
+
+
+
+ extern aac_states aac_currentState;
+ extern int aac_externValues[ 3 ];
+ extern int aac_parameters[ 9  ];
+
+ extern int aac_timesCounter;
+ int timer1_aac_counter = 0;
+
+
 unsigned int gearShift_timings[ TIMES_LAST ];
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
-
-
 
 void GCU_isAlive(void) {
  Can_resetWritePacket();
@@ -403,9 +488,7 @@ void GCU_isAlive(void) {
 }
 
 
-
 void init(void) {
-
  dSignalLed_init();
  Can_init();
  EngineControl_init();
@@ -415,11 +498,18 @@ void init(void) {
  GearShift_init();
  StopLight_init();
  Buzzer_init();
-#line 73 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
+
+
+
+
+ aac_init();
+
+
  setTimer( 1 , 0.001);
  setInterruptPriority( 1 ,  4 );
-#line 83 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
-}
+ }
+
 
 void main() {
  init();
@@ -464,31 +554,25 @@ void main() {
  if (timer1_counter2 >= 1000) {
  dSignalLed_switch( 0 );
 
- sendTempSensor();
 
  timer1_counter2 = 0;
  }
  if (timer1_counter3 >= 10) {
-#line 137 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
+
+ aac_sendTimes();
+
  timer1_counter3 = 0;
  }
- if (timer1_counter4 >= 100)
- {
- Can_resetWritePacket();
- Can_addIntToWritePacket(20);
- Can_addIntToWritePacket(20);
- Can_addIntToWritePacket(20);
- Can_addIntToWritePacket(20);
- Can_write( 0b01100010110 );
- Can_resetWritePacket();
- Can_addIntToWritePacket(20);
- Can_addIntToWritePacket(20);
- Can_addIntToWritePacket(20);
- Can_addIntToWritePacket(20);
- Can_write( 0b01100010111 );
- timer1_counter4 = 0;
+
+
+ timer1_aac_counter += 1;
+ if(timer1_aac_counter ==  25 ){
+ aac_execute();
+ timer1_aac_counter = 0;
  }
-#line 164 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
+
 }
 
  void CAN_Interrupt() iv IVT_ADDR_C1INTERRUPT {
@@ -521,27 +605,49 @@ void main() {
  case  0b01000000100 :
  EngineControl_resetStartCheck();
  EngineControl_start();
- Buzzer_Bip();
  break;
-#line 213 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 194 "C:/Users/nicol/Desktop/git/GCU-DPX/DY_GCU.c"
  case  0b01000000000 :
  GearShift_injectCommand(firstInt);
  break;
-#line 227 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 208 "C:/Users/nicol/Desktop/git/GCU-DPX/DY_GCU.c"
  case  0b01000000001 :
-#line 232 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
+ if(dataBuffer[0] >  10 ){
+
+
  if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
 
  Clutch_setBiased(dataBuffer[0]);
 
  }
-#line 240 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
+ }
+
  break;
-#line 267 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 248 "C:/Users/nicol/Desktop/git/GCU-DPX/DY_GCU.c"
  case  0b01100000100 :
 
  break;
-#line 292 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
+
+ case  0b01000000010 :
+
+ if(aac_currentState == OFF && firstInt == 1
+
+
+ ){
+ aac_currentState = START;
+ }
+ else if(aac_currentState == READY && firstInt == 2){
+ aac_currentState = START_RELEASE;
+ }
+
+ else if(firstInt == 0)
+ aac_stop();
+
+ break;
+
  default:
  break;
  }

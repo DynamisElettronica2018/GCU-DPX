@@ -38,10 +38,10 @@ void aac_execute(void){
             aac_clutchValue = 100;
             Clutch_set((unsigned int)aac_clutchValue);
             Can_resetWritePacket();
-            Can_addIntToWritePacket(getTractionFb());
+            Can_addIntToWritePacket(0);
             Can_addIntToWritePacket(getAccelerationFb());
-            Can_addIntToWritePacket(getDRSFb());
-            Can_addIntToWritePacket(getAuxFb());
+            Can_addIntToWritePacket(0);
+            Can_addIntToWritePacket(0);
             Can_write(GCU_AUX_ID);
             return;
         case READY:

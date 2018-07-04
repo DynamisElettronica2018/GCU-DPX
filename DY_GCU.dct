@@ -487,6 +487,7 @@ accbu_22
 accbu_22_bit
 accbu_23
 accbu_23_bit
+accelerationfb
 accsat
 accsat
 accsat_bit
@@ -3740,12 +3741,12 @@ gearshift_timings
 gearshift_up
 get_fosc_khz
 get_fosc_per_cyc
+getaccelerationfb
 getanalogvalue
 getexacttimerprescaler
 getexternalinterruptedge
 getminimumanalogclockconversion
 getnumberdigitcount
-gettempsensor
 gettimerperiod
 gettimerprescaler
 glcd_box
@@ -7431,7 +7432,6 @@ seg2phts_c2cfg2_bit
 sen
 sen
 sen_bit
-sendtempsensor
 setallpinasdigital
 setanalogdataoutputformat
 setanaloginterrupt
@@ -9096,6 +9096,7 @@ time_datediff
 time_datetoepoch
 time_epochtodate
 time_jd1970
+timer1_aac_counter
 timer1_counter0
 timer1_counter1
 timer1_counter2

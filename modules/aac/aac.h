@@ -10,9 +10,9 @@
 #include "gearshift.h"
 #include "efi.h"
 #include "can.h"
-#include "drs.h"
-#include "traction.h"
-#include "auxFb.h"
+//#include "drs.h"
+//#include "traction.h"
+//#include "auxFb.h"
 
 #define CODE_SET_AAC   2
 
