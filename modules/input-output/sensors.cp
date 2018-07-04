@@ -92,7 +92,7 @@ const unsigned char SENSORS[] = {
   5 ,
   4 ,
   3 ,
- GCU_TEMP_Pin
+  2 
 };
 
 unsigned char sensors_pinIndex = 0;

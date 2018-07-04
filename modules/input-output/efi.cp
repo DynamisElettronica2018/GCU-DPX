@@ -1,8 +1,8 @@
-#line 1 "C:/Users/sofia/Desktop/GIT REPO/GCU-DPX/modules/input-output/efi.c"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 16 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU/modules/input-output/efi.c"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/efi.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
+#line 16 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
 
 void signedIntToString(int number, char *text);
@@ -10,7 +10,7 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 177 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 177 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -68,7 +68,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 23 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
+#line 23 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/efi.h"
 void Efi_init(void);
 
 void Efi_setCut(void);
@@ -86,7 +86,7 @@ void Efi_unsetRPMLimiter(void);
 void Efi_setRPMLimiter_CAN(unsigned int limit);
 
 void Efi_unsetRPMLimiter_CAN(unsigned int limit);
-#line 6 "C:/Users/sofia/Desktop/GIT REPO/GCU-DPX/modules/input-output/efi.c"
+#line 6 "C:/Users/Salvatore/Desktop/git Repo/GCU/modules/input-output/efi.c"
 void Efi_init(void) {
   TRISD2_bit  =  0 ;
   TRISD3_bit  =  0 ;
