@@ -487,6 +487,7 @@ accbu_22
 accbu_22_bit
 accbu_23
 accbu_23_bit
+accelerationfb
 accsat
 accsat
 accsat_bit
@@ -9096,6 +9097,7 @@ time_datediff
 time_datetoepoch
 time_epochtodate
 time_jd1970
+timer1_aac_counter
 timer1_counter0
 timer1_counter1
 timer1_counter2
@@ -9374,6 +9376,7 @@ tp_tft_rotate_180
 tp_tft_set_adc_threshold
 tp_tft_set_calibration_consts
 tp_tft_set_default_mode
+tractionfb
 trapr
 trapr
 trapr_bit

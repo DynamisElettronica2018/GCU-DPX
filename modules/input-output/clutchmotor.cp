@@ -1,7 +1,7 @@
-#line 1 "C:/Users/sofia/Desktop/GIT REPO/GCU-DPX/modules/input-output/clutchmotor.c"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 16 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/input-output/clutchmotor.c"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
 
 void signedIntToString(int number, char *text);
@@ -9,9 +9,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 177 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 177 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -69,13 +69,13 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 16 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
 void ClutchMotor_init(void);
 
 void ClutchMotor_setupPWM(void);
 
 void ClutchMotor_setPosition(unsigned char percentage);
-#line 7 "C:/Users/sofia/Desktop/GIT REPO/GCU-DPX/modules/input-output/clutchmotor.c"
+#line 7 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/input-output/clutchmotor.c"
 unsigned int CLUTCHMOTOR_PWM_PERIOD_VALUE;
 double CLUTCHMOTOR_PERCENTAGE_STEP;
 unsigned int CLUTCHMOTOR_PWM_MAX_VALUE;

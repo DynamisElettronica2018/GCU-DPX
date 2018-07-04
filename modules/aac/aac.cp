@@ -1,10 +1,10 @@
-#line 1 "C:/Users/sofia/Desktop/GIT REPO/GCU-DPX/modules/aac/aac.c"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/aac/aac.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/aac/aac_defaults.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/clutch.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 16 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac_defaults.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
 
 void signedIntToString(int number, char *text);
@@ -12,9 +12,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 177 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 177 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -72,13 +72,13 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 16 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
 void ClutchMotor_init(void);
 
 void ClutchMotor_setupPWM(void);
 
 void ClutchMotor_setPosition(unsigned char percentage);
-#line 14 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/clutch.h"
+#line 14 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
 void Clutch_insert(void);
 
 void Clutch_release(void);
@@ -88,12 +88,12 @@ void Clutch_set(unsigned char percentage);
 unsigned char Clutch_get(void);
 
 void Clutch_setBiased(unsigned char value);
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/gearshift.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/gearmotor.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 26 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/gearmotor.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/gearmotor.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 26 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/gearmotor.h"
 void GearMotor_init(void);
 
 void GearMotor_turnLeft(void);
@@ -103,9 +103,9 @@ void GearMotor_turnRight(void);
 void GearMotor_brake(void);
 
 void GearMotor_release(void);
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 23 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 23 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
 void Efi_init(void);
 
 void Efi_setCut(void);
@@ -123,23 +123,23 @@ void Efi_unsetRPMLimiter(void);
 void Efi_setRPMLimiter_CAN(unsigned int limit);
 
 void Efi_unsetRPMLimiter_CAN(unsigned int limit);
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 17 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 17 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
 void Buzzer_init(void);
 
 void Buzzer_tick(void);
 
 void Buzzer_Bip(void);
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/clutch.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/d_can.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/gcu_rio.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/can.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/d_signalled.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 22 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/d_signalled.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/d_can.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gcu_rio.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/d_signalled.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 22 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);
@@ -147,8 +147,8 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/d_can.h"
-#line 60 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/can.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/d_can.h"
+#line 60 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
 void Can_init(void);
 
 void Can_read(unsigned long int *id, char dataBuffer[], unsigned int *dataLength, unsigned int *inFlags);
@@ -180,8 +180,8 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
-#line 41 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/gcu_rio.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
+#line 41 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gcu_rio.h"
 typedef enum {
 
  NT_PUSH_1_N,
@@ -253,7 +253,7 @@ extern void rio_sendAllTimes(void);
 extern void rio_sendTimes(void);
 
 extern void rio_send(void);
-#line 17 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/gearshift.h"
+#line 17 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
 typedef enum {
  STEP_UP_START,
 
@@ -268,7 +268,7 @@ typedef enum {
  STEP_UP_END,
  STEP_DOWN_END
  }shiftStep;
-#line 71 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/gearshift.h"
+#line 71 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
 extern unsigned int gearShift_timings[ TIMES_LAST ];
 
 
@@ -307,9 +307,11 @@ void GearShift_loadDefaultTimings(void);
 void GearShift_loadNeutralTimings(void);
 
 int Gearshift_get_time(shiftStep step);
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
-#line 1 "c:/users/sofia/desktop/git repo/gcu-dpx/libs/can.h"
-#line 27 "c:/users/sofia/desktop/git repo/gcu-dpx/modules/aac/aac.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
+#line 27 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
+extern unsigned int accelerationFb;
+
 typedef enum{
  OFF,
  START,
@@ -377,14 +379,23 @@ void aac_sendTimes(void);
 void aac_sendOneTime(time_id pos);
 
 void aac_sendAllTimes(void);
-#line 3 "C:/Users/sofia/Desktop/GIT REPO/GCU-DPX/modules/aac/aac.c"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/traction/traction.h"
+
+
+
+
+
+extern unsigned int tractionFb;
+#line 4 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 aac_states aac_currentState;
 int aac_parameters[ 9 ];
 int aac_externValues[ 3 ];
 int aac_dtRelease;
 char aac_sendingAll =  0 ;
 int aac_timesCounter;
-#line 15 "C:/Users/sofia/Desktop/GIT REPO/GCU-DPX/modules/aac/aac.c"
+
+unsigned int accelerationFb = 0;
+#line 18 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 float aac_clutchStep;
 float aac_clutchValue;
 
@@ -398,8 +409,14 @@ void aac_execute(void){
  switch (aac_currentState) {
  case START:
  Efi_setRPMLimiter();
+ accelerationFb = 1;
+ Can_resetWritePacket();
+ Can_addIntToWritePacket(tractionFb);
+ Can_addIntToWritePacket(accelerationFb);
+ Can_addIntToWritePacket(0);
+ Can_addIntToWritePacket(0);
+ Can_write( 0b11111110001 );
 
- Can_writeByte( 0b11111110000 , MEX_READY);
  aac_currentState = READY;
  aac_clutchValue = 100;
  Clutch_set((unsigned int)aac_clutchValue);
@@ -408,6 +425,13 @@ void aac_execute(void){
  Clutch_set(100);
  return;
  case START_RELEASE:
+ accelerationFb = 2;
+ Can_resetWritePacket();
+ Can_addIntToWritePacket(tractionFb);
+ Can_addIntToWritePacket(accelerationFb);
+ Can_addIntToWritePacket(0);
+ Can_addIntToWritePacket(0);
+ Can_write( 0b11111110001 );
  aac_clutchValue = aac_parameters[RAMP_START];
  Clutch_set(aac_clutchValue);
  aac_dtRelease = aac_parameters[RAMP_TIME] /  25 ;
@@ -430,7 +454,7 @@ void aac_execute(void){
  return;
  case RUNNING:
 
- if(gearShift_currentGear == 4){
+ if(gearShift_currentGear == 5){
  aac_stop();
  return;
  }
@@ -442,7 +466,13 @@ void aac_execute(void){
  return;
  case STOPPING:
  aac_currentState = OFF;
- Can_writeByte( 0b11111110000 , MEX_OFF);
+ accelerationFb = 0;
+ Can_resetWritePacket();
+ Can_addIntToWritePacket(tractionFb);
+ Can_addIntToWritePacket(accelerationFb);
+ Can_addIntToWritePacket(0);
+ Can_addIntToWritePacket(0);
+ Can_write( 0b11111110001 );
  return;
 
  default: return;
