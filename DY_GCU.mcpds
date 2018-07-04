@@ -39,16 +39,14 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=9
+Count=7
 File0=DY_GCU.c
 File1=libs\dspic.c
 File2=libs\can.h
 File3=libs\d_can.h
-File4=..\GCU\libs\can.c
-File5=..\GCU\libs\can.h
-File6=modules\enginecontrol.c
-File7=modules\enginecontrol.h
-File8=libs\can.c
+File4=modules\enginecontrol.c
+File5=modules\enginecontrol.h
+File6=libs\can.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -57,19 +55,19 @@ Count=0
 Count=0
 [SEARCH_PATH]
 Count=7
-Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\defs\
+Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\Defs\
 Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\uses\
-Path2=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\
-Path3=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\
-Path4=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\input-output\
-Path5=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\libs\
-Path6=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\aac\
+Path2=C:\Users\nicol\Desktop\git\GCU-DPX\
+Path3=C:\Users\nicol\Desktop\git\GCU-DPX\modules\
+Path4=C:\Users\nicol\Desktop\git\GCU-DPX\modules\input-output\
+Path5=C:\Users\nicol\Desktop\git\GCU-DPX\libs\
+Path6=C:\Users\nicol\Desktop\git\GCU-DPX\modules\aac\
 [HEADER_PATH]
 Count=4
-Path0=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\
-Path1=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\input-output\
-Path2=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\aac\
-Path3=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\libs\
+Path0=C:\Users\nicol\Desktop\git\GCU-DPX\modules\
+Path1=C:\Users\nicol\Desktop\git\GCU-DPX\modules\input-output\
+Path2=C:\Users\nicol\Desktop\git\GCU-DPX\modules\aac\
+Path3=C:\Users\nicol\Desktop\git\GCU-DPX\libs\
 [HEADERS]
 Count=17
 File0=modules\clutch.h

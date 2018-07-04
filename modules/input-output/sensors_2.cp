@@ -1,9 +1,9 @@
-#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU/modules/input-output/sensors_2.c"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/sensors_2.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
-#line 16 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
+#line 1 "C:/Users/nicol/Desktop/git/GCU-DPX/modules/input-output/sensors_2.c"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/sensors_2.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/can.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/d_signalled.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 16 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
 
 void signedIntToString(int number, char *text);
@@ -11,9 +11,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
-#line 177 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 177 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -71,7 +71,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 22 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
+#line 22 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);
@@ -79,8 +79,8 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/d_can.h"
-#line 60 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/d_can.h"
+#line 60 "c:/users/nicol/desktop/git/gcu-dpx/libs/can.h"
 void Can_init(void);
 
 void Can_read(unsigned long int *id, char dataBuffer[], unsigned int *dataLength, unsigned int *inFlags);
@@ -112,12 +112,12 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 13 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/sensors_2.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
+#line 13 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/sensors_2.h"
 unsigned int getTempSensor();
 
 void sendTempSensor(void);
-#line 8 "C:/Users/Salvatore/Desktop/git Repo/GCU/modules/input-output/sensors_2.c"
+#line 8 "C:/Users/nicol/Desktop/git/GCU-DPX/modules/input-output/sensors_2.c"
 unsigned int getTempSensor()
 {
  unsigned int analogValue = 0;

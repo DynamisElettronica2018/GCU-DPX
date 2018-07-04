@@ -1,8 +1,8 @@
-#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU/libs/can.c"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
-#line 16 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
+#line 1 "C:/Users/nicol/Desktop/git/GCU-DPX/libs/can.c"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/can.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/d_signalled.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 16 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
 
 void signedIntToString(int number, char *text);
@@ -10,9 +10,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/basic.h"
-#line 177 "c:/users/salvatore/desktop/git repo/gcu/libs/dspic.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/basic.h"
+#line 177 "c:/users/nicol/desktop/git/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -70,7 +70,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 22 "c:/users/salvatore/desktop/git repo/gcu/modules/input-output/d_signalled.h"
+#line 22 "c:/users/nicol/desktop/git/gcu-dpx/modules/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);
@@ -78,8 +78,8 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu/libs/d_can.h"
-#line 60 "c:/users/salvatore/desktop/git repo/gcu/libs/can.h"
+#line 1 "c:/users/nicol/desktop/git/gcu-dpx/libs/d_can.h"
+#line 60 "c:/users/nicol/desktop/git/gcu-dpx/libs/can.h"
 void Can_init(void);
 
 void Can_read(unsigned long int *id, char dataBuffer[], unsigned int *dataLength, unsigned int *inFlags);
@@ -111,7 +111,7 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 30 "C:/Users/Salvatore/Desktop/git Repo/GCU/libs/can.c"
+#line 30 "C:/Users/nicol/Desktop/git/GCU-DPX/libs/can.c"
 unsigned char can_dataOutBuffer[ 8 ];
 unsigned int can_dataOutLength = 0;
 unsigned int can_txPriority =  _CAN_TX_PRIORITY_1 ;
@@ -127,11 +127,11 @@ void Can_init() {
  _CAN_CONFIG_PHSEG2_PRG_ON;
  CAN1Initialize(2, 4, 3, 4, 2, Can_Init_flags);
  CAN1SetOperationMode(_CAN_MODE_CONFIG, 0xFF);
-#line 53 "C:/Users/Salvatore/Desktop/git Repo/GCU/libs/can.c"
+#line 53 "C:/Users/nicol/Desktop/git/GCU-DPX/libs/can.c"
  CAN1SetMask(_CAN_MASK_B1,  0b11111110100 , _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
  CAN1SetFilter(_CAN_FILTER_B1_F1,  0b01100000100 , _CAN_CONFIG_STD_MSG);
  CAN1SetFilter(_CAN_FILTER_B1_F2,  0b01000000000 , _CAN_CONFIG_STD_MSG);
-#line 60 "C:/Users/Salvatore/Desktop/git Repo/GCU/libs/can.c"
+#line 60 "C:/Users/nicol/Desktop/git/GCU-DPX/libs/can.c"
  CAN1SetOperationMode(_CAN_MODE_NORMAL, 0xFF);
 
  Delay_ms(250);
@@ -222,7 +222,7 @@ void Can_clearInterrupt(void) {
 }
 
 void Can_initInterrupt(void) {
-#line 156 "C:/Users/Salvatore/Desktop/git Repo/GCU/libs/can.c"
+#line 156 "C:/Users/nicol/Desktop/git/GCU-DPX/libs/can.c"
  IEC1BITS.C1IE = 1;
  C1INTEBITS.RXB0IE = 1;
  C1INTEBITS.RXB1IE = 1;
