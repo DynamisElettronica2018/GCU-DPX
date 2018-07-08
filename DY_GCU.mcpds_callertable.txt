@@ -1,5 +1,8 @@
 main
 	init
+		EngineControl_init
+			EngineControl_resetStartCheck
+			EngineControl_stop
 		dSignalLed_init
 			dSignalLed_unset
 		Can_init
@@ -15,9 +18,6 @@ main
 			CAN1SetFilter
 			Can_initInterrupt
 			Can_setWritePriority
-		EngineControl_init
-			EngineControl_resetStartCheck
-			EngineControl_stop
 		GearMotor_init
 			GearMotor_release
 		ClutchMotor_init
@@ -74,7 +74,6 @@ CAN_Interrupt
 	GearShift_setCurrentGear
 	EngineControl_resetStartCheck
 	EngineControl_start
-	Buzzer_Bip
 	GearShift_injectCommand
 		GearShift_setNeutral
 			GearShift_down

@@ -405,20 +405,19 @@ void GCU_isAlive(void) {
 
 
 void init(void) {
-
+ EngineControl_init();
  dSignalLed_init();
  Can_init();
- EngineControl_init();
  GearMotor_init();
  ClutchMotor_init();
  Efi_init();
  GearShift_init();
  StopLight_init();
  Buzzer_init();
-#line 73 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 72 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  setTimer( 1 , 0.001);
  setInterruptPriority( 1 ,  4 );
-#line 83 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 82 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 }
 
 void main() {
@@ -469,10 +468,10 @@ void main() {
  timer1_counter2 = 0;
  }
  if (timer1_counter3 >= 10) {
-#line 137 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 136 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  timer1_counter3 = 0;
  }
-#line 148 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 147 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 }
 
  void CAN_Interrupt() iv IVT_ADDR_C1INTERRUPT {
@@ -503,9 +502,10 @@ void main() {
  break;
 
  case  0b01000000100 :
+
  EngineControl_resetStartCheck();
  EngineControl_start();
- Buzzer_Bip();
+
  break;
 #line 197 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  case  0b01000000000 :

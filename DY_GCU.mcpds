@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=modules\gearshift.c
+Value=libs\can.h
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -39,7 +39,7 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=9
+Count=10
 File0=DY_GCU.c
 File1=libs\dspic.c
 File2=libs\can.h
@@ -49,6 +49,7 @@ File5=modules\gearshift.h
 File6=modules\input-output\gearmotor.c
 File7=modules\gcu_rio.h
 File8=modules\clutch.c
+File9=modules\enginecontrol.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

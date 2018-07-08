@@ -52,10 +52,9 @@ void GCU_isAlive(void) {
 
 
 void init(void) {
-
+    EngineControl_init();
     dSignalLed_init();
     Can_init();
-    EngineControl_init();
     GearMotor_init();
     ClutchMotor_init();
     Efi_init();
@@ -175,9 +174,10 @@ onCanInterrupt{
             break;
 
         case SW_FIRE_GCU_ID:
+
             EngineControl_resetStartCheck();           //resetCheckCounter = 0
             EngineControl_start();                     //debug on LED D2 board
-            Buzzer_Bip();
+            //Buzzer_Bip();
             break;
 
         /*
