@@ -1,5 +1,7 @@
 #include "autocross.h"
 
+unsigned int autocrossFb = 0;
+
 autocross_states autocross_currentState;
 int autocross_parameters[AUTOCROSS_NUM_PARAMS];
 int autocross_externValues[AUTOCROSS_NUM_VALUES];
