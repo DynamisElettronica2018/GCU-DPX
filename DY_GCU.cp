@@ -427,7 +427,7 @@ void main() {
  while (1)
  {
 
- Delay_ms(1000);
+
  bello += 1;
 
  }

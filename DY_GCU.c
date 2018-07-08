@@ -88,7 +88,7 @@ void main() {
     while (1) 
     {
       //dSignalLed_switch(DSIGNAL_LED_RG14);
-      Delay_ms(1000);
+      //Delay_ms(1000);
       bello += 1;
       //dSignalLed_switch(DSIGNAL_LED_RG14);
     }
