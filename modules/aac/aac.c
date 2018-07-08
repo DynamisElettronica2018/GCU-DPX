@@ -89,7 +89,7 @@ void aac_execute(void){
             Can_resetWritePacket();
             Can_addIntToWritePacket(tractionFb);
             Can_addIntToWritePacket(accelerationFb);
-            Can_addIntToWritePacket(0);
+            Can_addIntToWritePacket();
             Can_addIntToWritePacket(0);
             Can_write(GCU_AUX_ID);
             return;
