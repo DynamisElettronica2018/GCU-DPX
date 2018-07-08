@@ -86,6 +86,7 @@ void Drs_set(unsigned char percentage);
 unsigned char Drs_get(void);
 #line 7 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/drs.c"
 unsigned char drs_currentValue = 0;
+unsigned int drsFb = 0;
 
 void Drs_insert(void) {
  Drs_set(100);

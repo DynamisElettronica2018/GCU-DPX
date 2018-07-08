@@ -5,6 +5,7 @@
 #include "drs.h"
 
 unsigned char drs_currentValue = 0;
+unsigned int drsFb = 0;
 
 void Drs_insert(void) {
     Drs_set(100);

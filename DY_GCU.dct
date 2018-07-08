@@ -2514,6 +2514,7 @@ drs_get
 drs_insert
 drs_release
 drs_set
+drsfb
 drshmotor_setposition
 drsmotor_init
 drsmotor_percentage_step
