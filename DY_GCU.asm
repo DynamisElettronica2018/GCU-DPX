@@ -64,7 +64,7 @@ _init:
 	MOV.B	#4, W11
 	MOV.B	#1, W10
 	CALL	_setInterruptPriority
-;DY_GCU.c,82 :: 		}
+;DY_GCU.c,83 :: 		}
 L_end_init:
 	POP	W12
 	POP	W11
@@ -81,29 +81,20 @@ _main:
 	MOV	#4, W0
 	IOR	68
 
-;DY_GCU.c,84 :: 		void main() {
-;DY_GCU.c,85 :: 		init();
+;DY_GCU.c,85 :: 		void main() {
+;DY_GCU.c,86 :: 		init();
 	CALL	_init
-;DY_GCU.c,86 :: 		Buzzer_Bip();
+;DY_GCU.c,87 :: 		Buzzer_Bip();
 	CALL	_Buzzer_Bip
-;DY_GCU.c,88 :: 		while (1)
+;DY_GCU.c,89 :: 		while (1)
 L_main0:
-;DY_GCU.c,91 :: 		Delay_ms(1000);
-	MOV	#102, W8
-	MOV	#47563, W7
-L_main2:
-	DEC	W7
-	BRA NZ	L_main2
-	DEC	W8
-	BRA NZ	L_main2
-	NOP
-;DY_GCU.c,92 :: 		bello += 1;
+;DY_GCU.c,93 :: 		bello += 1;
 	MOV.B	#1, W1
 	MOV	#lo_addr(_bello), W0
 	ADD.B	W1, [W0], [W0]
-;DY_GCU.c,94 :: 		}
-	GOTO	L_main0
 ;DY_GCU.c,95 :: 		}
+	GOTO	L_main0
+;DY_GCU.c,96 :: 		}
 L_end_main:
 L__main_end_loop:
 	BRA	L__main_end_loop
@@ -117,95 +108,97 @@ _timer1_interrupt:
 	REPEAT	#12
 	PUSH	[W0++]
 
-;DY_GCU.c,98 :: 		onTimer1Interrupt{
-;DY_GCU.c,99 :: 		clearTimer1();
+;DY_GCU.c,99 :: 		onTimer1Interrupt{
+;DY_GCU.c,100 :: 		clearTimer1();
 	PUSH	W10
 	BCLR	IFS0bits, #3
-;DY_GCU.c,100 :: 		GearShift_msTick();
+;DY_GCU.c,101 :: 		GearShift_msTick();
 	CALL	_GearShift_msTick
-;DY_GCU.c,102 :: 		timer1_counter0 += 1;
+;DY_GCU.c,103 :: 		timer1_counter0 += 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_timer1_counter0), W0
 	ADD	W1, [W0], [W0]
-;DY_GCU.c,103 :: 		timer1_counter1 += 1;
+;DY_GCU.c,104 :: 		timer1_counter1 += 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_timer1_counter1), W0
 	ADD	W1, [W0], [W0]
-;DY_GCU.c,104 :: 		timer1_counter2 += 1;
+;DY_GCU.c,105 :: 		timer1_counter2 += 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_timer1_counter2), W0
 	ADD	W1, [W0], [W0]
-;DY_GCU.c,105 :: 		timer1_counter3 += 1;
+;DY_GCU.c,106 :: 		timer1_counter3 += 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_timer1_counter3), W0
 	ADD	W1, [W0], [W0]
-;DY_GCU.c,106 :: 		timer1_counter4 += 1;
+;DY_GCU.c,107 :: 		timer1_counter4 += 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_timer1_counter4), W0
 	ADD	W1, [W0], [W0]
-;DY_GCU.c,111 :: 		if (timer1_counter0 > 25) {
+;DY_GCU.c,112 :: 		if (timer1_counter0 > 25) {
 	MOV	_timer1_counter0, W0
 	CP	W0, #25
-	BRA GT	L__timer1_interrupt36
-	GOTO	L_timer1_interrupt4
-L__timer1_interrupt36:
-;DY_GCU.c,112 :: 		if (!EngineControl_isStarting()) {
+	BRA GT	L__timer1_interrupt34
+	GOTO	L_timer1_interrupt2
+L__timer1_interrupt34:
+;DY_GCU.c,113 :: 		if (!EngineControl_isStarting()) {
 	CALL	_EngineControl_isStarting
 	CP0.B	W0
-	BRA Z	L__timer1_interrupt37
-	GOTO	L_timer1_interrupt5
-L__timer1_interrupt37:
-;DY_GCU.c,113 :: 		EngineControl_stop();
+	BRA Z	L__timer1_interrupt35
+	GOTO	L_timer1_interrupt3
+L__timer1_interrupt35:
+;DY_GCU.c,114 :: 		EngineControl_stop();
 	CALL	_EngineControl_stop
-;DY_GCU.c,115 :: 		}
-L_timer1_interrupt5:
-;DY_GCU.c,116 :: 		timer1_counter0 = 0;
+;DY_GCU.c,116 :: 		}
+L_timer1_interrupt3:
+;DY_GCU.c,117 :: 		timer1_counter0 = 0;
 	CLR	W0
 	MOV	W0, _timer1_counter0
-;DY_GCU.c,117 :: 		}
-L_timer1_interrupt4:
-;DY_GCU.c,118 :: 		if (timer1_counter1 >= 20) {
+;DY_GCU.c,118 :: 		}
+L_timer1_interrupt2:
+;DY_GCU.c,119 :: 		if (timer1_counter1 >= 20) {
 	MOV	_timer1_counter1, W0
 	CP	W0, #20
-	BRA GE	L__timer1_interrupt38
-	GOTO	L_timer1_interrupt6
-L__timer1_interrupt38:
-;DY_GCU.c,119 :: 		GCU_isAlive();
+	BRA GE	L__timer1_interrupt36
+	GOTO	L_timer1_interrupt4
+L__timer1_interrupt36:
+;DY_GCU.c,120 :: 		GCU_isAlive();
 	CALL	_GCU_isAlive
-;DY_GCU.c,120 :: 		timer1_counter1 = 0;
+;DY_GCU.c,121 :: 		timer1_counter1 = 0;
 	CLR	W0
 	MOV	W0, _timer1_counter1
-;DY_GCU.c,121 :: 		}
-L_timer1_interrupt6:
-;DY_GCU.c,124 :: 		if (timer1_counter2 >= 1000) {
+;DY_GCU.c,122 :: 		}
+L_timer1_interrupt4:
+;DY_GCU.c,125 :: 		if (timer1_counter2 >= 1000) {
 	MOV	_timer1_counter2, W1
 	MOV	#1000, W0
 	CP	W1, W0
-	BRA GE	L__timer1_interrupt39
-	GOTO	L_timer1_interrupt7
-L__timer1_interrupt39:
-;DY_GCU.c,125 :: 		dSignalLed_switch(DSIGNAL_LED_RG14);
+	BRA GE	L__timer1_interrupt37
+	GOTO	L_timer1_interrupt5
+L__timer1_interrupt37:
+;DY_GCU.c,126 :: 		dSignalLed_switch(DSIGNAL_LED_RG14);
 	CLR	W10
 	CALL	_dSignalLed_switch
-;DY_GCU.c,127 :: 		sendTempSensor();
-	CALL	_sendTempSensor
-;DY_GCU.c,129 :: 		timer1_counter2 = 0;
+;DY_GCU.c,129 :: 		sendSensorsDebug1();
+	CALL	_sendSensorsDebug1
+;DY_GCU.c,132 :: 		timer1_counter2 = 0;
 	CLR	W0
 	MOV	W0, _timer1_counter2
-;DY_GCU.c,130 :: 		}
-L_timer1_interrupt7:
-;DY_GCU.c,131 :: 		if (timer1_counter3 >= 10) {
+;DY_GCU.c,133 :: 		}
+L_timer1_interrupt5:
+;DY_GCU.c,134 :: 		if (timer1_counter3 >= 10) {
 	MOV	_timer1_counter3, W0
 	CP	W0, #10
-	BRA GE	L__timer1_interrupt40
-	GOTO	L_timer1_interrupt8
-L__timer1_interrupt40:
-;DY_GCU.c,136 :: 		timer1_counter3 = 0;
+	BRA GE	L__timer1_interrupt38
+	GOTO	L_timer1_interrupt6
+L__timer1_interrupt38:
+;DY_GCU.c,136 :: 		sendSensorsDebug2();
+	CALL	_sendSensorsDebug2
+;DY_GCU.c,143 :: 		timer1_counter3 = 0;
 	CLR	W0
 	MOV	W0, _timer1_counter3
-;DY_GCU.c,137 :: 		}
-L_timer1_interrupt8:
-;DY_GCU.c,147 :: 		}
+;DY_GCU.c,144 :: 		}
+L_timer1_interrupt6:
+;DY_GCU.c,154 :: 		}
 L_end_timer1_interrupt:
 	POP	W10
 	MOV	#26, W0
@@ -226,8 +219,8 @@ _CAN_Interrupt:
 	REPEAT	#12
 	PUSH	[W0++]
 
-;DY_GCU.c,149 :: 		onCanInterrupt{
-;DY_GCU.c,154 :: 		Can_read(&id, dataBuffer, &dataLen, &flags);
+;DY_GCU.c,156 :: 		onCanInterrupt{
+;DY_GCU.c,161 :: 		Can_read(&id, dataBuffer, &dataLen, &flags);
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12
@@ -241,15 +234,15 @@ _CAN_Interrupt:
 	MOV	W1, W11
 	MOV	W0, W10
 	CALL	_Can_read
-;DY_GCU.c,155 :: 		Can_clearInterrupt();
+;DY_GCU.c,162 :: 		Can_clearInterrupt();
 	CALL	_Can_clearInterrupt
-;DY_GCU.c,157 :: 		if (dataLen >= 2) {
+;DY_GCU.c,164 :: 		if (dataLen >= 2) {
 	MOV	[W14+14], W0
 	CP	W0, #2
-	BRA GEU	L__CAN_Interrupt42
-	GOTO	L_CAN_Interrupt9
-L__CAN_Interrupt42:
-;DY_GCU.c,158 :: 		firstInt = (unsigned int) ((dataBuffer[0] << 8) | (dataBuffer[1] & 0xFF));
+	BRA GEU	L__CAN_Interrupt40
+	GOTO	L_CAN_Interrupt7
+L__CAN_Interrupt40:
+;DY_GCU.c,165 :: 		firstInt = (unsigned int) ((dataBuffer[0] << 8) | (dataBuffer[1] & 0xFF));
 	ADD	W14, #6, W1
 	MOV.B	[W1], W0
 	ZE	W0, W0
@@ -260,99 +253,115 @@ L__CAN_Interrupt42:
 	AND	W1, W0, W1
 	ADD	W14, #0, W0
 	IOR	W2, W1, [W0]
-;DY_GCU.c,159 :: 		}
-L_CAN_Interrupt9:
-;DY_GCU.c,160 :: 		if (dataLen >= 4) {
+;DY_GCU.c,166 :: 		}
+L_CAN_Interrupt7:
+;DY_GCU.c,167 :: 		if (dataLen >= 4) {
 	MOV	[W14+14], W0
 	CP	W0, #4
+	BRA GEU	L__CAN_Interrupt41
+	GOTO	L_CAN_Interrupt8
+L__CAN_Interrupt41:
+;DY_GCU.c,169 :: 		}
+L_CAN_Interrupt8:
+;DY_GCU.c,170 :: 		if (dataLen >= 6) {
+	MOV	[W14+14], W0
+	CP	W0, #6
+	BRA GEU	L__CAN_Interrupt42
+	GOTO	L_CAN_Interrupt9
+L__CAN_Interrupt42:
+;DY_GCU.c,172 :: 		}
+L_CAN_Interrupt9:
+;DY_GCU.c,173 :: 		if (dataLen >= 8) {
+	MOV	[W14+14], W0
+	CP	W0, #8
 	BRA GEU	L__CAN_Interrupt43
 	GOTO	L_CAN_Interrupt10
 L__CAN_Interrupt43:
-;DY_GCU.c,162 :: 		}
+;DY_GCU.c,175 :: 		}
 L_CAN_Interrupt10:
-;DY_GCU.c,163 :: 		if (dataLen >= 6) {
-	MOV	[W14+14], W0
-	CP	W0, #6
-	BRA GEU	L__CAN_Interrupt44
+;DY_GCU.c,178 :: 		switch (id) {
 	GOTO	L_CAN_Interrupt11
-L__CAN_Interrupt44:
-;DY_GCU.c,165 :: 		}
-L_CAN_Interrupt11:
-;DY_GCU.c,166 :: 		if (dataLen >= 8) {
-	MOV	[W14+14], W0
-	CP	W0, #8
-	BRA GEU	L__CAN_Interrupt45
-	GOTO	L_CAN_Interrupt12
-L__CAN_Interrupt45:
-;DY_GCU.c,168 :: 		}
-L_CAN_Interrupt12:
-;DY_GCU.c,171 :: 		switch (id) {
-	GOTO	L_CAN_Interrupt13
-;DY_GCU.c,172 :: 		case EFI_GEAR_RPM_TPS_APPS_ID:
-L_CAN_Interrupt15:
-;DY_GCU.c,173 :: 		GearShift_setCurrentGear(firstInt);
+;DY_GCU.c,179 :: 		case EFI_GEAR_RPM_TPS_APPS_ID:
+L_CAN_Interrupt13:
+;DY_GCU.c,180 :: 		GearShift_setCurrentGear(firstInt);
 	MOV	[W14+0], W10
 	CALL	_GearShift_setCurrentGear
-;DY_GCU.c,174 :: 		break;
-	GOTO	L_CAN_Interrupt14
-;DY_GCU.c,176 :: 		case SW_FIRE_GCU_ID:
-L_CAN_Interrupt16:
-;DY_GCU.c,178 :: 		EngineControl_resetStartCheck();           //resetCheckCounter = 0
-	CALL	_EngineControl_resetStartCheck
-;DY_GCU.c,179 :: 		EngineControl_start();                     //debug on LED D2 board
-	CALL	_EngineControl_start
 ;DY_GCU.c,181 :: 		break;
-	GOTO	L_CAN_Interrupt14
-;DY_GCU.c,197 :: 		case SW_GEARSHIFT_ID:
-L_CAN_Interrupt17:
-;DY_GCU.c,198 :: 		GearShift_injectCommand(firstInt);
+	GOTO	L_CAN_Interrupt12
+;DY_GCU.c,183 :: 		case SW_FIRE_GCU_ID:
+L_CAN_Interrupt14:
+;DY_GCU.c,185 :: 		EngineControl_resetStartCheck();           //resetCheckCounter = 0
+	CALL	_EngineControl_resetStartCheck
+;DY_GCU.c,186 :: 		EngineControl_start();                     //debug on LED D2 board
+	CALL	_EngineControl_start
+;DY_GCU.c,188 :: 		break;
+	GOTO	L_CAN_Interrupt12
+;DY_GCU.c,204 :: 		case SW_GEARSHIFT_ID:
+L_CAN_Interrupt15:
+;DY_GCU.c,205 :: 		GearShift_injectCommand(firstInt);
 	MOV	[W14+0], W10
 	CALL	_GearShift_injectCommand
-;DY_GCU.c,199 :: 		break;
-	GOTO	L_CAN_Interrupt14
-;DY_GCU.c,211 :: 		case SW_CLUTCH_TARGET_GCU_ID:
-L_CAN_Interrupt18:
-;DY_GCU.c,216 :: 		if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
+;DY_GCU.c,206 :: 		break;
+	GOTO	L_CAN_Interrupt12
+;DY_GCU.c,218 :: 		case SW_CLUTCH_TARGET_GCU_ID:
+L_CAN_Interrupt16:
+;DY_GCU.c,223 :: 		if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
 	MOV	#lo_addr(_gearShift_isShiftingDown), W0
 	CP0.B	[W0]
-	BRA Z	L__CAN_Interrupt46
-	GOTO	L__CAN_Interrupt29
-L__CAN_Interrupt46:
+	BRA Z	L__CAN_Interrupt44
+	GOTO	L__CAN_Interrupt27
+L__CAN_Interrupt44:
 	MOV	#lo_addr(_gearShift_isSettingNeutral), W0
 	CP0.B	[W0]
-	BRA Z	L__CAN_Interrupt47
-	GOTO	L__CAN_Interrupt28
-L__CAN_Interrupt47:
+	BRA Z	L__CAN_Interrupt45
 	GOTO	L__CAN_Interrupt26
-L__CAN_Interrupt29:
-L__CAN_Interrupt28:
+L__CAN_Interrupt45:
+	GOTO	L__CAN_Interrupt24
+L__CAN_Interrupt27:
+L__CAN_Interrupt26:
 	MOV	#lo_addr(_gearShift_isUnsettingNeutral), W0
 	CP0.B	[W0]
-	BRA Z	L__CAN_Interrupt48
-	GOTO	L__CAN_Interrupt30
-L__CAN_Interrupt48:
-	GOTO	L_CAN_Interrupt23
-L__CAN_Interrupt26:
-L__CAN_Interrupt30:
-;DY_GCU.c,218 :: 		Clutch_setBiased(dataBuffer[0]);
+	BRA Z	L__CAN_Interrupt46
+	GOTO	L__CAN_Interrupt28
+L__CAN_Interrupt46:
+	GOTO	L_CAN_Interrupt21
+L__CAN_Interrupt24:
+L__CAN_Interrupt28:
+;DY_GCU.c,225 :: 		Clutch_setBiased(dataBuffer[0]);
 	ADD	W14, #6, W0
 	MOV.B	[W0], W10
 	CALL	_Clutch_setBiased
-;DY_GCU.c,220 :: 		}
+;DY_GCU.c,227 :: 		}
+L_CAN_Interrupt21:
+;DY_GCU.c,231 :: 		break;
+	GOTO	L_CAN_Interrupt12
+;DY_GCU.c,258 :: 		case EFI_HALL_ID:
+L_CAN_Interrupt22:
+;DY_GCU.c,260 :: 		break;
+	GOTO	L_CAN_Interrupt12
+;DY_GCU.c,283 :: 		default:
 L_CAN_Interrupt23:
-;DY_GCU.c,224 :: 		break;
-	GOTO	L_CAN_Interrupt14
-;DY_GCU.c,251 :: 		case EFI_HALL_ID:
-L_CAN_Interrupt24:
-;DY_GCU.c,253 :: 		break;
-	GOTO	L_CAN_Interrupt14
-;DY_GCU.c,276 :: 		default:
-L_CAN_Interrupt25:
-;DY_GCU.c,277 :: 		break;
-	GOTO	L_CAN_Interrupt14
-;DY_GCU.c,278 :: 		}
-L_CAN_Interrupt13:
+;DY_GCU.c,284 :: 		break;
+	GOTO	L_CAN_Interrupt12
+;DY_GCU.c,285 :: 		}
+L_CAN_Interrupt11:
 	MOV	#773, W1
+	MOV	#0, W2
+	ADD	W14, #2, W0
+	CP	W1, [W0++]
+	CPB	W2, [W0--]
+	BRA NZ	L__CAN_Interrupt47
+	GOTO	L_CAN_Interrupt13
+L__CAN_Interrupt47:
+	MOV	#516, W1
+	MOV	#0, W2
+	ADD	W14, #2, W0
+	CP	W1, [W0++]
+	CPB	W2, [W0--]
+	BRA NZ	L__CAN_Interrupt48
+	GOTO	L_CAN_Interrupt14
+L__CAN_Interrupt48:
+	MOV	#512, W1
 	MOV	#0, W2
 	ADD	W14, #2, W0
 	CP	W1, [W0++]
@@ -360,7 +369,7 @@ L_CAN_Interrupt13:
 	BRA NZ	L__CAN_Interrupt49
 	GOTO	L_CAN_Interrupt15
 L__CAN_Interrupt49:
-	MOV	#516, W1
+	MOV	#513, W1
 	MOV	#0, W2
 	ADD	W14, #2, W0
 	CP	W1, [W0++]
@@ -368,33 +377,17 @@ L__CAN_Interrupt49:
 	BRA NZ	L__CAN_Interrupt50
 	GOTO	L_CAN_Interrupt16
 L__CAN_Interrupt50:
-	MOV	#512, W1
-	MOV	#0, W2
-	ADD	W14, #2, W0
-	CP	W1, [W0++]
-	CPB	W2, [W0--]
-	BRA NZ	L__CAN_Interrupt51
-	GOTO	L_CAN_Interrupt17
-L__CAN_Interrupt51:
-	MOV	#513, W1
-	MOV	#0, W2
-	ADD	W14, #2, W0
-	CP	W1, [W0++]
-	CPB	W2, [W0--]
-	BRA NZ	L__CAN_Interrupt52
-	GOTO	L_CAN_Interrupt18
-L__CAN_Interrupt52:
 	MOV	#772, W1
 	MOV	#0, W2
 	ADD	W14, #2, W0
 	CP	W1, [W0++]
 	CPB	W2, [W0--]
-	BRA NZ	L__CAN_Interrupt53
-	GOTO	L_CAN_Interrupt24
-L__CAN_Interrupt53:
-	GOTO	L_CAN_Interrupt25
-L_CAN_Interrupt14:
-;DY_GCU.c,279 :: 		}
+	BRA NZ	L__CAN_Interrupt51
+	GOTO	L_CAN_Interrupt22
+L__CAN_Interrupt51:
+	GOTO	L_CAN_Interrupt23
+L_CAN_Interrupt12:
+;DY_GCU.c,286 :: 		}
 L_end_CAN_Interrupt:
 	POP	W13
 	POP	W12

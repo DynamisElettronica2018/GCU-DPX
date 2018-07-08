@@ -113,11 +113,19 @@ void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 13 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors_2.h"
+#line 20 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors_2.h"
 unsigned int getTempSensor();
+unsigned int getDRSSensor();
+unsigned int getFuelSensor();
+unsigned int getGearSensor();
+unsigned int getClutchSensor();
+unsigned int getHPumpSensor();
+unsigned int getFanSensor();
 
-void sendTempSensor(void);
-#line 8 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/input-output/sensors_2.c"
+void sendSensorsDebug1(void);
+
+void sendSensorsDebug2(void);
+#line 17 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/input-output/sensors_2.c"
 unsigned int getTempSensor()
 {
  unsigned int analogValue = 0;
@@ -128,12 +136,79 @@ unsigned int getTempSensor()
  tempSensor = (unsigned int)((voltTempSensor - 100)*0.1-40);
  return tempSensor;
 }
+unsigned int getDRSSensor()
+{
+ unsigned int drsSensor = 0;
+ unsigned int analogValue = 0;
+ analogValue = ADC1_Read( 8 );
+ return drsSensor;
+}
+unsigned int getFuelSensor()
+{
+ unsigned int fuelSensor = 0;
+ unsigned int analogValue = 0;
+ analogValue = ADC1_Read( 4 );
+ return fuelSensor;
+}
+unsigned int getGearSensor()
+{
+ unsigned int gearSensor = 0;
+ unsigned int analogValue = 0;
+ analogValue = ADC1_Read( 11 );
+ return gearSensor;
+}
+unsigned int getClutchSensor()
+{
+ unsigned int clutchSensor = 0;
+ unsigned int analogValue = 0;
+ analogValue = ADC1_Read( 2 );
+ return clutchSensor;
+}
+unsigned int getHPumpSensor()
+{
+ unsigned int HPumpSensor = 0;
+ unsigned int analogValue = 0;
+ analogValue = ADC1_Read( 5 );
+ return HPumpSensor;
+}
+unsigned int getFanSensor()
+{
+ unsigned int fanSensor = 0;
+ unsigned int analogValue = 0;
+ analogValue = ADC1_Read( 3 );
+ return fanSensor;
+}
 
-void sendTempSensor(void)
+void sendSensorsDebug1(void)
 {
  unsigned int temp = 0;
+ unsigned int drs = 0;
+ unsigned int fuel = 0;
  temp = getTempSensor();
+ drs = getDRSSensor();
+ fuel = getFuelSensor();
  Can_resetWritePacket();
  Can_addIntToWritePacket(temp);
+ Can_addIntToWritePacket(drs);
+ Can_addIntToWritePacket(fuel);
+ Can_addIntToWritePacket(0);
  Can_write( 0b01100010110 );
+}
+
+void sendSensorsDebug2(void)
+{
+ unsigned int gear = 0;
+ unsigned int clutch = 0;
+ unsigned int hPump = 0;
+ unsigned int fan = 0;
+ gear = getGearSensor();
+ clutch = getClutchSensor();
+ hPump = getHPumpSensor();
+ fan = getFanSensor();
+ Can_resetWritePacket();
+ Can_addIntToWritePacket(gear);
+ Can_addIntToWritePacket(clutch);
+ Can_addIntToWritePacket(hPump);
+ Can_addIntToWritePacket(fan);
+ Can_write( 0b01100010111 );
 }

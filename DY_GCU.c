@@ -77,7 +77,8 @@ void init(void) {
     Can_addIntToWritePacket(test_launchActive);
     Can_addIntToWritePacket(test_launchActive);
     Can_addIntToWritePacket(test_launchActive);
-    Can_write(GCU_LAUNCH_CONTROL_EFI_ID);
+    Can_write(GCU_LAUNCH_CONT                  
+    ROL_EFI_ID);
     */
 }
 
@@ -88,7 +89,7 @@ void main() {
     while (1) 
     {
       //dSignalLed_switch(DSIGNAL_LED_RG14);
-      Delay_ms(1000);
+      //Delay_ms(1000);
       bello += 1;
       //dSignalLed_switch(DSIGNAL_LED_RG14);
     }
@@ -123,16 +124,22 @@ onTimer1Interrupt{
 //    if (timer1_counter2 >= 166) {
     if (timer1_counter2 >= 1000) {
         dSignalLed_switch(DSIGNAL_LED_RG14);
-        //Sensors_send();
-        sendTempSensor();
+
+        //send 1 Hz sensors GCU_DEBUG_1
+        sendSensorsDebug1();
+        
         
         timer1_counter2 = 0;
       }
     if (timer1_counter3 >= 10) {
+      //send 100 Hz sensors GCU_DEBUG_2
+      sendSensorsDebug2();
+    
         //rio_sendTimes();
       #ifdef AAC_H
         aac_sendTimes();
       #endif
+      
         timer1_counter3 = 0;
     }
 

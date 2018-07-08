@@ -3741,8 +3741,14 @@ gearshift_up
 get_fosc_khz
 get_fosc_per_cyc
 getanalogvalue
+getclutchsensor
+getdrssensor
 getexacttimerprescaler
 getexternalinterruptedge
+getfansensor
+getfuelsensor
+getgearsensor
+gethpumpsensor
 getminimumanalogclockconversion
 getnumberdigitcount
 gettempsensor
@@ -7431,7 +7437,8 @@ seg2phts_c2cfg2_bit
 sen
 sen
 sen_bit
-sendtempsensor
+sendsensorsdebug1
+sendsensorsdebug2
 setallpinasdigital
 setanalogdataoutputformat
 setanaloginterrupt

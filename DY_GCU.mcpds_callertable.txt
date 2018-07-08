@@ -127,7 +127,7 @@ timer1_interrupt
 				CAN1IDToRegs
 			Can_getWriteFlags
 	dSignalLed_switch
-	sendTempSensor
+	sendSensorsDebug1
 		getTempSensor
 			ADC1_Read
 				ADC1_Init
@@ -138,6 +138,22 @@ timer1_interrupt
 			_Float2Longint
 			_Sub_FP
 				_AddSub_FP
+		getDRSSensor
+			ADC1_Read
+		getFuelSensor
+			ADC1_Read
+		Can_resetWritePacket
+		Can_addIntToWritePacket
+		Can_write
+	sendSensorsDebug2
+		getGearSensor
+			ADC1_Read
+		getClutchSensor
+			ADC1_Read
+		getHPumpSensor
+			ADC1_Read
+		getFanSensor
+			ADC1_Read
 		Can_resetWritePacket
 		Can_addIntToWritePacket
 		Can_write
