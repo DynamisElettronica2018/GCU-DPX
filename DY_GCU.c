@@ -9,10 +9,12 @@
 #include "eeprom.h"
 #include "gearmotor.h"
 #include "clutchmotor.h"
+#include "drsmotor.h"
 #include "efi.h"
 #include "buzzer.h"
 #include "sensors.h"
 #include "clutch.h"
+#include "drs.h"
 #include "enginecontrol.h"
 #include "gearshift.h"
 #include "stoplight.h"
@@ -61,6 +63,7 @@ void init(void) {
     GearShift_init();
     StopLight_init();
     Buzzer_init();
+    DRSMotor_init();
     //Sensors_init();
 
 

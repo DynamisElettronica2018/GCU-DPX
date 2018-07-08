@@ -115,6 +115,15 @@ void ClutchMotor_init(void);
 void ClutchMotor_setupPWM(void);
 
 void ClutchMotor_setPosition(unsigned char percentage);
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drsmotor.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drsmotor.h"
+void DrsMotor_init(void);
+
+void DrsMotor_setupPWM(void);
+
+void DrsMotor_setPosition(unsigned char percentage);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 #line 23 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
@@ -177,6 +186,16 @@ void Clutch_set(unsigned char percentage);
 unsigned char Clutch_get(void);
 
 void Clutch_setBiased(unsigned char value);
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drsmotor.h"
+#line 8 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs.h"
+void Drs_insert(void);
+
+void Drs_release(void);
+
+void Drs_set(unsigned char percentage);
+
+unsigned char Drs_get(void);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/enginecontrol.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
@@ -381,11 +400,11 @@ void StopLight_setBrightness(unsigned char percentage);
 unsigned int getTempSensor();
 
 void sendTempSensor(void);
-#line 23 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 25 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
-#line 36 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 38 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 unsigned int gearShift_timings[ TIMES_LAST ];
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
@@ -414,10 +433,11 @@ void init(void) {
  GearShift_init();
  StopLight_init();
  Buzzer_init();
-#line 72 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+ DRSMotor_init();
+#line 75 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  setTimer( 1 , 0.001);
  setInterruptPriority( 1 ,  4 );
-#line 82 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 85 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 }
 
 void main() {
@@ -468,10 +488,10 @@ void main() {
  timer1_counter2 = 0;
  }
  if (timer1_counter3 >= 10) {
-#line 136 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 139 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  timer1_counter3 = 0;
  }
-#line 147 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 150 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 }
 
  void CAN_Interrupt() iv IVT_ADDR_C1INTERRUPT {
@@ -507,25 +527,25 @@ void main() {
  EngineControl_start();
 
  break;
-#line 197 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 200 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  case  0b01000000000 :
  GearShift_injectCommand(firstInt);
  break;
-#line 211 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 214 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  case  0b01000000001 :
-#line 216 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 219 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
 
  Clutch_setBiased(dataBuffer[0]);
 
  }
-#line 224 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 227 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  break;
-#line 251 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 254 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  case  0b01100000100 :
 
  break;
-#line 276 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 279 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  default:
  break;
  }
