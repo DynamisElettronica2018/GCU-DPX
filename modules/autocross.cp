@@ -378,13 +378,15 @@ void autocross_sendOneTime(time_id pos);
 
 void autocross_sendAllTimes(void);
 #line 3 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/autocross.c"
+unsigned int autocrossFb = 0;
+
 autocross_states autocross_currentState;
 int autocross_parameters[ 9 ];
 int autocross_externValues[ 3 ];
 int autocross_dtRelease;
 char autocross_sendingAll =  0 ;
 int autocross_timesCounter;
-#line 15 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/autocross.c"
+#line 17 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/autocross.c"
 float autocross_clutchStep;
 float autocross_clutchValue;
 
@@ -429,7 +431,7 @@ void autocross_execute(void){
  return;
  case RUNNING:
 
- if(gearShift_currentGear == 4){
+ if(gearShift_currentGear == 2){
  autocross_stop();
  return;
  }

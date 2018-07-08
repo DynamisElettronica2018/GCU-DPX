@@ -1077,6 +1077,7 @@ autocross_stop
 autocross_timescounter
 autocross_updateexternvalue
 autocross_updateparam
+autocrossfb
 awhuffacsymstart
 awhuffdcsymstart
 awquanttable
