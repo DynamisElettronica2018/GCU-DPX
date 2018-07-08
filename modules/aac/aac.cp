@@ -310,6 +310,8 @@ int Gearshift_get_time(shiftStep step);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
 #line 27 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
+extern unsigned int accelerationFb;
+
 typedef enum{
  OFF,
  START,
@@ -329,9 +331,11 @@ typedef enum{
  RPM_LIMIT_1_2,
  RPM_LIMIT_2_3,
  RPM_LIMIT_3_4,
+ RPM_LIMIT_4_5,
  SPEED_LIMIT_1_2,
  SPEED_LIMIT_2_3,
- SPEED_LIMIT_3_4
+ SPEED_LIMIT_3_4,
+ SPEED_LIMIT_4_5
 }aac_params;
 
 typedef enum{
@@ -377,14 +381,23 @@ void aac_sendTimes(void);
 void aac_sendOneTime(time_id pos);
 
 void aac_sendAllTimes(void);
-#line 3 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/traction/traction.h"
+
+
+
+
+
+extern unsigned int tractionFb;
+#line 4 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 aac_states aac_currentState;
-int aac_parameters[ 9 ];
+int aac_parameters[ 11 ];
 int aac_externValues[ 3 ];
 int aac_dtRelease;
 char aac_sendingAll =  0 ;
 int aac_timesCounter;
-#line 15 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+
+unsigned int accelerationFb = 0;
+#line 18 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 float aac_clutchStep;
 float aac_clutchValue;
 
@@ -398,8 +411,14 @@ void aac_execute(void){
  switch (aac_currentState) {
  case START:
  Efi_setRPMLimiter();
+ accelerationFb = 1;
+ Can_resetWritePacket();
+ Can_addIntToWritePacket(tractionFb);
+ Can_addIntToWritePacket(accelerationFb);
+ Can_addIntToWritePacket(0);
+ Can_addIntToWritePacket(0);
+ Can_write( 0b11111110001 );
 
- Can_writeByte( 0b11111110000 , MEX_READY);
  aac_currentState = READY;
  aac_clutchValue = 100;
  Clutch_set((unsigned int)aac_clutchValue);
@@ -408,6 +427,13 @@ void aac_execute(void){
  Clutch_set(100);
  return;
  case START_RELEASE:
+ accelerationFb = 2;
+ Can_resetWritePacket();
+ Can_addIntToWritePacket(tractionFb);
+ Can_addIntToWritePacket(accelerationFb);
+ Can_addIntToWritePacket(0);
+ Can_addIntToWritePacket(0);
+ Can_write( 0b11111110001 );
  aac_clutchValue = aac_parameters[RAMP_START];
  Clutch_set(aac_clutchValue);
  aac_dtRelease = aac_parameters[RAMP_TIME] /  25 ;
@@ -430,7 +456,7 @@ void aac_execute(void){
  return;
  case RUNNING:
 
- if(gearShift_currentGear == 4){
+ if(gearShift_currentGear == 5){
  aac_stop();
  return;
  }
@@ -442,7 +468,13 @@ void aac_execute(void){
  return;
  case STOPPING:
  aac_currentState = OFF;
- Can_writeByte( 0b11111110000 , MEX_OFF);
+ accelerationFb = 0;
+ Can_resetWritePacket();
+ Can_addIntToWritePacket(tractionFb);
+ Can_addIntToWritePacket(accelerationFb);
+ Can_addIntToWritePacket(0);
+ Can_addIntToWritePacket(0);
+ Can_write( 0b11111110001 );
  return;
 
  default: return;
@@ -473,7 +505,7 @@ void aac_sendTimes(void)
 void aac_sendAllTimes(void)
 {
  if(!aac_sendingAll){
- aac_timesCounter =  9 ;
+ aac_timesCounter =  11 ;
  aac_sendingAll =  1 ;
  }
 }
@@ -487,14 +519,16 @@ void aac_loadDefaultParams(void){
  aac_parameters[RPM_LIMIT_1_2] =  11300 ;
  aac_parameters[RPM_LIMIT_2_3] =  11300 ;
  aac_parameters[RPM_LIMIT_3_4] =  11300 ;
+ aac_parameters[RPM_LIMIT_4_5] =  11300 ;
  aac_parameters[SPEED_LIMIT_1_2] =  47 ;
  aac_parameters[SPEED_LIMIT_2_3] =  65 ;
  aac_parameters[SPEED_LIMIT_3_4] =  80 ;
+ aac_parameters[SPEED_LIMIT_4_5] =  100 ;
 
 }
 
 void aac_updateParam(const aac_params id, const int value){
- if(id <  9 )
+ if(id <  11 )
  aac_parameters[id] = value;
 }
 
@@ -509,7 +543,7 @@ void aac_updateExternValue(const aac_values id, const int value){
 }
 
 int aac_getParam(const aac_params id){
- if(id <  9 )
+ if(id <  11 )
  return aac_parameters[id];
  return -1;
 }

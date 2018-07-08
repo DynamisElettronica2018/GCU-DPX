@@ -59,6 +59,8 @@ main
 		Buzzer_init
 			setTimer
 			setInterruptPriority
+		aac_init
+			aac_loadDefaultParams
 		setTimer
 		setInterruptPriority
 	Buzzer_Bip
@@ -72,6 +74,7 @@ CAN_Interrupt
 		Can_clearB1Flag
 	Can_clearInterrupt
 	GearShift_setCurrentGear
+	aac_updateExternValue
 	EngineControl_resetStartCheck
 	EngineControl_start
 	GearShift_injectCommand
@@ -106,6 +109,7 @@ CAN_Interrupt
 			GearShift_down
 		Efi_setRPMLimiter
 		Efi_unsetRPMLimiter
+	aac_stop
 	Clutch_setBiased
 		Clutch_set
 timer4_interrupt
@@ -141,3 +145,24 @@ timer1_interrupt
 		Can_resetWritePacket
 		Can_addIntToWritePacket
 		Can_write
+	aac_sendTimes
+		Can_resetWritePacket
+		Can_addIntToWritePacket
+		Can_write
+		Buzzer_Bip
+	aac_execute
+		Efi_setRPMLimiter
+		Can_resetWritePacket
+		Can_addIntToWritePacket
+		Can_write
+		Clutch_set
+		Clutch_get
+		Efi_unsetRPMLimiter
+		Buzzer_Bip
+		aac_stop
+		GearShift_up
+		_Float2Longint
+		_Long2Float
+		_Mul_FP
+		_Div_FP
+		_Sub_FP

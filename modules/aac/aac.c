@@ -1,4 +1,5 @@
 #include "aac.h"
+#include "traction.h"
 
 aac_states aac_currentState;
 int aac_parameters[AAC_NUM_PARAMS];
@@ -6,6 +7,8 @@ int aac_externValues[AAC_NUM_VALUES];
 int aac_dtRelease;      //counter for clutch "slow" release
 char aac_sendingAll = FALSE;
 int aac_timesCounter;
+
+unsigned int accelerationFb = 0;
 
 /*
 int aac_shiftTry = 0;
@@ -25,8 +28,14 @@ void aac_execute(void){
     switch (aac_currentState) {
         case START:
             Efi_setRPMLimiter();
-//            Activate Launch Control
-            Can_writeByte(SW_AUX_ID, MEX_READY);
+            accelerationFb = 1;
+            Can_resetWritePacket();
+            Can_addIntToWritePacket(tractionFb);
+            Can_addIntToWritePacket(accelerationFb);
+            Can_addIntToWritePacket(0);
+            Can_addIntToWritePacket(0);
+            Can_write(GCU_AUX_ID);
+//            Activate acceleration
             aac_currentState = READY;
             aac_clutchValue = 100;
             Clutch_set((unsigned int)aac_clutchValue);
@@ -35,6 +44,13 @@ void aac_execute(void){
             Clutch_set(100);
             return;
         case START_RELEASE:
+            accelerationFb = 2;
+            Can_resetWritePacket();
+            Can_addIntToWritePacket(tractionFb);
+            Can_addIntToWritePacket(accelerationFb);
+            Can_addIntToWritePacket(0);
+            Can_addIntToWritePacket(0);
+            Can_write(GCU_AUX_ID);
             aac_clutchValue = aac_parameters[RAMP_START];
             Clutch_set(aac_clutchValue);
             aac_dtRelease = aac_parameters[RAMP_TIME] / AAC_WORK_RATE_ms;
@@ -57,7 +73,7 @@ void aac_execute(void){
             return;
         case RUNNING:
         //Check condizioni e cambio
-            if(gearShift_currentGear == 4){
+            if(gearShift_currentGear == 5){
                 aac_stop();
                 return;
             }
@@ -69,7 +85,13 @@ void aac_execute(void){
             return;
         case STOPPING:
             aac_currentState = OFF;
-            Can_writeByte(SW_AUX_ID, MEX_OFF);
+            accelerationFb = 0;
+            Can_resetWritePacket();
+            Can_addIntToWritePacket(tractionFb);
+            Can_addIntToWritePacket(accelerationFb);
+            Can_addIntToWritePacket(0);
+            Can_addIntToWritePacket(0);
+            Can_write(GCU_AUX_ID);
             return;
         //gearshift check
         default: return;
@@ -114,9 +136,11 @@ void aac_loadDefaultParams(void){
     aac_parameters[RPM_LIMIT_1_2]   = DEF_RPM_LIMIT_1_2;
     aac_parameters[RPM_LIMIT_2_3]   = DEF_RPM_LIMIT_2_3;
     aac_parameters[RPM_LIMIT_3_4]   = DEF_RPM_LIMIT_3_4;
+    aac_parameters[RPM_LIMIT_4_5]   = DEF_RPM_LIMIT_4_5;
     aac_parameters[SPEED_LIMIT_1_2] = DEF_SPEED_LIMIT_1_2;
     aac_parameters[SPEED_LIMIT_2_3] = DEF_SPEED_LIMIT_2_3;
     aac_parameters[SPEED_LIMIT_3_4] = DEF_SPEED_LIMIT_3_4;
+    aac_parameters[SPEED_LIMIT_4_5] = DEF_SPEED_LIMIT_4_5;
 #endif
 }
 
