@@ -10,7 +10,7 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 177 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 187 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);

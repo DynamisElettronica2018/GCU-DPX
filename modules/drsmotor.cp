@@ -1,5 +1,5 @@
 #line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/drsmotor.c"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drsmotor.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
 #line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
@@ -11,7 +11,7 @@ unsigned char getNumberDigitCount(unsigned char number);
 void emptyString(char* myString);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 177 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 187 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -69,49 +69,51 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
-void ClutchMotor_init(void);
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drsmotor.h"
+void DrsMotor_init(void);
 
-void ClutchMotor_setupPWM(void);
+void DrsMotor_setupPWM(void);
 
-void ClutchMotor_setPosition(unsigned char percentage);
+void DrsMotor_setPosition(unsigned char percentage);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 #line 8 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/drsmotor.c"
-unsigned int CLUTCHMOTOR_PWM_PERIOD_VALUE;
-double CLUTCHMOTOR_PERCENTAGE_STEP;
-unsigned int CLUTCHMOTOR_PWM_MAX_VALUE;
-unsigned int CLUTCHMOTOR_PWM_MIN_VALUE;
+unsigned int DRSMOTOR_PWM_PERIOD_VALUE;
+double DRSMOTOR_PERCENTAGE_STEP;
+unsigned int DRSMOTOR_PWM_MAX_VALUE;
+unsigned int DRSMOTOR_PWM_MIN_VALUE;
 
- void timer2_interrupt() iv IVT_ADDR_T2INTERRUPT ics ICS_AUTO 
-{
-  IFS0bits.T2IF  = 0 ;
+ void timer3_interrupt() iv IVT_ADDR_T3INTERRUPT ics ICS_AUTO {
+  IFS0bits.T3IF  = 0 ;
 }
 
-void ClutchMotor_init(void) {
- setTimer( 2 ,  0.020 );
- ClutchMotor_setupPWM();
+void DrsMotor_init(void) {
+ setTimer( 3 ,  0.020 );
+ DrsMotor_setupPWM();
 }
 
-void ClutchMotor_setupPWM(void) {
- OC3CON = 0x6;
- CLUTCHMOTOR_PWM_PERIOD_VALUE = getTimerPeriod( 0.020 ,  T2CONbits.TCKPS );
+void DrsMotor_setupPWM(void) {
+ OC1CON = 0x6;
+ OC2CON = 0x6;
+ DRSMOTOR_PWM_PERIOD_VALUE = getTimerPeriod( 0.020 ,  T3CONbits.TCKPS );
 
- CLUTCHMOTOR_PWM_MAX_VALUE = (unsigned int) (CLUTCHMOTOR_PWM_PERIOD_VALUE *
- ( 11  / 100.0));
- CLUTCHMOTOR_PWM_MIN_VALUE = (unsigned int) (CLUTCHMOTOR_PWM_PERIOD_VALUE *
+ DRSMOTOR_PWM_MAX_VALUE = (unsigned int) (DRSMOTOR_PWM_PERIOD_VALUE *
+ ( 10  / 100.0));
+ DRSMOTOR_PWM_MIN_VALUE = (unsigned int) (DRSMOTOR_PWM_PERIOD_VALUE *
  ( 5  / 100.0));
- CLUTCHMOTOR_PERCENTAGE_STEP = (CLUTCHMOTOR_PWM_MAX_VALUE - CLUTCHMOTOR_PWM_MIN_VALUE) / 100.0;
- OC3R = CLUTCHMOTOR_PWM_MIN_VALUE;
- ClutchMotor_setPosition(100);
+ DRSMOTOR_PERCENTAGE_STEP = (DRSMOTOR_PWM_MAX_VALUE - DRSMOTOR_PWM_MIN_VALUE) / 100.0;
+ OC1R = DRSMOTOR_PWM_MIN_VALUE;
+ OC2R = DRSMOTOR_PWM_MIN_VALUE;
+
 }
 
-void ClutchMotor_setPosition(unsigned char percentage) {
+void DrshMotor_setPosition(unsigned char percentage) {
  unsigned int pwmValue;
- pwmValue = (unsigned int) ((percentage * CLUTCHMOTOR_PERCENTAGE_STEP) + CLUTCHMOTOR_PWM_MIN_VALUE);
- if (pwmValue > CLUTCHMOTOR_PWM_MAX_VALUE) {
- pwmValue = CLUTCHMOTOR_PWM_MAX_VALUE;
- } else if (pwmValue < CLUTCHMOTOR_PWM_MIN_VALUE) {
- pwmValue = CLUTCHMOTOR_PWM_MIN_VALUE;
+ pwmValue = (unsigned int) ((percentage * DRSMOTOR_PERCENTAGE_STEP) + DRSMOTOR_PWM_MIN_VALUE);
+ if (pwmValue > DRSMOTOR_PWM_MAX_VALUE) {
+ pwmValue = DRSMOTOR_PWM_MAX_VALUE;
+ } else if (pwmValue < DRSMOTOR_PWM_MIN_VALUE) {
+ pwmValue = DRSMOTOR_PWM_MIN_VALUE;
  }
- OC3RS = pwmValue;
+ OC1R = pwmValue;
+ OC2R = pwmValue;
 }

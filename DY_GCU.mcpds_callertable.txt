@@ -59,6 +59,14 @@ main
 		Buzzer_init
 			setTimer
 			setInterruptPriority
+		DrsMotor_init
+			setTimer
+			DrsMotor_setupPWM
+				getTimerPeriod
+				_Long2Float
+				_Mul_FP
+				_Float2Longint
+				_Div_FP
 		setTimer
 		setInterruptPriority
 	Buzzer_Bip
@@ -110,6 +118,7 @@ CAN_Interrupt
 		Clutch_set
 timer4_interrupt
 	Buzzer_tick
+timer3_interrupt
 timer2_interrupt
 timer1_interrupt
 	GearShift_msTick

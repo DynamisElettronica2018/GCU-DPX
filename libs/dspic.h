@@ -26,7 +26,8 @@
 //@Devices list
 #define TIMER1_DEVICE 1
 #define TIMER2_DEVICE 2
-#define TIMER4_DEVICE 3
+#define TIMER3_DEVICE 3
+#define TIMER4_DEVICE 4
 #define INT0_DEVICE 4
 #define INT1_DEVICE 5
 #define INT2_DEVICE 6
@@ -78,7 +79,7 @@
 #define INT2_ENABLE IEC1.INT2IE
 #define INT4_ENABLE IEC2.INT4IE
 
-//@Timer (Implemented: 1 ~ 2 ~ 4)
+//@Timer (Implemented: 1 ~ 2 ~ 3 ~ 4)
 #define TIMER1_PRESCALER    T1CONbits.TCKPS
 #define TIMER1_PERIOD   PR1
 #define TIMER1_PRIORITY IPC0bits.T1IP
@@ -92,6 +93,13 @@
 #define TIMER2_ENABLE_INTERRUPT IEC0bits.T2IE
 #define TIMER2_ENABLE   T2CONbits.TON
 #define TIMER2_OCCURRED IFS0bits.T2IF
+
+#define TIMER3_PRESCALER    T3CONbits.TCKPS
+#define TIMER3_PERIOD   PR3
+#define TIMER3_PRIORITY IPC1bits.T3IP
+#define TIMER3_ENABLE_INTERRUPT IEC0bits.T3IE
+#define TIMER3_ENABLE   T3CONbits.TON
+#define TIMER3_OCCURRED IFS0bits.T3IF
 
 #define TIMER4_PRESCALER    T4CONbits.TCKPS
 #define TIMER4_PERIOD   PR4
@@ -155,6 +163,7 @@
 //@Interrupt handlers
 #define onTimer1Interrupt void timer1_interrupt() iv IVT_ADDR_T1INTERRUPT ics ICS_AUTO
 #define onTimer2Interrupt void timer2_interrupt() iv IVT_ADDR_T2INTERRUPT ics ICS_AUTO
+#define onTimer3Interrupt void timer3_interrupt() iv IVT_ADDR_T3INTERRUPT ics ICS_AUTO
 #define onTimer4Interrupt void timer4_interrupt() iv IVT_ADDR_T4INTERRUPT ics ICS_AUTO
 #define onExternal0Interrupt    void external0() iv IVT_ADDR_INT0INTERRUPT ics ICS_AUTO
 #define onExternal1Interrupt   void external1() iv IVT_ADDR_INT1INTERRUPT ics ICS_AUTO
@@ -165,6 +174,7 @@
 //Faster timer operations
 #define clearTimer1() TIMER1_OCCURRED = FALSE
 #define clearTimer2() TIMER2_OCCURRED = FALSE
+#define clearTimer3() TIMER3_OCCURRED = FALSE
 #define clearTimer4() TIMER4_OCCURRED = FALSE
 #define turnOnTimer4() TIMER4_ENABLE = TRUE
 #define turnOffTimer4() TIMER4_ENABLE = FALSE

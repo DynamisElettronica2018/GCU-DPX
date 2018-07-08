@@ -11,7 +11,7 @@ unsigned char getNumberDigitCount(unsigned char number);
 void emptyString(char* myString);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 177 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 187 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -86,8 +86,8 @@ unsigned int buzzer_ticks = 0, buzzer_bipTicks;
 void Buzzer_init(void) {
   TRISG13_bit  =  0 ;
   RG13_bit  = 0;
- setTimer( 3 ,  0.0005 );
- setInterruptPriority( 3 ,  5 );
+ setTimer( 4 ,  0.0005 );
+ setInterruptPriority( 4 ,  5 );
  buzzer_bipTicks = (int)( 1  /  0.0005 );
 }
 
