@@ -381,11 +381,93 @@ void StopLight_setBrightness(unsigned char percentage);
 unsigned int getTempSensor();
 
 void sendTempSensor(void);
-#line 23 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/autocross.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/autocross_defaults.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
+#line 27 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/autocross.h"
+typedef enum{
+ OFF,
+ START,
+ READY,
+ START_RELEASE,
+ RELEASING,
+ RUNNING,
+ STOPPING
+}autocross_states;
+
+
+typedef enum{
+ RAMP_START,
+ RAMP_END,
+ RAMP_TIME,
+
+ RPM_LIMIT_1_2,
+ RPM_LIMIT_2_3,
+ RPM_LIMIT_3_4,
+ SPEED_LIMIT_1_2,
+ SPEED_LIMIT_2_3,
+ SPEED_LIMIT_3_4
+}autocross_params;
+
+typedef enum{
+ MEX_ON,
+ MEX_READY,
+ MEX_GO,
+ MEX_OFF,
+}autocross_notifications;
+
+
+typedef enum{
+ RPM,
+ WHEEL_SPEED,
+ APPS
+}autocross_values;
+
+extern unsigned int gearShift_currentGear;
+
+void autocross_init(void);
+
+
+void autocross_execute(void);
+
+
+void autocross_checkAndPrepare(void);
+
+void autocross_stop(void);
+
+void autocross_loadDefaultParams(void);
+
+void autocross_updateParam(const autocross_params id, const int value);
+
+void autocross_updateExternValue(const autocross_values id, const int value);
+
+int autocross_getParam(const autocross_params id);
+
+int autocross_getExternValue(const autocross_values id);
+
+void autocross_forceState(const autocross_states newState);
+
+void autocross_sendTimes(void);
+
+void autocross_sendOneTime(time_id pos);
+
+void autocross_sendAllTimes(void);
+#line 24 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
-#line 36 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 39 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+ extern autocross_states autocross_currentState;
+ extern int autocross_externValues[ 3 ];
+ extern int autocross_parameters[ 9  ];
+
+ extern int autocross_timesCounter;
+ int timer1_autocross_counter = 0;
+
+
 unsigned int gearShift_timings[ TIMES_LAST ];
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
@@ -414,10 +496,14 @@ void init(void) {
  GearShift_init();
  StopLight_init();
  Buzzer_init();
-#line 72 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 85 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+ autocross_init();
+
+
+
  setTimer( 1 , 0.001);
  setInterruptPriority( 1 ,  4 );
-#line 82 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 99 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 }
 
 void main() {
@@ -468,10 +554,16 @@ void main() {
  timer1_counter2 = 0;
  }
  if (timer1_counter3 >= 10) {
-#line 136 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 153 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  timer1_counter3 = 0;
  }
-#line 147 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 165 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+ timer1_autocross_counter += 1;
+ if(timer1_autocross_counter ==  25 ){
+ autocross_execute();
+ timer1_autocross_counter = 0;
+ }
+
 }
 
  void CAN_Interrupt() iv IVT_ADDR_C1INTERRUPT {
@@ -507,25 +599,40 @@ void main() {
  EngineControl_start();
 
  break;
-#line 197 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 221 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  case  0b01000000000 :
  GearShift_injectCommand(firstInt);
  break;
-#line 211 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 235 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  case  0b01000000001 :
-#line 216 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 240 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
 
  Clutch_setBiased(dataBuffer[0]);
 
  }
-#line 224 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 248 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  break;
-#line 251 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
+ case  0b11111110000 :
+
+ if(autocross_currentState == OFF && secondInt == 1)
+ {
+ autocross_currentState = START;
+ }
+ else if (autocross_currentState == READY && secondInt == 2)
+ {
+ autocross_currentState = START_RELEASE;
+ }
+ else
+ autocross_Stop();
+
+ break;
+#line 290 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  case  0b01100000100 :
 
  break;
-#line 276 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 315 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  default:
  break;
  }

@@ -18,6 +18,7 @@
 #include "stoplight.h"
 #include "sensors_2.h"
 //#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
+#include "autocross.h"
 //*/
 
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
@@ -25,12 +26,22 @@ char bello = 0;
 char isSteeringWheelAvailable;
 
 #ifdef AAC_H
-  extern aac_states aac_currentState;
+  extern aac_states autocross_currentState;
   extern int aac_externValues[AAC_NUM_VALUES];
-  extern int aac_parameters[AAC_NUM_PARAMS ];
+  extern int acc_parameters[AAC_NUM_PARAMS ];
   //extern bool aac_sendingAll = false;
   extern int aac_timesCounter;
   int timer1_aac_counter = 0;
+#endif
+
+#ifdef AUTOCROSS_H
+  //dichiarazioni variabili AUTOCROSS
+  extern autocross_states autocross_currentState;
+  extern int autocross_externValues[AUTOCROSS_NUM_VALUES];
+  extern int autocross_parameters[AUTOCROSS_NUM_PARAMS ];
+  //extern bool autocross_sendingAll = false;
+  extern int autocross_timesCounter;
+  int timer1_autocross_counter = 0;
 #endif
 
 unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� spazio e cos� possiamo fare fino a 30 step di cambiata, molto powa
@@ -68,6 +79,12 @@ void init(void) {
   #ifdef AAC_H
     aac_init();
   #endif
+  
+  #ifdef AUTOCROSS_H
+    //init autocross
+    autocross_init();
+  #endif
+  
     //Generic 1ms timer
     setTimer(TIMER1_DEVICE, 0.001);
     setInterruptPriority(TIMER1_DEVICE, MEDIUM_PRIORITY);
@@ -144,6 +161,13 @@ onTimer1Interrupt{
     }
   #endif
 
+  #ifdef AUTOCROSS_H
+    timer1_autocross_counter += 1;
+    if(timer1_autocross_counter == AUTOCROSS_WORK_RATE_ms){
+        autocross_execute();
+        timer1_autocross_counter = 0;
+    }
+  #endif
 }
 
 onCanInterrupt{
@@ -188,7 +212,7 @@ onCanInterrupt{
                   &&(firstInt == GEAR_COMMAND_NEUTRAL_DOWN
                      || firstInt == GEAR_COMMAND_NEUTRAL_UP
                      || firstInt == GEAR_COMMAND_DOWN))
-                aac_stop();
+                autocross_stop();
           #endif
             GearShift_injectCommand(firstInt);
             break;
@@ -202,8 +226,8 @@ onCanInterrupt{
         ***** COMMENTATA PER RIFARE STRUTTURA CONTROLLO LAUNCH *****    
         case EFI_FUEL_RPM_ID:
           #ifdef AAC_H
-            aac_updateExternValue(WHEEL_SPEED, thirdInt / 10);
-            aac_updateExternValue(RPM, fourthInt);
+            autocross_updateExternValue(WHEEL_SPEED, thirdInt / 10);
+            autocross_updateExternValue(RPM, fourthInt);
           #endif
             break;
         */
@@ -211,7 +235,7 @@ onCanInterrupt{
         case SW_CLUTCH_TARGET_GCU_ID:
           #ifdef AAC_H
             if(dataBuffer[0] > AAC_CLUTCH_NOISE_LEVEL){
-                //aac_stop();
+                //autocross_stop();
           #endif
             if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
               //Buzzer_Bip();
@@ -222,6 +246,21 @@ onCanInterrupt{
             }
           #endif
             break;
+            
+        case SW_AUX_ID:
+           #ifdef AUTOCROSS_H
+              if(autocross_currentState == OFF && secondInt == 1)
+              {
+                 autocross_currentState = START;
+              }
+              else if (autocross_currentState == READY && secondInt == 2)
+              {
+                  autocross_currentState = START_RELEASE;
+              }
+              else      //controllare cosa faccio per stop in autocross
+                  autocross_Stop();
+           #endif
+           break;
 
         /*
         ***** COMMENTATA PER RIFARE STRUTTURA SET TIMINGS *****
@@ -234,13 +273,13 @@ onCanInterrupt{
                 case CODE_REFRESH:
                      rio_sendAllTimes();
                    #ifdef AAC_H
-                     aac_sendAllTimes();
+                     autocross_sendAllTimes();
                    #endif
                      break;
               #ifdef AAC_H
                 case CODE_SET_AAC:
-                     aac_parameters[secondInt] = thirdInt;
-                     aac_sendOneTime(secondInt);
+                     autocross_parameters[secondInt] = thirdInt;
+                     autocross_sendOneTime(secondInt);
               #endif
                 default:
                      break;
@@ -257,18 +296,18 @@ onCanInterrupt{
         case SW_AUX_ID:
           #ifdef AAC_H
             dSignalLed_switch(DSIGNAL_LED_RG12);
-            if(aac_currentState == OFF                                  //FOR TESTING
+            if(autocross_currentState == OFF                                  //FOR TESTING
  //             && gearShift_currentGear == GEARSHIFT_NEUTRAL
- //             && aac_externValues[WHEEL_SPEED] <= 1
+ //             && autocross_externValues[WHEEL_SPEED] <= 1
               ){
-                aac_currentState = START; //comment to disable AAC
+                autocross_currentState = START; //comment to disable AAC
             }
-            else if(aac_currentState == READY){
-                aac_currentState = START_RELEASE; //comment to disable AAC
+            else if(autocross_currentState == READY){
+                autocross_currentState = START_RELEASE; //comment to disable AAC
             }
-            //If none of the previous conditions are met, the aac is stopped
+            //If none of the previous conditions are met, the autocross is stopped
             else
-                aac_stop();
+                autocross_stop();
           #endif
             break;
         */
