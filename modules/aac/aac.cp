@@ -309,7 +309,8 @@ void GearShift_loadNeutralTimings(void);
 int Gearshift_get_time(shiftStep step);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
-#line 27 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
+#line 28 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
 extern unsigned int accelerationFb;
 
 typedef enum{
@@ -382,12 +383,28 @@ void aac_sendOneTime(time_id pos);
 
 void aac_sendAllTimes(void);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/traction/traction.h"
-
-
-
-
-
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
+#line 17 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/traction/traction.h"
 extern unsigned int tractionFb;
+extern unsigned int tractionVariable[11];
+
+typedef enum{
+ TRACTION_0,
+ TRACTION_1,
+ TRACTION_2,
+ TRACTION_3,
+ TRACTION_4,
+ TRACTION_5,
+ TRACTION_6,
+ TRACTION_7
+}traction_params;
+
+void traction_init(void);
+
+void tractionLoadDefaultsSettings(void);
+
+Efi_setTraction(unsigned int setState);
 #line 4 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 aac_states aac_currentState;
 int aac_parameters[ 11 ];
@@ -412,12 +429,7 @@ void aac_execute(void){
  case START:
  Efi_setRPMLimiter();
  accelerationFb = 1;
- Can_resetWritePacket();
- Can_addIntToWritePacket(tractionFb);
- Can_addIntToWritePacket(accelerationFb);
- Can_addIntToWritePacket(0);
- Can_addIntToWritePacket(0);
- Can_write( 0b11111110001 );
+
 
  aac_currentState = READY;
  aac_clutchValue = 100;
@@ -428,12 +440,6 @@ void aac_execute(void){
  return;
  case START_RELEASE:
  accelerationFb = 2;
- Can_resetWritePacket();
- Can_addIntToWritePacket(tractionFb);
- Can_addIntToWritePacket(accelerationFb);
- Can_addIntToWritePacket(0);
- Can_addIntToWritePacket(0);
- Can_write( 0b11111110001 );
  aac_clutchValue = aac_parameters[RAMP_START];
  Clutch_set(aac_clutchValue);
  aac_dtRelease = aac_parameters[RAMP_TIME] /  25 ;
@@ -469,12 +475,6 @@ void aac_execute(void){
  case STOPPING:
  aac_currentState = OFF;
  accelerationFb = 0;
- Can_resetWritePacket();
- Can_addIntToWritePacket(tractionFb);
- Can_addIntToWritePacket(accelerationFb);
- Can_addIntToWritePacket(0);
- Can_addIntToWritePacket(0);
- Can_write( 0b11111110001 );
  return;
 
  default: return;

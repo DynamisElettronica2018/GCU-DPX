@@ -387,7 +387,8 @@ void sendTempSensor(void);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
-#line 27 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
+#line 28 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
 extern unsigned int accelerationFb;
 
 typedef enum{
@@ -459,7 +460,30 @@ void aac_sendTimes(void);
 void aac_sendOneTime(time_id pos);
 
 void aac_sendAllTimes(void);
-#line 23 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/traction/traction.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
+#line 17 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/traction/traction.h"
+extern unsigned int tractionFb;
+extern unsigned int tractionVariable[11];
+
+typedef enum{
+ TRACTION_0,
+ TRACTION_1,
+ TRACTION_2,
+ TRACTION_3,
+ TRACTION_4,
+ TRACTION_5,
+ TRACTION_6,
+ TRACTION_7
+}traction_params;
+
+void traction_init(void);
+
+void tractionLoadDefaultsSettings(void);
+
+Efi_setTraction(unsigned int setState);
+#line 24 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
@@ -473,11 +497,27 @@ char isSteeringWheelAvailable;
  int timer1_aac_counter = 0;
 
 
+
+ extern unsigned int traction_currentState;
+ extern int traction_parameters[ 8 ];
+ extern int traction_timesCounter;
+ int timer1_traction_counter = 0;
+
+
 unsigned int gearShift_timings[ TIMES_LAST ];
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
+void sendUpdatesSW(void)
+{
+ Can_resetWritePacket();
+ Can_addIntToWritePacket(tractionFb);
+ Can_addIntToWritePacket(accelerationFb);
+ Can_addIntToWritePacket(0);
+ Can_addIntToWritePacket(0);
+ Can_write( 0b11111110001 );
 
+}
 
 void GCU_isAlive(void) {
  Can_resetWritePacket();
@@ -501,6 +541,7 @@ void init(void) {
  GearShift_init();
  StopLight_init();
  Buzzer_init();
+ sendUpdatesSW();
 
 
 
@@ -509,9 +550,15 @@ void init(void) {
  aac_init();
 
 
+
+ traction_init();
+
+
  setTimer( 1 , 0.001);
  setInterruptPriority( 1 ,  4 );
 }
+
+
 
 void main() {
  init();
@@ -557,7 +604,7 @@ void main() {
  dSignalLed_switch( 0 );
 
  sendTempSensor();
-
+#line 154 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  timer1_counter2 = 0;
  }
  if (timer1_counter3 >= 10) {
@@ -614,7 +661,7 @@ void main() {
  EngineControl_start();
 
  break;
-#line 192 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 225 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  case  0b01000000000 :
  GearShift_injectCommand(firstInt);
  break;
@@ -640,7 +687,7 @@ void main() {
  }
 
  break;
-#line 243 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 276 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  case  0b01100000100 :
 
  break;
@@ -652,17 +699,37 @@ void main() {
  if(aac_currentState == OFF && firstInt == 1
 
 
- ){
+ )
+ {
  aac_currentState = START;
+ sendUpdatesSW();
  }
  else if(aac_currentState == READY && firstInt == 2){
  aac_currentState = START_RELEASE;
+ sendUpdatesSW();
  }
 
  else if(firstInt == 0)
+ {
  aac_stop();
+ sendUpdatesSW();
+ }
 
  break;
+
+ case  0b01000000011 :
+
+
+ tractionFb = firstInt;
+
+ traction_currentState = tractionFb * 100;
+ Efi_setTraction(traction_currentState);
+ sendUpdatesSW();
+ Buzzer_Bip();
+
+ break;
+
+
  default:
  break;
  }

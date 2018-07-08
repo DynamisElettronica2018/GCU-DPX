@@ -10,6 +10,7 @@
 #include "gearshift.h"
 #include "efi.h"
 #include "can.h"
+#include "buzzer.h"
 
 #define CODE_SET_AAC   2
 

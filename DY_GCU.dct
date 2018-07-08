@@ -2530,6 +2530,7 @@ efi_init
 efi_setblip
 efi_setcut
 efi_setrpmlimiter
+efi_settraction
 efi_unsetblip
 efi_unsetcut
 efi_unsetrpmlimiter
@@ -7433,6 +7434,7 @@ sen
 sen
 sen_bit
 sendtempsensor
+sendupdatessw
 setallpinasdigital
 setanalogdataoutputformat
 setanaloginterrupt
@@ -9104,6 +9106,7 @@ timer1_counter2
 timer1_counter3
 timer1_counter4
 timer1_interrupt
+timer1_traction_counter
 timer2_interrupt
 timer4_interrupt
 tmode
@@ -9376,7 +9379,13 @@ tp_tft_rotate_180
 tp_tft_set_adc_threshold
 tp_tft_set_calibration_consts
 tp_tft_set_default_mode
+traction_currentstate
+traction_init
+traction_parameters
+traction_timescounter
 tractionfb
+tractionloaddefaultssettings
+tractionvariable
 trapr
 trapr
 trapr_bit

@@ -59,8 +59,18 @@ main
 		Buzzer_init
 			setTimer
 			setInterruptPriority
+		sendUpdatesSW
+			Can_resetWritePacket
+			Can_addIntToWritePacket
+				Can_addByteToWritePacket
+			Can_write
+				CAN1Write
+					CAN1IDToRegs
+				Can_getWriteFlags
 		aac_init
 			aac_loadDefaultParams
+		traction_init
+			tractionLoadDefaultsSettings
 		setTimer
 		setInterruptPriority
 	Buzzer_Bip
@@ -112,6 +122,12 @@ CAN_Interrupt
 	aac_stop
 	Clutch_setBiased
 		Clutch_set
+	sendUpdatesSW
+	Efi_setTraction
+		Can_resetWritePacket
+		Can_addIntToWritePacket
+		Can_write
+	Buzzer_Bip
 timer4_interrupt
 	Buzzer_tick
 timer2_interrupt
@@ -124,12 +140,8 @@ timer1_interrupt
 	GCU_isAlive
 		Can_resetWritePacket
 		Can_addIntToWritePacket
-			Can_addByteToWritePacket
 		Clutch_get
 		Can_write
-			CAN1Write
-				CAN1IDToRegs
-			Can_getWriteFlags
 	dSignalLed_switch
 	sendTempSensor
 		getTempSensor
@@ -152,9 +164,6 @@ timer1_interrupt
 		Buzzer_Bip
 	aac_execute
 		Efi_setRPMLimiter
-		Can_resetWritePacket
-		Can_addIntToWritePacket
-		Can_write
 		Clutch_set
 		Clutch_get
 		Efi_unsetRPMLimiter
