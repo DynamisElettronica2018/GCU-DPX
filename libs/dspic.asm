@@ -158,7 +158,7 @@ L__setInterruptPriority76:
 	BRA NZ	L__setInterruptPriority77
 	GOTO	L_setInterruptPriority7
 L__setInterruptPriority77:
-	CP.B	W10, #3
+	CP.B	W10, #4
 	BRA NZ	L__setInterruptPriority78
 	GOTO	L_setInterruptPriority8
 L__setInterruptPriority78:
@@ -590,7 +590,7 @@ L__setTimer100:
 	BRA NZ	L__setTimer101
 	GOTO	L_setTimer49
 L__setTimer101:
-	CP.B	W10, #3
+	CP.B	W10, #4
 	BRA NZ	L__setTimer102
 	GOTO	L_setTimer50
 L__setTimer102:
@@ -637,7 +637,7 @@ L__clearTimer104:
 	BRA NZ	L__clearTimer105
 	GOTO	L_clearTimer54
 L__clearTimer105:
-	CP.B	W10, #3
+	CP.B	W10, #4
 	BRA NZ	L__clearTimer106
 	GOTO	L_clearTimer55
 L__clearTimer106:
@@ -680,7 +680,7 @@ L__turnOnTimer108:
 	BRA NZ	L__turnOnTimer109
 	GOTO	L_turnOnTimer59
 L__turnOnTimer109:
-	CP.B	W10, #3
+	CP.B	W10, #4
 	BRA NZ	L__turnOnTimer110
 	GOTO	L_turnOnTimer60
 L__turnOnTimer110:
@@ -723,7 +723,7 @@ L__turnOffTimer112:
 	BRA NZ	L__turnOffTimer113
 	GOTO	L_turnOffTimer64
 L__turnOffTimer113:
-	CP.B	W10, #3
+	CP.B	W10, #4
 	BRA NZ	L__turnOffTimer114
 	GOTO	L_turnOffTimer65
 L__turnOffTimer114:

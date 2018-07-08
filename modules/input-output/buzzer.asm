@@ -36,11 +36,11 @@ _Buzzer_init:
 ;buzzer.c,17 :: 		setTimer(TIMER4_DEVICE, BUZZER_TIMER_PERIOD);
 	MOV	#4719, W11
 	MOV	#14851, W12
-	MOV.B	#3, W10
+	MOV.B	#4, W10
 	CALL	_setTimer
 ;buzzer.c,18 :: 		setInterruptPriority(TIMER4_DEVICE, LOW_PRIORITY);
 	MOV.B	#5, W11
-	MOV.B	#3, W10
+	MOV.B	#4, W10
 	CALL	_setInterruptPriority
 ;buzzer.c,19 :: 		buzzer_bipTicks = (int)(BUZZER_BIP_TIME / BUZZER_TIMER_PERIOD);
 	MOV	#1999, W0

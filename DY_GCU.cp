@@ -9,7 +9,7 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 177 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 187 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -115,6 +115,19 @@ void ClutchMotor_init(void);
 void ClutchMotor_setupPWM(void);
 
 void ClutchMotor_setPosition(unsigned char percentage);
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drsmotor.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drsmotor.h"
+void DrsMotor_init(void);
+
+void DrsMotorDX_setupPWM(void);
+
+void DrsMotorSX_setupPWM(void);
+
+void DrsMotor_setPositionDX(unsigned char percentage);
+
+void DrsMotor_setPositionSX(unsigned char percentage);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 #line 23 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
@@ -177,6 +190,20 @@ void Clutch_set(unsigned char percentage);
 unsigned char Clutch_get(void);
 
 void Clutch_setBiased(unsigned char value);
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drsmotor.h"
+#line 14 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs.h"
+extern unsigned int drsFb;
+
+void Drs_open(void);
+
+void Drs_close(void);
+
+void Drs_setDX(unsigned char percentage);
+
+void Drs_setSX(unsigned char percentage);
+
+unsigned char Drs_get(void);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/enginecontrol.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
@@ -489,7 +516,11 @@ Efi_setTraction(unsigned int setState);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
-#line 27 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/autocross.h"
+#line 25 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/autocross.h"
+extern unsigned int autocrossFb;
+
+
+
 typedef enum{
  OFF_AUTOCROSS,
  START_AUTOCROSS,
@@ -552,7 +583,7 @@ void autocross_sendTimes(void);
 void autocross_sendOneTime(time_id pos);
 
 void autocross_sendAllTimes(void);
-#line 24 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 26 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
@@ -577,12 +608,11 @@ char isSteeringWheelAvailable;
 
  extern autocross_states autocross_currentState;
  extern int autocross_externValues[ 3 ];
- extern int autocross_parameters[ 9  ];
+ extern int autocross_parameters[ 9 ];
 
  extern int autocross_timesCounter;
  int timer1_autocross_counter = 0;
-
-
+#line 60 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 unsigned int gearShift_timings[ TIMES_LAST ];
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
@@ -592,8 +622,8 @@ void sendUpdatesSW(void)
  Can_resetWritePacket();
  Can_addIntToWritePacket(tractionFb);
  Can_addIntToWritePacket(accelerationFb);
- Can_addIntToWritePacket(0);
- Can_addIntToWritePacket(0);
+ Can_addIntToWritePacket(drsFb);
+ Can_addIntToWritePacket(autocrossFb);
  Can_write( 0b11111110001 );
 
 }
@@ -616,6 +646,7 @@ void init(void) {
  Can_init();
  GearMotor_init();
  ClutchMotor_init();
+ DRSMotor_init();
  Efi_init();
  GearShift_init();
  StopLight_init();
@@ -690,7 +721,7 @@ void main() {
  dSignalLed_switch( 0 );
 
  sendTempSensor();
-#line 171 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 178 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  timer1_counter2 = 0;
  }
  if (timer1_counter3 >= 10) {
@@ -754,7 +785,7 @@ void main() {
  EngineControl_start();
 
  break;
-#line 249 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 256 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  case  0b01000000000 :
  GearShift_injectCommand(firstInt);
  break;
@@ -807,7 +838,7 @@ void main() {
  autocross_Stop();
 
  break;
-#line 333 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 340 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  case  0b01100000100 :
 
  break;
@@ -837,7 +868,7 @@ void main() {
  break;
 
  case  0b11111110000 :
-#line 380 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 387 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  break;
 
  case  0b01000000011 :
@@ -852,7 +883,8 @@ void main() {
 
  break;
 
-
+ case  0b01000000101 :
+#line 412 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  default:
  break;
  }

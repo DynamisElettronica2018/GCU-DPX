@@ -7,10 +7,12 @@
 #include "eeprom.h"
 #include "gearmotor.h"
 #include "clutchmotor.h"
+#include "drsmotor.h"
 #include "efi.h"
 #include "buzzer.h"
 #include "sensors.h"
 #include "clutch.h"
+#include "drs.h"
 #include "enginecontrol.h"
 #include "gearshift.h"
 #include "stoplight.h"
@@ -45,10 +47,14 @@ char isSteeringWheelAvailable;
   //dichiarazioni variabili AUTOCROSS
   extern autocross_states autocross_currentState;
   extern int autocross_externValues[AUTOCROSS_NUM_VALUES];
-  extern int autocross_parameters[AUTOCROSS_NUM_PARAMS ];
+  extern int autocross_parameters[AUTOCROSS_NUM_PARAMS];
   //extern bool autocross_sendingAll = false;
   extern int autocross_timesCounter;
   int timer1_autocross_counter = 0;
+#endif
+
+#ifdef DRS_H
+  extern unsigned int drs_currentState;
 #endif
 
 unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� spazio e cos� possiamo fare fino a 30 step di cambiata, molto powa
@@ -60,8 +66,8 @@ void sendUpdatesSW(void)
     Can_resetWritePacket();
     Can_addIntToWritePacket(tractionFb);
     Can_addIntToWritePacket(accelerationFb);
-    Can_addIntToWritePacket(0);
-    Can_addIntToWritePacket(0);
+    Can_addIntToWritePacket(drsFb);
+    Can_addIntToWritePacket(autocrossFb);
     Can_write(GCU_AUX_ID);
 
 }
@@ -84,6 +90,7 @@ void init(void) {
     Can_init();
     GearMotor_init();
     ClutchMotor_init();
+    DRSMotor_init();
     Efi_init();
     GearShift_init();
     StopLight_init();
@@ -390,6 +397,16 @@ onCanInterrupt{
              Buzzer_Bip();
           #endif
           break;
+
+        case SW_DRS_GCU_ID:
+          #ifdef DRS_H
+             if(firstInt == 1)
+                Drs_open();
+                Buzzer_Bip();
+             else if(firstInt == 0)
+                Drs_close();
+             Buzzer_Bip();
+          #endif
 
           
         default:

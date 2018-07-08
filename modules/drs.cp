@@ -1,5 +1,6 @@
-#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/stoplight.c"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/stoplight.h"
+#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/drs.c"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drsmotor.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
 #line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
@@ -69,37 +70,66 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 17 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/stoplight.h"
-void StopLight_init(void);
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drsmotor.h"
+void DrsMotor_init(void);
 
-void StopLight_setupPWM(void);
+void DrsMotorDX_setupPWM(void);
 
-void StopLight_setBrightness(unsigned char percentage);
-#line 7 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/stoplight.c"
-unsigned int STOPLIGHT_PWM_PERIOD_VALUE;
-double STOPLIGHT_PERCENTAGE_STEP;
-unsigned int STOPLIGHT_PWM_VALUE;
+void DrsMotorSX_setupPWM(void);
 
-void StopLight_init(void) {
- StopLight_setupPWM();
+void DrsMotor_setPositionDX(unsigned char percentage);
+
+void DrsMotor_setPositionSX(unsigned char percentage);
+#line 14 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs.h"
+extern unsigned int drsFb;
+
+void Drs_open(void);
+
+void Drs_close(void);
+
+void Drs_setDX(unsigned char percentage);
+
+void Drs_setSX(unsigned char percentage);
+
+unsigned char Drs_get(void);
+#line 7 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/drs.c"
+unsigned char drs_currentValue = 0;
+unsigned int drsFb = 0;
+
+void Drs_open(void)
+{
+ Drs_setDX( 40 );
+ Drs_setSX( 60 );
 }
 
-void StopLight_setupPWM(void) {
- OC7CON = 0x6;
- STOPLIGHT_PWM_PERIOD_VALUE = getTimerPeriod( 0.020 ,  T2CONbits.TCKPS );
- STOPLIGHT_PWM_VALUE = (unsigned int) (STOPLIGHT_PWM_PERIOD_VALUE *
- ( 95  / 100.0));
- OC7R = STOPLIGHT_PWM_VALUE;
- OC7RS = STOPLIGHT_PWM_VALUE;
+void Drs_close(void)
+{
+ Drs_setDX( 60 );
+ Drs_setSX( 40 );
 }
 
-void StopLight_setBrightness(unsigned char percentage) {
- unsigned int pwmValue;
- pwmValue = (unsigned int) (STOPLIGHT_PWM_PERIOD_VALUE * (percentage / 100.0));
- if (pwmValue > 100) {
- pwmValue = (unsigned int) STOPLIGHT_PWM_PERIOD_VALUE;
- } else if (pwmValue < 0) {
- pwmValue = 1;
+void Drs_setDX(unsigned char percentage) {
+ unsigned char actualPercentage = 0;
+ if (percentage > 100) {
+ actualPercentage = 100;
+ } else {
+ actualPercentage = percentage;
  }
- OC7RS = pwmValue;
+ DrsMotor_setPositionDX(100 - actualPercentage);
+ Drs_currentValue = actualPercentage;
+}
+
+void Drs_setSX(unsigned char percentage) {
+ unsigned char actualPercentage = 0;
+ if (percentage > 100) {
+ actualPercentage = 100;
+ } else {
+ actualPercentage = percentage;
+ }
+ DrsMotor_setPositionSX(100 - actualPercentage);
+ Drs_currentValue = actualPercentage;
+}
+
+unsigned char Drs_get(void) {
+ return Drs_currentValue;
 }

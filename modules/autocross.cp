@@ -14,7 +14,7 @@ unsigned char getNumberDigitCount(unsigned char number);
 void emptyString(char* myString);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 177 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 187 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -309,7 +309,11 @@ void GearShift_loadNeutralTimings(void);
 int Gearshift_get_time(shiftStep step);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
-#line 27 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/autocross.h"
+#line 25 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/autocross.h"
+extern unsigned int autocrossFb;
+
+
+
 typedef enum{
  OFF_AUTOCROSS,
  START_AUTOCROSS,

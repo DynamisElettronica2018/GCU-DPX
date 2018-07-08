@@ -22,6 +22,8 @@
 #define AUTOCROSS_NUM_PARAMS    9            //Number of autocross_params enum elements
 #define AUTOCROSS_NUM_VALUES    3            //Number of autocross_values enum elements
 
+extern unsigned int autocrossFb;
+
 //float AUTOCROSS_WORK_RATE_ms = 25;
 
 typedef enum{
