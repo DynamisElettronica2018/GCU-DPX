@@ -8,6 +8,7 @@ Value=0
 [ACTIVE_TAB]
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Value=DY_GCU.c
 =======
 Value=modules\aac\aac.c
@@ -15,6 +16,9 @@ Value=modules\aac\aac.c
 =======
 Value=modules\traction\traction.c
 >>>>>>> traction_ottobiano
+=======
+Value=modules\autocross.c
+>>>>>>> autocross
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -24,7 +28,7 @@ Value=2000
 [EEPROM_DEFINITION]
 Value=
 [FILES]
-Count=17
+Count=18
 File0=DY_GCU.c
 File1=modules\clutch.c
 File2=modules\enginecontrol.c
@@ -42,13 +46,14 @@ File13=libs\eeprom.c
 File14=modules\aac\aac.c
 File15=modules\input-output\sensors_2.c
 File16=modules\traction\traction.c
+File17=modules\autocross.c
 [BINARIES]
 Count=0
 [IMAGES]
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=7
+Count=10
 File0=DY_GCU.c
 File1=modules\aac\aac.c
 File2=modules\aac\aac_defaults.h
@@ -56,6 +61,9 @@ File3=modules\aac\aac.h
 File4=modules\traction\traction.c
 File5=modules\traction\traction.h
 File6=modules\traction\traction_settings.h
+File7=modules\autocross_defaults.h
+File8=modules\autocross.h
+File9=modules\autocross.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -90,7 +98,7 @@ Path2=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\aac\
 Path3=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\libs\
 Path4=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\traction\
 [HEADERS]
-Count=19
+Count=21
 File0=modules\clutch.h
 File1=modules\enginecontrol.h
 File2=modules\gearshift.h
@@ -110,6 +118,8 @@ File15=libs\eeprom.h
 File16=modules\input-output\sensors_2.h
 File17=modules\traction\traction.h
 File18=modules\traction\traction_settings.h
+File19=modules\autocross.h
+File20=modules\autocross_defaults.h
 [PLDS]
 Count=0
 [Useses]
