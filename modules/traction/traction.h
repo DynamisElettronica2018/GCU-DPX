@@ -3,6 +3,10 @@
 #ifndef TRACTION_H
 #define TRACTION_H
 
+#include "aac_defaults.h"
+#include "clutch.h"
+#include "gearshift.h"
+#include "efi.h"
 #include "can.h"
 #include "buzzer.h"
 

@@ -12,14 +12,14 @@
 #include "buzzer.h"
 #include "sensors.h"
 #include "clutch.h"
-#include "drs.h"
+//#include "drs.h"
 #include "enginecontrol.h"
 #include "gearshift.h"
 #include "stoplight.h"
 #include "sensors_2.h"
 #include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
 #include "traction.h"
-#include "autocross.h"          //COMMENT THIS LINE TO DISABLE AUTOCROSS
+//#include "autocross.h"          //COMMENT THIS LINE TO DISABLE AUTOCROSS
 //*/
 //int tractionTemp = 0;
 
@@ -64,10 +64,18 @@ extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettin
 void sendUpdatesSW(void)
 {
     Can_resetWritePacket();
+    #ifdef TRACTION_H
     Can_addIntToWritePacket(tractionFb);
+    #endif
+    #ifdef AAC_H
     Can_addIntToWritePacket(accelerationFb);
+    #endif
+    #ifdef DRS_H
     Can_addIntToWritePacket(drsFb);
+    #endif
+    #ifdef AUTOCROSS_H
     Can_addIntToWritePacket(autocrossFb);
+    #endif
     Can_write(GCU_AUX_ID);
 
 }
@@ -262,7 +270,7 @@ onCanInterrupt{
           #ifdef AAC_H
             aac_updateExternValue(WHEEL_SPEED, firstInt / 10);
           #endif
-          #ifdef TRACTION_H
+          #ifdef AUTOCROSS_H
             autocross_updateExternValue(WHEEL_SPEED, firstInt / 10);
           #endif
             break;
@@ -273,7 +281,7 @@ onCanInterrupt{
             {
                 aac_stop();
           #endif
-          #ifdef TRACTION_H
+          #ifdef AUTOCROSS_H
             if(dataBuffer[0] > AUTOCROSS_CLUTCH_NOISE_LEVEL)
             {
                 autocross_stop();
@@ -286,7 +294,7 @@ onCanInterrupt{
           #ifdef AAC_H
             }
           #endif
-          #ifdef TRACTION_H
+          #ifdef AUTOCROSS_H
             }
           #endif
           break;

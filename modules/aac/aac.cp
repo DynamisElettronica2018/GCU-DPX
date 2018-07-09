@@ -383,9 +383,13 @@ void aac_sendOneTime(time_id pos);
 
 void aac_sendAllTimes(void);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/traction/traction.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac_defaults.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
-#line 17 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/traction/traction.h"
+#line 21 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/traction/traction.h"
 extern unsigned int tractionFb;
 extern unsigned int tractionVariable[11];
 
@@ -516,14 +520,14 @@ void aac_loadDefaultParams(void){
  aac_parameters[RAMP_START] =  70 ;
  aac_parameters[RAMP_END] =  0 ;
  aac_parameters[RAMP_TIME] =  250 ;
- aac_parameters[RPM_LIMIT_1_2] =  11300 ;
- aac_parameters[RPM_LIMIT_2_3] =  11300 ;
- aac_parameters[RPM_LIMIT_3_4] =  11300 ;
- aac_parameters[RPM_LIMIT_4_5] =  11300 ;
- aac_parameters[SPEED_LIMIT_1_2] =  47 ;
- aac_parameters[SPEED_LIMIT_2_3] =  65 ;
- aac_parameters[SPEED_LIMIT_3_4] =  80 ;
- aac_parameters[SPEED_LIMIT_4_5] =  100 ;
+ aac_parameters[RPM_LIMIT_1_2] =  11647 ;
+ aac_parameters[RPM_LIMIT_2_3] =  11506 ;
+ aac_parameters[RPM_LIMIT_3_4] =  11383 ;
+ aac_parameters[RPM_LIMIT_4_5] =  11362 ;
+ aac_parameters[SPEED_LIMIT_1_2] =  46 ;
+ aac_parameters[SPEED_LIMIT_2_3] =  61 ;
+ aac_parameters[SPEED_LIMIT_3_4] =  77 ;
+ aac_parameters[SPEED_LIMIT_4_5] =  113 ;
 
 }
 

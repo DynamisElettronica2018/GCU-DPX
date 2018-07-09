@@ -10,7 +10,7 @@ Value=0
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-Value=DY_GCU.c
+Value=modules\aac\aac_defaults.h
 =======
 Value=modules\aac\aac.c
 >>>>>>> aac_ottobiano
@@ -59,15 +59,12 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=8
+Count=5
 File0=DY_GCU.c
-File1=modules\drsmotor.c
-File2=modules\drs.c
-File3=modules\drsmotor.h
-File4=modules\drs.h
-File5=modules\clutch.c
-File6=modules\autocross.c
-File7=modules\autocross.h
+File1=modules\aac\aac.c
+File2=modules\aac\aac.h
+File3=modules\aac\aac_defaults.h
+File4=modules\traction\traction.h
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

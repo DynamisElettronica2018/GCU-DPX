@@ -383,28 +383,28 @@ _aac_loadDefaultParams:
 	MOV	#250, W0
 	MOV	W0, _aac_parameters+4
 ;aac.c,119 :: 		aac_parameters[RPM_LIMIT_1_2]   = DEF_RPM_LIMIT_1_2;
-	MOV	#11300, W0
+	MOV	#11647, W0
 	MOV	W0, _aac_parameters+6
 ;aac.c,120 :: 		aac_parameters[RPM_LIMIT_2_3]   = DEF_RPM_LIMIT_2_3;
-	MOV	#11300, W0
+	MOV	#11506, W0
 	MOV	W0, _aac_parameters+8
 ;aac.c,121 :: 		aac_parameters[RPM_LIMIT_3_4]   = DEF_RPM_LIMIT_3_4;
-	MOV	#11300, W0
+	MOV	#11383, W0
 	MOV	W0, _aac_parameters+10
 ;aac.c,122 :: 		aac_parameters[RPM_LIMIT_4_5]   = DEF_RPM_LIMIT_4_5;
-	MOV	#11300, W0
+	MOV	#11362, W0
 	MOV	W0, _aac_parameters+12
 ;aac.c,123 :: 		aac_parameters[SPEED_LIMIT_1_2] = DEF_SPEED_LIMIT_1_2;
-	MOV	#47, W0
+	MOV	#46, W0
 	MOV	W0, _aac_parameters+14
 ;aac.c,124 :: 		aac_parameters[SPEED_LIMIT_2_3] = DEF_SPEED_LIMIT_2_3;
-	MOV	#65, W0
+	MOV	#61, W0
 	MOV	W0, _aac_parameters+16
 ;aac.c,125 :: 		aac_parameters[SPEED_LIMIT_3_4] = DEF_SPEED_LIMIT_3_4;
-	MOV	#80, W0
+	MOV	#77, W0
 	MOV	W0, _aac_parameters+18
 ;aac.c,126 :: 		aac_parameters[SPEED_LIMIT_4_5] = DEF_SPEED_LIMIT_4_5;
-	MOV	#100, W0
+	MOV	#113, W0
 	MOV	W0, _aac_parameters+20
 ;aac.c,128 :: 		}
 L_end_aac_loadDefaultParams:

@@ -16,7 +16,7 @@
 
 #define AAC_WORK_RATE_ms   25
 #define CLUTCH_PULL_MAX_TIME_s 10
-#define AAC_CLUTCH_NOISE_LEVEL 10       //margin against accidental clutch lever pulling
+#define AAC_CLUTCH_NOISE_LEVEL 40       //margin against accidental clutch lever pulling
 #define AAC_MAX_SHIFT_TIMES    22      //maximum number of tries to insert a new gear
 #define AAC_INTER_GEAR_TIME    500     //time after which a gearshift is considered succesful or failed
 
