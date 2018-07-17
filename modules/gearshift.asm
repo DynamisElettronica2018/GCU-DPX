@@ -964,7 +964,7 @@ _GearShift_loadDefaultTimings:
 	MOV	#100, W0
 	MOV	W0, _gearShift_timings+26
 ;gearshift.c,405 :: 		gearShift_timings[UP_PUSH_3_4] = DEFAULT_UP_PUSH_3_4;
-	MOV	#170, W0
+	MOV	#100, W0
 	MOV	W0, _gearShift_timings+28
 ;gearshift.c,406 :: 		gearShift_timings[UP_PUSH_4_5] = DEFAULT_UP_PUSH_4_5;
 	MOV	#100, W0

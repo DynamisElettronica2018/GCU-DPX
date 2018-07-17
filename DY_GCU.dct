@@ -288,14 +288,10 @@ aac_getparam
 aac_init
 aac_loaddefaultparams
 aac_parameters
-aac_sendalltimes
 aac_sendingall
-aac_sendonetime
-aac_sendtimes
 aac_stop
 aac_timescounter
 aac_updateexternvalue
-aac_updateparam
 abat
 abat
 abat
@@ -487,6 +483,7 @@ accbu_22
 accbu_22_bit
 accbu_23
 accbu_23_bit
+accelerationfb
 accsat
 accsat
 accsat_bit
@@ -7432,6 +7429,7 @@ sen
 sen
 sen_bit
 sendtempsensor
+sendupdatessw
 setallpinasdigital
 setanalogdataoutputformat
 setanaloginterrupt
@@ -9096,6 +9094,7 @@ time_datediff
 time_datetoepoch
 time_epochtodate
 time_jd1970
+timer1_aac_counter
 timer1_counter0
 timer1_counter1
 timer1_counter2

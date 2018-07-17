@@ -16,7 +16,7 @@ Value=2000
 [EEPROM_DEFINITION]
 Value=
 [FILES]
-Count=16
+Count=17
 File0=DY_GCU.c
 File1=modules\clutch.c
 File2=modules\enginecontrol.c
@@ -33,23 +33,25 @@ File12=libs\dspic.c
 File13=libs\eeprom.c
 File14=modules\aac\aac.c
 File15=modules\input-output\sensors_2.c
+File16=modules\sw.c
 [BINARIES]
 Count=0
 [IMAGES]
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=10
+Count=11
 File0=DY_GCU.c
-File1=libs\dspic.c
-File2=libs\can.h
-File3=libs\d_can.h
-File4=modules\gearshift.c
-File5=modules\gearshift.h
-File6=modules\input-output\gearmotor.c
-File7=modules\gcu_rio.h
-File8=modules\clutch.c
-File9=modules\enginecontrol.c
+File1=modules\aac\aac.c
+File2=modules\aac\aac_defaults.h
+File3=libs\dspic.h
+File4=libs\can.c
+File5=libs\can.h
+File6=libs\d_can.h
+File7=modules\input-output\efi.c
+File8=modules\aac\aac.h
+File9=modules\gcu_rio.h
+File10=modules\sw.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -90,7 +92,7 @@ Path9=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\input-output\
 Path10=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\aac\
 Path11=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\libs\
 [HEADERS]
-Count=17
+Count=18
 File0=modules\clutch.h
 File1=modules\enginecontrol.h
 File2=modules\gearshift.h
@@ -108,6 +110,7 @@ File13=libs\d_can.h
 File14=libs\dspic.h
 File15=libs\eeprom.h
 File16=modules\input-output\sensors_2.h
+File17=modules\sw.h
 [PLDS]
 Count=0
 [Useses]

@@ -10,12 +10,13 @@
 #include "gearshift.h"
 #include "efi.h"
 #include "can.h"
+#include "sw.h"
 
 #define CODE_SET_AAC   2
 
 #define AAC_WORK_RATE_ms   25
 #define CLUTCH_PULL_MAX_TIME_s 10
-#define AAC_CLUTCH_NOISE_LEVEL 10       //margin against accidental clutch lever pulling
+#define AAC_CLUTCH_NOISE_LEVEL 40       //margin against accidental clutch lever pulling
 #define AAC_MAX_SHIFT_TIMES    22      //maximum number of tries to insert a new gear
 #define AAC_INTER_GEAR_TIME    500     //time after which a gearshift is considered succesful or failed
 
@@ -43,10 +44,13 @@ typedef enum{
     RPM_LIMIT_1_2,
     RPM_LIMIT_2_3,
     RPM_LIMIT_3_4,
+    RPM_LIMIT_4_5,
     SPEED_LIMIT_1_2,
     SPEED_LIMIT_2_3,
-    SPEED_LIMIT_3_4
+    SPEED_LIMIT_3_4,
+    SPEED_LIMIT_4_5
 }aac_params;
+
 
 typedef enum{
     MEX_ON,
@@ -85,12 +89,5 @@ int aac_getParam(const aac_params id);
 int aac_getExternValue(const aac_values id);
 
 void aac_forceState(const aac_states newState);
-
-void aac_sendTimes(void);
-
-void aac_sendOneTime(time_id pos);
-
-void aac_sendAllTimes(void);
-
 
 #endif

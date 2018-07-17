@@ -59,6 +59,8 @@ main
 		Buzzer_init
 			setTimer
 			setInterruptPriority
+		aac_init
+			aac_loadDefaultParams
 		setTimer
 		setInterruptPriority
 	Buzzer_Bip
@@ -72,8 +74,11 @@ CAN_Interrupt
 		Can_clearB1Flag
 	Can_clearInterrupt
 	GearShift_setCurrentGear
+	aac_updateExternValue
 	EngineControl_resetStartCheck
 	EngineControl_start
+	Clutch_get
+	aac_stop
 	GearShift_injectCommand
 		GearShift_setNeutral
 			GearShift_down
@@ -106,8 +111,15 @@ CAN_Interrupt
 			GearShift_down
 		Efi_setRPMLimiter
 		Efi_unsetRPMLimiter
+	sendUpdatesSW
+		Can_resetWritePacket
+		Can_write
+			CAN1Write
+				CAN1IDToRegs
+			Can_getWriteFlags
 	Clutch_setBiased
 		Clutch_set
+	Buzzer_Bip
 timer4_interrupt
 	Buzzer_tick
 timer2_interrupt
@@ -123,21 +135,19 @@ timer1_interrupt
 			Can_addByteToWritePacket
 		Clutch_get
 		Can_write
-			CAN1Write
-				CAN1IDToRegs
-			Can_getWriteFlags
 	dSignalLed_switch
-	sendTempSensor
-		getTempSensor
-			ADC1_Read
-				ADC1_Init
-				ADC1_Get_Sample
-			_Long2Float
-			_Div_FP
-			_Mul_FP
-			_Float2Longint
-			_Sub_FP
-				_AddSub_FP
-		Can_resetWritePacket
-		Can_addIntToWritePacket
-		Can_write
+	aac_execute
+		Efi_setRPMLimiter
+		Clutch_set
+		sendUpdatesSW
+		Clutch_get
+		Efi_unsetRPMLimiter
+		Buzzer_Bip
+		aac_stop
+		GearShift_up
+		_Float2Longint
+		_Long2Float
+		_Mul_FP
+		_Div_FP
+		_Sub_FP
+			_AddSub_FP

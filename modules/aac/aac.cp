@@ -219,40 +219,12 @@ typedef enum {
  TIMES_LAST
  }time_id;
 
- typedef enum{
 
- H2O_DC,
- TH2O_ENGINE,
- TH2O_IN,
- TH2O_OUT,
-
- POIL,
- TOIL_IN,
- TOIL_OUT,
- BATTERY,
-
- P_FUEL,
- FAN,
- INJ1,
- INJ2,
-
- DATA_LAST
- }efi_dataIds;
 
 
 
 
 extern unsigned int gearShift_timings[ TIMES_LAST ];
-
-void rio_init(void);
-
-extern void rio_sendOneTime(time_id pos);
-
-extern void rio_sendAllTimes(void);
-
-extern void rio_sendTimes(void);
-
-extern void rio_send(void);
 #line 17 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
 typedef enum {
  STEP_UP_START,
@@ -309,7 +281,11 @@ void GearShift_loadNeutralTimings(void);
 int Gearshift_get_time(shiftStep step);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
-#line 27 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
+#line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
+void sendUpdatesSW(unsigned int valCode);
+#line 28 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
 typedef enum{
  OFF,
  START,
@@ -329,10 +305,13 @@ typedef enum{
  RPM_LIMIT_1_2,
  RPM_LIMIT_2_3,
  RPM_LIMIT_3_4,
+ RPM_LIMIT_4_5,
  SPEED_LIMIT_1_2,
  SPEED_LIMIT_2_3,
- SPEED_LIMIT_3_4
+ SPEED_LIMIT_3_4,
+ SPEED_LIMIT_4_5
 }aac_params;
+
 
 typedef enum{
  MEX_ON,
@@ -371,12 +350,6 @@ int aac_getParam(const aac_params id);
 int aac_getExternValue(const aac_values id);
 
 void aac_forceState(const aac_states newState);
-
-void aac_sendTimes(void);
-
-void aac_sendOneTime(time_id pos);
-
-void aac_sendAllTimes(void);
 #line 3 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 aac_states aac_currentState;
 int aac_parameters[ 9 ];
@@ -384,7 +357,8 @@ int aac_externValues[ 3 ];
 int aac_dtRelease;
 char aac_sendingAll =  0 ;
 int aac_timesCounter;
-#line 15 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+unsigned int accelerationFb = 0;
+#line 16 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 float aac_clutchStep;
 float aac_clutchValue;
 
@@ -398,11 +372,11 @@ void aac_execute(void){
  switch (aac_currentState) {
  case START:
  Efi_setRPMLimiter();
-
- Can_writeByte( 0b11111110000 , MEX_READY);
  aac_currentState = READY;
  aac_clutchValue = 100;
  Clutch_set((unsigned int)aac_clutchValue);
+ accelerationFb = 1;
+ sendUpdatesSW( 1 );
  return;
  case READY:
  Clutch_set(100);
@@ -413,6 +387,8 @@ void aac_execute(void){
  aac_dtRelease = aac_parameters[RAMP_TIME] /  25 ;
  aac_clutchStep = ((float)(aac_parameters[RAMP_START] - aac_parameters[RAMP_END]) *  25 ) / (float)aac_parameters[RAMP_TIME];
  aac_currentState = RELEASING;
+ accelerationFb = 2;
+ sendUpdatesSW( 1 );
  return;
  case RELEASING:
 
@@ -442,62 +418,31 @@ void aac_execute(void){
  return;
  case STOPPING:
  aac_currentState = OFF;
- Can_writeByte( 0b11111110000 , MEX_OFF);
+ accelerationFb = 0;
+ sendUpdatesSW( 1 );
  return;
 
  default: return;
  }
 }
-
-void aac_sendOneTime(time_id pos){
- aac_timesCounter = pos;
-}
-
-void aac_sendTimes(void)
-{
- if(aac_timesCounter >= 0){
- Can_resetWritePacket();
- Can_addIntToWritePacket( 2 );
- Can_addIntToWritePacket(aac_timesCounter);
- Can_addIntToWritePacket(aac_parameters[aac_timesCounter]);
- if(Can_write( 0b11100001101 ) < 0)
- Buzzer_Bip();
- aac_timesCounter -= 1;
- if(!aac_sendingAll || aac_timesCounter < 0){
- aac_sendingAll =  0 ;
- aac_timesCounter = -1;
- }
- }
-}
-
-void aac_sendAllTimes(void)
-{
- if(!aac_sendingAll){
- aac_timesCounter =  9 ;
- aac_sendingAll =  1 ;
- }
-}
-
+#line 113 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 void aac_loadDefaultParams(void){
 
 
  aac_parameters[RAMP_START] =  70 ;
  aac_parameters[RAMP_END] =  0 ;
  aac_parameters[RAMP_TIME] =  250 ;
- aac_parameters[RPM_LIMIT_1_2] =  11300 ;
- aac_parameters[RPM_LIMIT_2_3] =  11300 ;
- aac_parameters[RPM_LIMIT_3_4] =  11300 ;
- aac_parameters[SPEED_LIMIT_1_2] =  47 ;
- aac_parameters[SPEED_LIMIT_2_3] =  65 ;
- aac_parameters[SPEED_LIMIT_3_4] =  80 ;
+ aac_parameters[RPM_LIMIT_1_2] =  11647 ;
+ aac_parameters[RPM_LIMIT_2_3] =  11506 ;
+ aac_parameters[RPM_LIMIT_3_4] =  11383 ;
+ aac_parameters[RPM_LIMIT_4_5] =  11362 ;
+ aac_parameters[SPEED_LIMIT_1_2] =  46 ;
+ aac_parameters[SPEED_LIMIT_2_3] =  61 ;
+ aac_parameters[SPEED_LIMIT_3_4] =  77 ;
+ aac_parameters[SPEED_LIMIT_4_5] =  113 ;
 
 }
-
-void aac_updateParam(const aac_params id, const int value){
- if(id <  9 )
- aac_parameters[id] = value;
-}
-
+#line 136 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 void aac_stop(void){
  if(aac_currentState != OFF)
  aac_currentState = STOPPING;

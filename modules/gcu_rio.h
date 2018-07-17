@@ -16,7 +16,7 @@
 #define DEFAULT_UP_BRAKE    20
 #define DEFAULT_UP_PUSH_1_2 115
 #define DEFAULT_UP_PUSH_2_3 100
-#define DEFAULT_UP_PUSH_3_4 170
+#define DEFAULT_UP_PUSH_3_4 100
 #define DEFAULT_UP_PUSH_4_5 100
      //down
 #define DEFAULT_CLUTCH      70
@@ -75,39 +75,12 @@ typedef enum {
      TIMES_LAST
      }time_id;
 
- typedef enum{
-    //H2O
-     H2O_DC,
-     TH2O_ENGINE,
-     TH2O_IN,
-     TH2O_OUT,
-    //Oil and Battery
-     POIL,
-     TOIL_IN,
-     TOIL_OUT,
-     BATTERY,
-    //Fan and Fuel
-     P_FUEL,
-     FAN,
-     INJ1,
-     INJ2,
-     //Keep Last
-     DATA_LAST
- }efi_dataIds;
+
 
 #define RIO_NUM_TIMES TIMES_LAST    //Number of times variables (enums)
 #define RIO_NUM_EFI_DATA DATA_LAST    //Number of times variables (enums)
 
 extern unsigned int gearShift_timings[RIO_NUM_TIMES];
 
-void rio_init(void);
-
-extern void rio_sendOneTime(time_id pos);
-
-extern void rio_sendAllTimes(void);
-
-extern void rio_sendTimes(void);
-
-extern void rio_send(void);
 
 #endif
