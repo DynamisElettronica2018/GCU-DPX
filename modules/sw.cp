@@ -1,4 +1,6 @@
-#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/input-output/d_signalled.c"
+#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/sw.c"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/d_signalled.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
 #line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
@@ -77,32 +79,50 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 7 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/input-output/d_signalled.c"
-void dSignalLed_init(void) {
-  TRISG14_bit  =  0 ;
- dSignalLed_unset( 0 );
-}
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/d_can.h"
+#line 60 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
+void Can_init(void);
 
-void dSignalLed_switch(unsigned char led) {
- switch (led) {
- case  0 :
-  RG14_bit  = ! RG14_bit ;
+void Can_read(unsigned long int *id, char dataBuffer[], unsigned int *dataLength, unsigned int *inFlags);
+
+void Can_writeByte(unsigned long int id, unsigned char dataOut);
+
+void Can_writeInt(unsigned long int id, int dataOut);
+
+void Can_addIntToWritePacket(int dataOut);
+
+void Can_addByteToWritePacket(unsigned char dataOut);
+
+unsigned int Can_write(unsigned long int id);
+
+void Can_setWritePriority(unsigned int txPriority);
+
+void Can_resetWritePacket(void);
+
+unsigned int Can_getWriteFlags(void);
+
+unsigned char Can_B0hasBeenReceived(void);
+
+unsigned char Can_B1hasBeenReceived(void);
+
+void Can_clearB0Flag(void);
+
+void Can_clearB1Flag(void);
+
+void Can_clearInterrupt(void);
+
+void Can_initInterrupt(void);
+#line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
+void sendUpdatesSW(unsigned int valCode);
+#line 3 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/sw.c"
+void sendUpdatesSW(unsigned int valCode)
+{
+ Can_resetWritePacket();
+ switch (valCode)
+ {
+#line 32 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/sw.c"
+ default:
  break;
  }
-}
-
-void dSignalLed_set(unsigned char led) {
- switch (led) {
- case  0 :
-  RG14_bit  =  1 ;
- break;
- }
-}
-
-void dSignalLed_unset(unsigned char led) {
- switch (led) {
- case  0 :
-  RG14_bit  =  0 ;
- break;
- }
+ Can_write( 0b01100010111 );
 }

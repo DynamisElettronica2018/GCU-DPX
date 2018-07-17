@@ -9,7 +9,7 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 177 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 187 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -353,6 +353,37 @@ void StopLight_init(void);
 void StopLight_setupPWM(void);
 
 void StopLight_setBrightness(unsigned char percentage);
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drsmotor.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drsmotor.h"
+void DrsMotor_init(void);
+
+void DrsMotorDX_setupPWM(void);
+
+void DrsMotorSX_setupPWM(void);
+
+void DrsMotor_setPositionDX(unsigned char percentage);
+
+void DrsMotor_setPositionSX(unsigned char percentage);
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drs.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drsmotor.h"
+#line 15 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drs.h"
+extern unsigned int drsFb;
+
+void Drs_open(void);
+
+void Drs_close(void);
+
+void Drs_setDX(unsigned char percentage);
+
+void Drs_setSX(unsigned char percentage);
+
+unsigned char Drs_getDX(void);
+
+unsigned char Drs_getSX(void);
+
+unsigned char Drs_get(void);
 #line 20 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
@@ -360,9 +391,7 @@ char isSteeringWheelAvailable;
 unsigned int gearShift_timings[ TIMES_LAST ];
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
-
-
-
+#line 32 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 void GCU_isAlive(void) {
  Can_resetWritePacket();
  Can_addIntToWritePacket((unsigned int) 99 );
@@ -385,6 +414,7 @@ void init(void) {
  GearShift_init();
  StopLight_init();
  Buzzer_init();
+ DRSMotor_init();
 
  setTimer( 1 , 0.001);
  setInterruptPriority( 1 ,  4 );
@@ -494,6 +524,8 @@ void main() {
 
  break;
 
+ case  0b01000000101 :
+#line 178 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  default:
  break;
  }

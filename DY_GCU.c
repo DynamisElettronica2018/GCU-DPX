@@ -2,8 +2,6 @@
  * Software GCU DPX
 */
 
-
-
 #include "dspic.h"
 #include "d_signalled.h"
 #include "eeprom.h"
@@ -15,6 +13,8 @@
 #include "enginecontrol.h"
 #include "gearshift.h"
 #include "stoplight.h"
+#include "drsmotor.h"
+#include "drs.h"
 //*/
 
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
@@ -24,7 +24,10 @@ unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� 
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
-
+#ifdef DRS_H
+  extern unsigned int drs_currentState;
+  extern unsigned int drsFb = 0;
+#endif
 
 void GCU_isAlive(void) {
     Can_resetWritePacket();
@@ -48,6 +51,7 @@ void init(void) {
     GearShift_init();
     StopLight_init();
     Buzzer_init();
+    DRSMotor_init();
     //Generic 1ms timer
     setTimer(TIMER1_DEVICE, 0.001);
     setInterruptPriority(TIMER1_DEVICE, MEDIUM_PRIORITY);
@@ -156,6 +160,20 @@ onCanInterrupt{
         case EFI_HALL_ID:
               //salvare dati in variabili globali
               break;
+
+        case SW_DRS_GCU_ID:
+            #ifdef DRS_H
+                if(firstInt == 1)
+                {
+                    Drs_open();
+                    Buzzer_Bip();
+                }
+                else if(firstInt == 0)
+                {
+                    Drs_close();
+                    Buzzer_Bip();
+                }
+            #endif
 
         default:
             break;
