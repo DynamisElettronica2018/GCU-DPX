@@ -59,6 +59,8 @@ main
 		Buzzer_init
 			setTimer
 			setInterruptPriority
+		antistall_init
+			antistall_loadDefaultParams
 		setTimer
 		setInterruptPriority
 	Buzzer_Bip
@@ -72,6 +74,7 @@ CAN_Interrupt
 		Can_clearB1Flag
 	Can_clearInterrupt
 	GearShift_setCurrentGear
+	antistall_updateExternValue
 	EngineControl_resetStartCheck
 	EngineControl_start
 	GearShift_injectCommand
@@ -106,6 +109,13 @@ CAN_Interrupt
 			GearShift_down
 		Efi_setRPMLimiter
 		Efi_unsetRPMLimiter
+	antistall_stop
+		sendUpdatesSW
+			Can_resetWritePacket
+			Can_write
+				CAN1Write
+					CAN1IDToRegs
+				Can_getWriteFlags
 	Clutch_setBiased
 		Clutch_set
 timer4_interrupt
@@ -123,7 +133,8 @@ timer1_interrupt
 			Can_addByteToWritePacket
 		Clutch_get
 		Can_write
-			CAN1Write
-				CAN1IDToRegs
-			Can_getWriteFlags
 	dSignalLed_switch
+	antistall_checkPlausibility
+		sendUpdatesSW
+	antistall_execute
+		Clutch_set

@@ -76,6 +76,7 @@
 #define AUTOX_CODE                      2
 #define TRACTION_CODE                   3
 #define DRS_CODE                        4
+#define ANTISTALL_CODE                  5
 /*****/
 #define DCU_DEBUG_ID                    0b01100011000 //792
 
