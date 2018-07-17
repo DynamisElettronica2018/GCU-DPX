@@ -16,7 +16,7 @@ Value=2000
 [EEPROM_DEFINITION]
 Value=
 [FILES]
-Count=16
+Count=14
 File0=DY_GCU.c
 File1=modules\clutch.c
 File2=modules\enginecontrol.c
@@ -31,8 +31,6 @@ File10=libs\basic.c
 File11=libs\can.c
 File12=libs\dspic.c
 File13=libs\eeprom.c
-File14=modules\aac\aac.c
-File15=modules\input-output\sensors_2.c
 [BINARIES]
 Count=0
 [IMAGES]
@@ -90,7 +88,7 @@ Path9=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\input-output\
 Path10=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\aac\
 Path11=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\libs\
 [HEADERS]
-Count=17
+Count=15
 File0=modules\clutch.h
 File1=modules\enginecontrol.h
 File2=modules\gearshift.h
@@ -101,13 +99,11 @@ File6=modules\input-output\d_signalled.h
 File7=modules\input-output\efi.h
 File8=modules\input-output\gearmotor.h
 File9=modules\aac\aac.h
-File10=modules\aac\aac_defaults.h
-File11=libs\basic.h
-File12=libs\can.h
-File13=libs\d_can.h
-File14=libs\dspic.h
-File15=libs\eeprom.h
-File16=modules\input-output\sensors_2.h
+File10=libs\basic.h
+File11=libs\can.h
+File12=libs\d_can.h
+File13=libs\dspic.h
+File14=libs\eeprom.h
 [PLDS]
 Count=0
 [Useses]

@@ -144,27 +144,6 @@ void Buzzer_init(void);
 void Buzzer_tick(void);
 
 void Buzzer_Bip(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/d_can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 23 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors.h"
-void Sensors_init(void);
-
-void Sensors_tick(void);
-
-void Sensors_read(void);
-
-void Sensors_nextPin(void);
-
-void Sensors_send(void);
-
-void Sensors_sampleFanCurrent(unsigned int value);
-
-void Sensors_sampleH2OPumpCurrent(unsigned int value);
-
-void Sensors_sampleFuelPumpCurrent(unsigned int value);
-
-void Sensors_sampleGCUTemp(unsigned int value);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
 #line 14 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
@@ -374,18 +353,10 @@ void StopLight_init(void);
 void StopLight_setupPWM(void);
 
 void StopLight_setBrightness(unsigned char percentage);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors_2.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 13 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors_2.h"
-unsigned int getTempSensor();
-
-void sendTempSensor(void);
-#line 23 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 20 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
-#line 36 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 unsigned int gearShift_timings[ TIMES_LAST ];
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
@@ -414,10 +385,9 @@ void init(void) {
  GearShift_init();
  StopLight_init();
  Buzzer_init();
-#line 72 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
  setTimer( 1 , 0.001);
  setInterruptPriority( 1 ,  4 );
-#line 82 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 }
 
 void main() {
@@ -463,15 +433,13 @@ void main() {
  if (timer1_counter2 >= 1000) {
  dSignalLed_switch( 0 );
 
- sendTempSensor();
-
  timer1_counter2 = 0;
  }
  if (timer1_counter3 >= 10) {
-#line 136 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  timer1_counter3 = 0;
  }
-#line 147 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
+
 }
 
  void CAN_Interrupt() iv IVT_ADDR_C1INTERRUPT {
@@ -507,25 +475,25 @@ void main() {
  EngineControl_start();
 
  break;
-#line 197 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
  case  0b01000000000 :
  GearShift_injectCommand(firstInt);
  break;
-#line 211 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
+
  case  0b01000000001 :
-#line 216 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
  if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
 
  Clutch_setBiased(dataBuffer[0]);
 
  }
-#line 224 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  break;
-#line 251 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
  case  0b01100000100 :
 
  break;
-#line 276 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
  default:
  break;
  }
