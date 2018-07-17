@@ -1,9 +1,6 @@
 /*
  * Software GCU DPX
 */
-
-
-
 #include "dspic.h"
 #include "d_signalled.h"
 #include "eeprom.h"
@@ -15,6 +12,7 @@
 #include "enginecontrol.h"
 #include "gearshift.h"
 #include "stoplight.h"
+#include "traction.h"
 //*/
 
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
@@ -24,7 +22,10 @@ unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� 
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
-
+#ifdef TRACTION_H
+  extern unsigned int traction_currentState;
+  extern int traction_parameters[TRACTION_NUM_PARAM];
+#endif
 
 void GCU_isAlive(void) {
     Can_resetWritePacket();
@@ -48,6 +49,11 @@ void init(void) {
     GearShift_init();
     StopLight_init();
     Buzzer_init();
+
+    #ifdef TRACTION_H
+        traction_init();
+    #endif
+    
     //Generic 1ms timer
     setTimer(TIMER1_DEVICE, 0.001);
     setInterruptPriority(TIMER1_DEVICE, MEDIUM_PRIORITY);
@@ -156,6 +162,19 @@ onCanInterrupt{
         case EFI_HALL_ID:
               //salvare dati in variabili globali
               break;
+
+        #ifdef TRACTION_H      
+        case SW_TRACTION_CONTROL_GCU_ID:
+          
+            //set traction to EFI
+            tractionFb = firstInt;
+            //traction_state = tractionVariable[tractionFb];
+            traction_currentState = tractionFb * 100;
+            setTraction(TRACTION_CODE, traction_currentState);
+            //Buzzer_Bip();
+         
+            break;      
+        #endif
 
         default:
             break;
