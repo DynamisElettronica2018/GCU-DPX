@@ -447,7 +447,7 @@ void GearShift_nextStep_A(void) {
  } else {
 
  if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60) {
- Clutch_set(90);
+ Clutch_set(60);
  }
  Efi_setBlip();
  Buzzer_Bip();
@@ -581,7 +581,7 @@ void GearShift_loadDefaultTimings(void) {
  gearShift_timings[UP_BRAKE] =  20 ;
  gearShift_timings[UP_PUSH_1_2] =  115 ;
  gearShift_timings[UP_PUSH_2_3] =  100 ;
- gearShift_timings[UP_PUSH_3_4] =  170 ;
+ gearShift_timings[UP_PUSH_3_4] =  100 ;
  gearShift_timings[UP_PUSH_4_5] =  100 ;
 
  gearShift_timings[CLUTCH] =  70 ;

@@ -390,89 +390,9 @@ void StopLight_setBrightness(unsigned char percentage);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors_2.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 13 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors_2.h"
+#line 14 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors_2.h"
 unsigned int getTempSensor();
-
-void sendTempSensor(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac_defaults.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
-#line 28 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
-extern unsigned int accelerationFb;
-
-typedef enum{
- OFF,
- START,
- READY,
- START_RELEASE,
- RELEASING,
- RUNNING,
- STOPPING
-}aac_states;
-
-
-typedef enum{
- RAMP_START,
- RAMP_END,
- RAMP_TIME,
-
- RPM_LIMIT_1_2,
- RPM_LIMIT_2_3,
- RPM_LIMIT_3_4,
- RPM_LIMIT_4_5,
- SPEED_LIMIT_1_2,
- SPEED_LIMIT_2_3,
- SPEED_LIMIT_3_4,
- SPEED_LIMIT_4_5
-}aac_params;
-
-typedef enum{
- MEX_ON,
- MEX_READY,
- MEX_GO,
- MEX_OFF,
-}aac_notifications;
-
-
-typedef enum{
- RPM,
- WHEEL_SPEED,
- APPS
-}aac_values;
-
-extern unsigned int gearShift_currentGear;
-
-void aac_init(void);
-
-
-void aac_execute(void);
-
-
-void aac_checkAndPrepare(void);
-
-void aac_stop(void);
-
-void aac_loadDefaultParams(void);
-
-void aac_updateParam(const aac_params id, const int value);
-
-void aac_updateExternValue(const aac_values id, const int value);
-
-int aac_getParam(const aac_params id);
-
-int aac_getExternValue(const aac_values id);
-
-void aac_forceState(const aac_states newState);
-
-void aac_sendTimes(void);
-
-void aac_sendOneTime(time_id pos);
-
-void aac_sendAllTimes(void);
+unsigned int getGearSensor();
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/traction/traction.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac_defaults.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
@@ -504,22 +424,14 @@ Efi_setTraction(unsigned int setState);
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
-
-
- extern aac_states aac_currentState;
- extern int aac_externValues[ 3 ];
- extern int acc_parameters[ 11  ];
-
- extern int aac_timesCounter;
- int timer1_aac_counter = 0;
-
-
-
+ unsigned int tempSens;
+ unsigned int gearSens;
+#line 43 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  extern unsigned int traction_currentState;
  extern int traction_parameters[ 8 ];
  extern int traction_timesCounter;
  int timer1_traction_counter = 0;
-#line 60 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 63 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 unsigned int gearShift_timings[ TIMES_LAST ];
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
@@ -529,13 +441,28 @@ void sendUpdatesSW(void)
  Can_resetWritePacket();
 
  Can_addIntToWritePacket(tractionFb);
+#line 83 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+ Can_addIntToWritePacket(0);
 
 
- Can_addIntToWritePacket(accelerationFb);
-#line 79 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
- Can_write( 0b11111110001 );
+ Can_addIntToWritePacket(0);
+
+ Can_write( 0b01100010111 );
 
 }
+
+
+void sendSensors2(void)
+{
+
+ tempSens = getTempSensor();
+ gearSens = getGearSensor();
+ Can_resetWritePacket();
+ Can_addIntToWritePacket(tempSens);
+ Can_addIntToWritePAcket(gearSens);
+ Can_write( 0b01100010110 );
+}
+
 
 void GCU_isAlive(void) {
  Can_resetWritePacket();
@@ -561,18 +488,9 @@ void init(void) {
  StopLight_init();
  Buzzer_init();
  sendUpdatesSW();
-
-
-
-
-
- aac_init();
-
-
-
-
+#line 134 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  traction_init();
-#line 126 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 141 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  setTimer( 1 , 0.001);
  setInterruptPriority( 1 ,  4 );
 }
@@ -582,6 +500,7 @@ void init(void) {
 void main() {
  init();
  Buzzer_Bip();
+
 
  while (1)
  {
@@ -621,26 +540,18 @@ void main() {
 
  if (timer1_counter2 >= 1000) {
  dSignalLed_switch( 0 );
-
- sendTempSensor();
-#line 186 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 201 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  timer1_counter2 = 0;
  }
  if (timer1_counter3 >= 10) {
+#line 209 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+ sendSensors2();
 
-
- aac_sendTimes();
 
  timer1_counter3 = 0;
- }
 
-
- timer1_aac_counter += 1;
- if(timer1_aac_counter ==  25 ){
- aac_execute();
- timer1_aac_counter = 0;
  }
-#line 211 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 231 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 }
 
  void CAN_Interrupt() iv IVT_ADDR_C1INTERRUPT {
@@ -668,9 +579,7 @@ void main() {
  switch (id) {
  case  0b01100000101 :
  GearShift_setCurrentGear(firstInt);
-
- aac_updateExternValue(RPM, secondInt);
-
+#line 261 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  break;
 
  case  0b01000000100 :
@@ -679,68 +588,42 @@ void main() {
  EngineControl_start();
 
  break;
-#line 264 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 284 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  case  0b01000000000 :
+#line 292 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  GearShift_injectCommand(firstInt);
  break;
 
 
  case  0b01100000110 :
-
- aac_updateExternValue(WHEEL_SPEED, firstInt / 10);
-#line 276 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 303 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  break;
 
  case  0b01000000001 :
-
- if(dataBuffer[0] >  40 )
+#line 324 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+ if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral)
  {
- aac_stop();
-#line 289 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
- if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
 
  Clutch_setBiased(dataBuffer[0]);
 
  }
-
- }
-#line 300 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 336 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  break;
 
  case  0b11111110000 :
-#line 315 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 355 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  break;
-#line 348 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 388 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  case  0b01100000100 :
 
  break;
 
  case  0b01000000010 :
-
-
- if(aac_currentState == OFF && firstInt == 1
-
-
- )
- {
- aac_currentState = START;
- sendUpdatesSW();
- }
- else if(aac_currentState == READY && firstInt == 2){
- aac_currentState = START_RELEASE;
- sendUpdatesSW();
- }
-
- else if(firstInt == 0)
- {
- aac_stop();
- sendUpdatesSW();
- }
-
+#line 420 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  break;
 
  case  0b11111110000 :
-#line 395 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 446 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  break;
 
  case  0b01000000011 :
@@ -756,7 +639,7 @@ void main() {
  break;
 
  case  0b01000000101 :
-#line 420 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 471 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  default:
  break;
  }

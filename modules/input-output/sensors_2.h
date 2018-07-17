@@ -9,10 +9,10 @@
 #include "dspic.h"
 
 #define TEMP_SENSE_PIN 10
+#define GEAR_SENSOR_PIN 11
 
 unsigned int getTempSensor();
-
-void sendTempSensor(void);
+unsigned int getGearSensor();
 
 
 #endif //FIRMWARE_SENSORS_2_H

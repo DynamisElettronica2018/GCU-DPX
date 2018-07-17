@@ -236,7 +236,7 @@ void GearShift_nextStep_A(void) {
             } else {
 //                if (!gearShift_isUnsettingNeutral) {
                 if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60) {
-                    Clutch_set(90);
+                    Clutch_set(60);
                 }
                 Efi_setBlip();
                 Buzzer_Bip();

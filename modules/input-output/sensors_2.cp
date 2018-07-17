@@ -113,27 +113,24 @@ void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 13 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors_2.h"
+#line 14 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors_2.h"
 unsigned int getTempSensor();
-
-void sendTempSensor(void);
-#line 8 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/input-output/sensors_2.c"
+unsigned int getGearSensor();
+#line 6 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/input-output/sensors_2.c"
 unsigned int getTempSensor()
 {
  unsigned int analogValue = 0;
  unsigned int voltTempSensor = 0;
- unsigned int tempSensor = 0;
  analogValue = ADC1_Read( 10 );
  voltTempSensor = ((float)(analogValue * 5)/4095.0)*1000.0;
- tempSensor = (unsigned int)((voltTempSensor - 100)*0.1-40);
- return tempSensor;
+ voltTempSensor = (unsigned int)((voltTempSensor - 100)*0.1-40);
+ return voltTempSensor;
 }
-
-void sendTempSensor(void)
+unsigned int getGearSensor()
 {
- unsigned int temp = 0;
- temp = getTempSensor();
- Can_resetWritePacket();
- Can_addIntToWritePacket(temp);
- Can_write( 0b01100010110 );
+ unsigned int analogValue = 0;
+ unsigned int voltGearSensor = 0;
+ analogValue = ADC1_Read( 11 );
+ voltGearSensor = analogValue;
+ return voltGearSensor;
 }

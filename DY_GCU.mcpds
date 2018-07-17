@@ -1,6 +1,6 @@
 [DEVICE]
 Name=P30F6012A
-Clock=80000000
+Clock=10000000
 [MEMORY_MODEL]
 Value=0
 [BUILD_TYPE]
@@ -10,7 +10,7 @@ Value=0
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-Value=modules\aac\aac_defaults.h
+Value=DY_GCU.c
 =======
 Value=modules\aac\aac.c
 >>>>>>> aac_ottobiano
@@ -48,23 +48,32 @@ File11=libs\can.c
 File12=libs\dspic.c
 File13=libs\eeprom.c
 File14=modules\aac\aac.c
-File15=modules\input-output\sensors_2.c
-File16=modules\traction\traction.c
-File17=modules\autocross.c
-File18=modules\drs.c
-File19=modules\drsmotor.c
+File15=modules\traction\traction.c
+File16=modules\autocross.c
+File17=modules\drs.c
+File18=modules\drsmotor.c
+File19=modules\input-output\sensors_2.c
 [BINARIES]
 Count=0
 [IMAGES]
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=5
+Count=14
 File0=DY_GCU.c
 File1=modules\aac\aac.c
 File2=modules\aac\aac.h
 File3=modules\aac\aac_defaults.h
 File4=modules\traction\traction.h
+File5=modules\gearshift.c
+File6=modules\gearshift.h
+File7=modules\input-output\gearmotor.h
+File8=modules\gcu_rio.h
+File9=modules\input-output\efi.c
+File10=modules\input-output\efi.h
+File11=modules\traction\traction.c
+File12=modules\input-output\sensors_2.c
+File13=modules\input-output\sensors_2.h
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -116,13 +125,13 @@ File12=libs\can.h
 File13=libs\d_can.h
 File14=libs\dspic.h
 File15=libs\eeprom.h
-File16=modules\input-output\sensors_2.h
-File17=modules\traction\traction.h
-File18=modules\traction\traction_settings.h
-File19=modules\autocross.h
-File20=modules\autocross_defaults.h
-File21=modules\drs.h
-File22=modules\drsmotor.h
+File16=modules\traction\traction.h
+File17=modules\traction\traction_settings.h
+File18=modules\autocross.h
+File19=modules\autocross_defaults.h
+File20=modules\drs.h
+File21=modules\drsmotor.h
+File22=modules\input-output\sensors_2.h
 [PLDS]
 Count=0
 [Useses]

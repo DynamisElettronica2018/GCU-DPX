@@ -1,6 +1,4 @@
 #include "aac.h"
-#include "traction.h"
-
 aac_states aac_currentState;
 int aac_parameters[AAC_NUM_PARAMS];
 int aac_externValues[AAC_NUM_VALUES];
@@ -28,7 +26,6 @@ void aac_execute(void){
       switch (aac_currentState) {
         case START:
             Efi_setRPMLimiter();
-            accelerationFb = 1;
 
 //            Activate acceleration
             aac_currentState = READY;
@@ -39,7 +36,6 @@ void aac_execute(void){
             Clutch_set(100);
             return;
         case START_RELEASE:
-            accelerationFb = 2;
             aac_clutchValue = aac_parameters[RAMP_START];
             Clutch_set(aac_clutchValue);
             aac_dtRelease = aac_parameters[RAMP_TIME] / AAC_WORK_RATE_ms;

@@ -382,34 +382,7 @@ void aac_sendTimes(void);
 void aac_sendOneTime(time_id pos);
 
 void aac_sendAllTimes(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/traction/traction.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac_defaults.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
-#line 21 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/traction/traction.h"
-extern unsigned int tractionFb;
-extern unsigned int tractionVariable[11];
-
-typedef enum{
- TRACTION_0,
- TRACTION_1,
- TRACTION_2,
- TRACTION_3,
- TRACTION_4,
- TRACTION_5,
- TRACTION_6,
- TRACTION_7
-}traction_params;
-
-void traction_init(void);
-
-void tractionLoadDefaultsSettings(void);
-
-Efi_setTraction(unsigned int setState);
-#line 4 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+#line 2 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 aac_states aac_currentState;
 int aac_parameters[ 11 ];
 int aac_externValues[ 3 ];
@@ -418,7 +391,7 @@ char aac_sendingAll =  0 ;
 int aac_timesCounter;
 
 unsigned int accelerationFb = 0;
-#line 18 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+#line 16 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 float aac_clutchStep;
 float aac_clutchValue;
 
@@ -432,7 +405,6 @@ void aac_execute(void){
  switch (aac_currentState) {
  case START:
  Efi_setRPMLimiter();
- accelerationFb = 1;
 
 
  aac_currentState = READY;
@@ -443,7 +415,6 @@ void aac_execute(void){
  Clutch_set(100);
  return;
  case START_RELEASE:
- accelerationFb = 2;
  aac_clutchValue = aac_parameters[RAMP_START];
  Clutch_set(aac_clutchValue);
  aac_dtRelease = aac_parameters[RAMP_TIME] /  25 ;

@@ -462,8 +462,8 @@ L__GearShift_nextStep_A132:
 	GOTO	L__GearShift_nextStep_A90
 L__GearShift_nextStep_A133:
 L__GearShift_nextStep_A86:
-;gearshift.c,239 :: 		Clutch_set(90);
-	MOV.B	#90, W10
+;gearshift.c,239 :: 		Clutch_set(60);
+	MOV.B	#60, W10
 	CALL	_Clutch_set
 ;gearshift.c,238 :: 		if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60) {
 L__GearShift_nextStep_A91:
@@ -964,7 +964,7 @@ _GearShift_loadDefaultTimings:
 	MOV	#100, W0
 	MOV	W0, _gearShift_timings+26
 ;gearshift.c,405 :: 		gearShift_timings[UP_PUSH_3_4] = DEFAULT_UP_PUSH_3_4;
-	MOV	#170, W0
+	MOV	#100, W0
 	MOV	W0, _gearShift_timings+28
 ;gearshift.c,406 :: 		gearShift_timings[UP_PUSH_4_5] = DEFAULT_UP_PUSH_4_5;
 	MOV	#100, W0

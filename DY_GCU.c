@@ -17,8 +17,8 @@
 #include "gearshift.h"
 #include "stoplight.h"
 #include "sensors_2.h"
-#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
-#include "traction.h"
+//#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
+#include "traction.h"           //COMMENT THIS LINE TO DISABLE
 //#include "autocross.h"          //COMMENT THIS LINE TO DISABLE AUTOCROSS
 //*/
 //int tractionTemp = 0;
@@ -26,6 +26,9 @@
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
+  unsigned int tempSens;
+  unsigned int gearSens;
+
 
 #ifdef AAC_H
   extern aac_states aac_currentState;
@@ -76,9 +79,28 @@ void sendUpdatesSW(void)
     #ifdef AUTOCROSS_H
     Can_addIntToWritePacket(autocrossFb);
     #endif
-    Can_write(GCU_AUX_ID);
+    #ifndef DRS_H
+    Can_addIntToWritePacket(0);
+    #endif
+    #ifndef AUTOCROSS_H
+    Can_addIntToWritePacket(0);
+    #endif
+    Can_write(GCU_DEBUG_2_ID);
 
 }
+
+
+void sendSensors2(void)
+{
+
+    tempSens = getTempSensor();
+    gearSens = getGearSensor();
+    Can_resetWritePacket();
+    Can_addIntToWritePacket(tempSens);
+    Can_addIntToWritePAcket(gearSens);
+    Can_write(GCU_DEBUG_1_ID);
+}
+
 
 void GCU_isAlive(void) {
     Can_resetWritePacket();
@@ -105,23 +127,16 @@ void init(void) {
     Buzzer_init();
     sendUpdatesSW();
     //Sensors_init();
-
-
-    
   #ifdef AAC_H
     aac_init();
   #endif
-  
-
   #ifdef TRACTION_H
     traction_init();
   #endif
-  
   #ifdef AUTOCROSS_H
     //init autocross
     autocross_init();
   #endif
-
     //Generic 1ms timer
     setTimer(TIMER1_DEVICE, 0.001);
     setInterruptPriority(TIMER1_DEVICE, MEDIUM_PRIORITY);
@@ -132,6 +147,7 @@ void init(void) {
 void main() {
     init();
     Buzzer_Bip();
+    //Clutch_set(100);
     //ShiftTimings_load();
     while (1) 
     {
@@ -172,8 +188,7 @@ onTimer1Interrupt{
     if (timer1_counter2 >= 1000) {
         dSignalLed_switch(DSIGNAL_LED_RG14);
         //Sensors_send();
-        sendTempSensor();
-        
+
         /*Efi_setTraction(tractionTemp);
         tractionFb = (int)(tractionTemp/100.0);
         sendControlsSW();
@@ -190,7 +205,12 @@ onTimer1Interrupt{
       #ifdef AAC_H
         aac_sendTimes();
       #endif
+      #ifdef FIRMWARE_SENSORS_2_H
+         sendSensors2();
+      #endif
+
         timer1_counter3 = 0;
+        
     }
 
   #ifdef AAC_H
@@ -255,14 +275,21 @@ onCanInterrupt{
                   &&(firstInt == GEAR_COMMAND_NEUTRAL_DOWN
                      || firstInt == GEAR_COMMAND_NEUTRAL_UP
                      || firstInt == GEAR_COMMAND_DOWN))
-                autocross_stop();
+                aac_stop();
           #endif
             GearShift_injectCommand(firstInt);
             break;
          */
 
         case SW_GEARSHIFT_ID:
-          GearShift_injectCommand(firstInt);
+            #ifdef AAC_H
+            if (Clutch_get() != 100
+                  &&(firstInt == GEAR_COMMAND_NEUTRAL_DOWN
+                     || firstInt == GEAR_COMMAND_NEUTRAL_UP
+                     || firstInt == GEAR_COMMAND_DOWN))
+                aac_stop();
+            #endif
+             GearShift_injectCommand(firstInt);
           break;
 
 
@@ -279,22 +306,31 @@ onCanInterrupt{
           #ifdef AAC_H
             if(dataBuffer[0] > AAC_CLUTCH_NOISE_LEVEL)
             {
-                aac_stop();
+                if (accelerationFb > 0)
+                {
+                  aac_stop();
+                  accelerationFb = 0;
+                  sendUpdatesSW();
+                }
+
           #endif
-          #ifdef AUTOCROSS_H
+          /*#ifdef AUTOCROSS_H
             if(dataBuffer[0] > AUTOCROSS_CLUTCH_NOISE_LEVEL)
             {
                 autocross_stop();
-          #endif
-            if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
+                autocrossFb = 0;
+                sendUpdatesSW();
+          #endif*/
+            if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) 
+            {
               //Buzzer_Bip();
               Clutch_setBiased(dataBuffer[0]);
               //Clutch_set(dataBuffer[0]);
             }
-          #ifdef AAC_H
+          /*#ifdef AUTOCROSS_H
             }
-          #endif
-          #ifdef AUTOCROSS_H
+          #endif*/
+          #ifdef AAC_H
             }
           #endif
           break;
@@ -309,8 +345,12 @@ onCanInterrupt{
               {
                   autocross_currentState = START_RELEASE;
               }
-              else      //controllare cosa faccio per stop in autocross
+              else if(secondInt == 0)
+              {     //controllare cosa faccio per stop in autocross
                   autocross_Stop();
+                  autocrossFb = 0;
+                  sendUpdatesSW();
+              }
            #endif
            break;
 
@@ -358,17 +398,23 @@ onCanInterrupt{
                 )
                 {
                   aac_currentState = START;   //comment to disable AAC
+                  accelerationFb = 1;
                   sendUpdatesSW();
+                  Buzzer_bip();
                 }
               else if(aac_currentState == READY && firstInt == 2){
                   aac_currentState = START_RELEASE; //comment to disable AAC
+                  accelerationFb = 2;
                   sendUpdatesSW();
+                  Buzzer_bip();
               }
               //If none of the previous conditions are met, the aac is stopped
-              else if(firstInt == 0)
+              else
               {
                   aac_stop();
+                  accelerationFb = 0;
                   sendUpdatesSW();
+                  Buzzer_bip();
               }
             #endif
             break;
@@ -381,16 +427,21 @@ onCanInterrupt{
    //             && autocross_externValues[WHEEL_SPEED] <= 1
                 ){
                   autocross_currentState = START_AUTOCROSS; //comment to disable AAC
+                  autocrossFb = 1;
                   sendUpdatesSW();
               }
               else if(autocross_currentState == READY_AUTOCROSS && secondInt == 2){
                   autocross_currentState = START_RELEASE_AUTOCROSS; //comment to disable AAC
+                  autocrossFb = 2;
                   sendUpdatesSW();
               }
               //If none of the previous conditions are met, the autocross is stopped
               else
+              {
                   autocross_stop();
-                  sendUpdatesSW();
+                  /*autocrossFb = 0;
+                  sendUpdatesSW();*/
+               }
           #endif
           break;
 
