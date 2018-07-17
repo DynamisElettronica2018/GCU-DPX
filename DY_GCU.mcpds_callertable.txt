@@ -59,6 +59,8 @@ main
 		Buzzer_init
 			setTimer
 			setInterruptPriority
+		autocross_init
+			autocross_loadDefaultParams
 		setTimer
 		setInterruptPriority
 	Buzzer_Bip
@@ -106,6 +108,14 @@ CAN_Interrupt
 			GearShift_down
 		Efi_setRPMLimiter
 		Efi_unsetRPMLimiter
+	autocross_updateExternValue
+	autocross_stop
+		sendUpdatesSW
+			Can_resetWritePacket
+			Can_write
+				CAN1Write
+					CAN1IDToRegs
+				Can_getWriteFlags
 	Clutch_setBiased
 		Clutch_set
 timer4_interrupt
@@ -123,7 +133,19 @@ timer1_interrupt
 			Can_addByteToWritePacket
 		Clutch_get
 		Can_write
-			CAN1Write
-				CAN1IDToRegs
-			Can_getWriteFlags
 	dSignalLed_switch
+	autocross_execute
+		Efi_setRPMLimiter
+		Clutch_set
+		sendUpdatesSW
+		Clutch_get
+		Efi_unsetRPMLimiter
+		Buzzer_Bip
+		autocross_stop
+		GearShift_up
+		_Float2Longint
+		_Long2Float
+		_Mul_FP
+		_Div_FP
+		_Sub_FP
+			_AddSub_FP

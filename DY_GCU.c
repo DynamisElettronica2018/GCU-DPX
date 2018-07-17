@@ -15,6 +15,7 @@
 #include "enginecontrol.h"
 #include "gearshift.h"
 #include "stoplight.h"
+#include "autocross.h"
 //*/
 
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
@@ -24,7 +25,16 @@ unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� 
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
-
+#ifdef AUTOCROSS_H
+  //dichiarazioni variabili AUTOCROSS
+  extern unsigned int autocrossFb;
+  extern autocross_states autocross_currentState;
+  extern int autocross_externValues[AUTOCROSS_NUM_VALUES];
+  extern int autocross_parameters[AUTOCROSS_NUM_PARAMS];
+  //extern bool autocross_sendingAll = false;
+  extern int autocross_timesCounter;
+  int timer1_autocross_counter = 0;
+#endif
 
 void GCU_isAlive(void) {
     Can_resetWritePacket();
@@ -33,10 +43,7 @@ void GCU_isAlive(void) {
     Can_addIntToWritePacket(0);
     Can_addIntToWritePacket(0);
     Can_write(GCU_CLUTCH_FB_SW_ID);
-
 }
-
-
 
 void init(void) {
     EngineControl_init();
@@ -48,6 +55,11 @@ void init(void) {
     GearShift_init();
     StopLight_init();
     Buzzer_init();
+
+    #ifdef AUTOCROSS_H
+        //init autocross
+        autocross_init();
+    #endif
     //Generic 1ms timer
     setTimer(TIMER1_DEVICE, 0.001);
     setInterruptPriority(TIMER1_DEVICE, MEDIUM_PRIORITY);
@@ -103,6 +115,14 @@ onTimer1Interrupt{
     }
 
 
+    #ifdef AUTOCROSS_H
+        timer1_autocross_counter += 1;
+        if(timer1_autocross_counter == AUTOCROSS_WORK_RATE_ms){
+            autocross_execute();
+            timer1_autocross_counter = 0;
+        }
+    #endif
+
 }
 
 onCanInterrupt{
@@ -140,18 +160,54 @@ onCanInterrupt{
             break;
 
         case SW_GEARSHIFT_ID:
-          GearShift_injectCommand(firstInt);
-          break;
+            #ifdef AUTOCROSS_h
+                if (Clutch_get() != 100
+                     &&(firstInt == GEAR_COMMAND_NEUTRAL_DOWN
+                     || firstInt == GEAR_COMMAND_NEUTRAL_UP
+                     || firstInt == GEAR_COMMAND_DOWN)
+                    && autocrossFb > 0)
+                autocross_stop();
+            #endif
+            GearShift_injectCommand(firstInt);
+            break;
+
+        case EFI_TRACTION_CONTROL_ID:
+          #ifdef AUTOCROSS_H
+            autocross_updateExternValue(WHEEL_SPEED_AUTOCROSS, firstInt / 10);
+          #endif
+            break;
 
 
         case SW_CLUTCH_TARGET_GCU_ID:
-
+            #ifdef AUTOCROSS_H
+            if(dataBuffer[0] > AUTOCROSS_CLUTCH_NOISE_LEVEL && autocrossFb > 0)
+            {
+                autocross_stop();
+            }
+            #endif
             if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
               //Buzzer_Bip();
               Clutch_setBiased(dataBuffer[0]);
               //Clutch_set(dataBuffer[0]);
             }
             break;
+
+        case SW_AUX_ID:
+           #ifdef AUTOCROSS_H
+              if(autocross_currentState == OFF_AUTOCROSS && secondInt == 1)
+              {
+                 autocross_currentState = START_AUTOCROSS;
+              }
+              else if (autocross_currentState == READY_AUTOCROSS && secondInt == 2)
+              {
+                  autocross_currentState = START_RELEASE_AUTOCROSS;
+              }
+              else if(secondInt == 0)
+              {     //controllare cosa faccio per stop in autocross
+                  autocross_Stop();
+              }
+           #endif
+           break;
 
         case EFI_HALL_ID:
               //salvare dati in variabili globali
