@@ -3737,12 +3737,12 @@ gearshift_timings
 gearshift_up
 get_fosc_khz
 get_fosc_per_cyc
+getaccelerationfb
 getanalogvalue
 getexacttimerprescaler
 getexternalinterruptedge
 getminimumanalogclockconversion
 getnumberdigitcount
-gettempsensor
 gettimerperiod
 gettimerprescaler
 glcd_box
@@ -7428,7 +7428,6 @@ seg2phts_c2cfg2_bit
 sen
 sen
 sen_bit
-sendtempsensor
 sendupdatessw
 setallpinasdigital
 setanalogdataoutputformat

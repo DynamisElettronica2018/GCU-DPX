@@ -144,27 +144,6 @@ void Buzzer_init(void);
 void Buzzer_tick(void);
 
 void Buzzer_Bip(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/d_can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 23 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors.h"
-void Sensors_init(void);
-
-void Sensors_tick(void);
-
-void Sensors_read(void);
-
-void Sensors_nextPin(void);
-
-void Sensors_send(void);
-
-void Sensors_sampleFanCurrent(unsigned int value);
-
-void Sensors_sampleH2OPumpCurrent(unsigned int value);
-
-void Sensors_sampleFuelPumpCurrent(unsigned int value);
-
-void Sensors_sampleGCUTemp(unsigned int value);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
 #line 14 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
@@ -361,6 +340,10 @@ void sendUpdatesSW(unsigned int valCode);
 #line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
 void sendUpdatesSW(unsigned int valCode);
 #line 28 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
+extern unsigned int accelerationFb;
+
+unsigned int getAccelerationFb();
+
 typedef enum{
  OFF,
  START,
@@ -431,6 +414,13 @@ char bello = 0;
 char isSteeringWheelAvailable;
 
 
+
+
+
+
+
+
+
  extern unsigned int accelerationFb;
  extern aac_states aac_currentState;
  extern int aac_externValues[ 3 ];
@@ -444,8 +434,6 @@ unsigned int gearShift_timings[ TIMES_LAST ];
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
-
-
 void GCU_isAlive(void) {
  Can_resetWritePacket();
  Can_addIntToWritePacket((unsigned int) 99 );
@@ -453,8 +441,8 @@ void GCU_isAlive(void) {
  Can_addIntToWritePacket(0);
  Can_addIntToWritePacket(0);
  Can_write( 0b01100010000 );
-
 }
+
 void init(void) {
  EngineControl_init();
  dSignalLed_init();
@@ -473,7 +461,9 @@ void init(void) {
 
  setTimer( 1 , 0.001);
  setInterruptPriority( 1 ,  4 );
+
 }
+
 
 void main() {
  init();
@@ -517,10 +507,11 @@ void main() {
  if (timer1_counter2 >= 1000) {
  dSignalLed_switch( 0 );
 
+
  timer1_counter2 = 0;
  }
  if (timer1_counter3 >= 10) {
-#line 121 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 129 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  timer1_counter3 = 0;
  }
 
@@ -564,10 +555,8 @@ void main() {
  break;
 
  case  0b01000000100 :
-
  EngineControl_resetStartCheck();
  EngineControl_start();
-
  break;
 
  case  0b01000000000 :
@@ -575,7 +564,8 @@ void main() {
  if (Clutch_get() != 100
  &&(firstInt ==  100 
  || firstInt ==  50 
- || firstInt ==  200 ))
+ || firstInt ==  200 )
+ && accelerationFb > 0)
  aac_stop();
 
  GearShift_injectCommand(firstInt);
@@ -586,7 +576,7 @@ void main() {
  aac_updateExternValue(WHEEL_SPEED, firstInt / 10);
 
  break;
-#line 197 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 204 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  case  0b01000000001 :
 
  if(dataBuffer[0] >  40 )
@@ -594,8 +584,6 @@ void main() {
  if (accelerationFb > 0)
  {
  aac_stop();
- accelerationFb = 0;
- sendUpdatesSW( 1 );
  }
 
 
@@ -613,6 +601,7 @@ void main() {
  case  0b01100000100 :
 
  break;
+
 
  case  0b01000000010 :
 
@@ -632,11 +621,11 @@ void main() {
 
  else
  {
+ if (accelerationFb > 0)
  aac_stop();
  }
 
  break;
-
  default:
  break;
  }

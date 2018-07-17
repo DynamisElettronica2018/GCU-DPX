@@ -25,6 +25,10 @@
 
 //float AAC_WORK_RATE_ms = 25;
 
+extern unsigned int accelerationFb;
+
+unsigned int getAccelerationFb();
+
 typedef enum{
     OFF,
     START,

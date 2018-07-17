@@ -11,18 +11,25 @@
 #include "clutchmotor.h"
 #include "efi.h"
 #include "buzzer.h"
-#include "sensors.h"
 #include "clutch.h"
 #include "enginecontrol.h"
 #include "gearshift.h"
 #include "stoplight.h"
 #include "sw.h"
 #include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
+
 //*/
 
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
+
+//TODO///////
+//uncommentare il led 14 nel main e commentarlo/rimuoverl in onCanInterrupt
+
+
+
+
 
 #ifdef AAC_H
   extern unsigned int accelerationFb;
@@ -38,8 +45,6 @@ unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� 
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
-
-
 void GCU_isAlive(void) {
     Can_resetWritePacket();
     Can_addIntToWritePacket((unsigned int)CAN_COMMAND_GCU_IS_ALIVE);
@@ -47,8 +52,8 @@ void GCU_isAlive(void) {
     Can_addIntToWritePacket(0);
     Can_addIntToWritePacket(0);
     Can_write(GCU_CLUTCH_FB_SW_ID);
-
 }
+
 void init(void) {
     EngineControl_init();
     dSignalLed_init();
@@ -67,7 +72,9 @@ void init(void) {
     //Generic 1ms timer
     setTimer(TIMER1_DEVICE, 0.001);
     setInterruptPriority(TIMER1_DEVICE, MEDIUM_PRIORITY);
+
 }
+
 
 void main() {
     init();
@@ -110,6 +117,7 @@ onTimer1Interrupt{
 //    if (timer1_counter2 >= 166) {
     if (timer1_counter2 >= 1000) {
         dSignalLed_switch(DSIGNAL_LED_RG14);
+
         
         timer1_counter2 = 0;
       }
@@ -161,10 +169,8 @@ onCanInterrupt{
             break;
 
         case SW_FIRE_GCU_ID:
-
             EngineControl_resetStartCheck();           //resetCheckCounter = 0
             EngineControl_start();                     //debug on LED D2 board
-            //Buzzer_Bip();
             break;
 
         case SW_GEARSHIFT_ID:
@@ -172,7 +178,8 @@ onCanInterrupt{
             if (Clutch_get() != 100
                   &&(firstInt == GEAR_COMMAND_NEUTRAL_DOWN
                      || firstInt == GEAR_COMMAND_NEUTRAL_UP
-                     || firstInt == GEAR_COMMAND_DOWN))
+                     || firstInt == GEAR_COMMAND_DOWN) 
+                  && accelerationFb > 0)
                 aac_stop();
           #endif
             GearShift_injectCommand(firstInt);
@@ -201,8 +208,6 @@ onCanInterrupt{
                 if (accelerationFb > 0)
                 {
                   aac_stop();
-                  accelerationFb = 0;
-                  sendUpdatesSW(ACC_CODE);
                 }
 
           #endif
@@ -220,6 +225,7 @@ onCanInterrupt{
         case EFI_HALL_ID:
               //salvare dati in variabili globali
               break;
+
 
         case SW_ACCELERATION_GCU_ID:
           #ifdef AAC_H
@@ -239,11 +245,11 @@ onCanInterrupt{
               //If none of the previous conditions are met, the aac is stopped
               else
               {
-                aac_stop();
+                if (accelerationFb > 0)
+                   aac_stop();
               }
           #endif
-          break;
-              
+            break;
         default:
           break;
     }

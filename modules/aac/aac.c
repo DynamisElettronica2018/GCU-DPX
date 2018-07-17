@@ -16,6 +16,11 @@ int aac_targetGear = -1;
 float aac_clutchStep;   //step for each "frame" of aac
 float aac_clutchValue;
 
+unsigned int getAccelerationFb()
+{
+    return accelerationFb;
+}
+
 
 void aac_init(void){
     aac_currentState = OFF;
@@ -26,6 +31,7 @@ void aac_execute(void){
     switch (aac_currentState) {
         case START:
             Efi_setRPMLimiter();
+//            Activate acceleration mode
             aac_currentState = READY;
             aac_clutchValue = 100;
             Clutch_set((unsigned int)aac_clutchValue);

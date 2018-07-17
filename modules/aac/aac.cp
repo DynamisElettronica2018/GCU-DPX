@@ -286,6 +286,10 @@ int Gearshift_get_time(shiftStep step);
 #line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
 void sendUpdatesSW(unsigned int valCode);
 #line 28 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
+extern unsigned int accelerationFb;
+
+unsigned int getAccelerationFb();
+
 typedef enum{
  OFF,
  START,
@@ -362,6 +366,11 @@ unsigned int accelerationFb = 0;
 float aac_clutchStep;
 float aac_clutchValue;
 
+unsigned int getAccelerationFb()
+{
+ return accelerationFb;
+}
+
 
 void aac_init(void){
  aac_currentState = OFF;
@@ -372,6 +381,7 @@ void aac_execute(void){
  switch (aac_currentState) {
  case START:
  Efi_setRPMLimiter();
+
  aac_currentState = READY;
  aac_clutchValue = 100;
  Clutch_set((unsigned int)aac_clutchValue);
@@ -425,24 +435,24 @@ void aac_execute(void){
  default: return;
  }
 }
-#line 113 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+#line 119 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 void aac_loadDefaultParams(void){
 
 
  aac_parameters[RAMP_START] =  70 ;
  aac_parameters[RAMP_END] =  0 ;
  aac_parameters[RAMP_TIME] =  250 ;
- aac_parameters[RPM_LIMIT_1_2] =  11647 ;
- aac_parameters[RPM_LIMIT_2_3] =  11506 ;
- aac_parameters[RPM_LIMIT_3_4] =  11383 ;
- aac_parameters[RPM_LIMIT_4_5] =  11362 ;
- aac_parameters[SPEED_LIMIT_1_2] =  46 ;
- aac_parameters[SPEED_LIMIT_2_3] =  61 ;
- aac_parameters[SPEED_LIMIT_3_4] =  77 ;
- aac_parameters[SPEED_LIMIT_4_5] =  113 ;
+ aac_parameters[RPM_LIMIT_1_2] =  11300 ;
+ aac_parameters[RPM_LIMIT_2_3] =  11300 ;
+ aac_parameters[RPM_LIMIT_3_4] =  11300 ;
+ aac_parameters[RPM_LIMIT_4_5] =  11300 ;
+ aac_parameters[SPEED_LIMIT_1_2] =  47 ;
+ aac_parameters[SPEED_LIMIT_2_3] =  65 ;
+ aac_parameters[SPEED_LIMIT_3_4] =  80 ;
+ aac_parameters[SPEED_LIMIT_4_5] =  80 ;
 
 }
-#line 136 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+#line 142 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 void aac_stop(void){
  if(aac_currentState != OFF)
  aac_currentState = STOPPING;

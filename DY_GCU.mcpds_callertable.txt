@@ -111,12 +111,6 @@ CAN_Interrupt
 			GearShift_down
 		Efi_setRPMLimiter
 		Efi_unsetRPMLimiter
-	sendUpdatesSW
-		Can_resetWritePacket
-		Can_write
-			CAN1Write
-				CAN1IDToRegs
-			Can_getWriteFlags
 	Clutch_setBiased
 		Clutch_set
 	Buzzer_Bip
@@ -135,11 +129,16 @@ timer1_interrupt
 			Can_addByteToWritePacket
 		Clutch_get
 		Can_write
+			CAN1Write
+				CAN1IDToRegs
+			Can_getWriteFlags
 	dSignalLed_switch
 	aac_execute
 		Efi_setRPMLimiter
 		Clutch_set
 		sendUpdatesSW
+			Can_resetWritePacket
+			Can_write
 		Clutch_get
 		Efi_unsetRPMLimiter
 		Buzzer_Bip
