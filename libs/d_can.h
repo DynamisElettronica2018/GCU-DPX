@@ -17,6 +17,14 @@
 #define GCU_LAUNCH_CONTROL_EFI_ID       0b10100000001 //1281       MANDATO SOLO DA GCU AD EFI!!!!
 #define GCU_CLUTCH_FB_SW_ID             0b01100010000 //784
 #define GCU_GEAR_TIMING_TELEMETRY_ID    0b11100001101 //1624
+#define GCU_FEEDBACK_ID					0b01100010101 //793		  /**FEEDBACK CODES**/
+/**FEEDBACK CODES**/
+#define ACC_CODE        1
+#define AUTOX_CODE      2
+#define TRACTION_CODE   3
+#define DRS_CODE        4
+#define ANTISTALL_CODE	5
+
 
 /***** COMANDI GCU ****/
 #define CAN_COMMAND_GCU_IS_ALIVE                99
