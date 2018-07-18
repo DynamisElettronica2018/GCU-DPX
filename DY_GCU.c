@@ -24,7 +24,10 @@ unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� 
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
-
+#ifdef SENSORS_H
+    int timer1_sensors_counter = 0;
+    int timer2_sensors_counter = 0;
+#endif
 
 void GCU_isAlive(void) {
     Can_resetWritePacket();
@@ -76,11 +79,15 @@ onTimer1Interrupt{
     timer1_counter2 += 1;
     timer1_counter3 += 1;
     timer1_counter4 += 1;
+    #ifdef SENSORS_H
+           timer2_sensors_counter += 1;
+           //timer1e_sensors_counter += 1;
+    #endif
     //STUFF FOR REPEATED SHIFT
 
     //*/
 
-    if (timer1_counter0 > 25) {
+    if (timer1_counter0 >= 25) {
         if (!EngineControl_isStarting()) {
             EngineControl_stop();
             //Buzzer_Bip();
@@ -98,11 +105,26 @@ onTimer1Interrupt{
         
         timer1_counter2 = 0;
       }
+
     if (timer1_counter3 >= 10) {
         timer1_counter3 = 0;
     }
 
+    #ifdef SENSORS_H
+    if (timer2_sensors_counter >= 10)
+    {
+        sendSensorsDebug1();
+        sendSensorsDebug2();
+        timer2_sensors_counter = 0;
+    }
 
+    /*
+    if (timer1_sensors_counter >= 100)
+    {
+        sendSensorsDebug1();
+    }
+    */
+    #endif
 }
 
 onCanInterrupt{

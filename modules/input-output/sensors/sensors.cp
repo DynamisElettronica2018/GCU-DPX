@@ -1,5 +1,5 @@
-#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/input-output/sensors_2.c"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors_2.h"
+#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/input-output/sensors/sensors.c"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors/sensors.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/d_signalled.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
@@ -113,27 +113,117 @@ void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 13 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors_2.h"
+#line 20 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors/sensors.h"
 unsigned int getTempSensor();
+unsigned int getDRSSensor();
+unsigned int getFuelSensor();
+unsigned int getGearSensor();
+unsigned int getClutchSensor();
+unsigned int getHPumpSensor();
+unsigned int getFanSensor();
 
-void sendTempSensor(void);
-#line 8 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/input-output/sensors_2.c"
+void sendSensorsDebug1(void);
+
+void sendSensorsDebug2(void);
+#line 18 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/input-output/sensors/sensors.c"
+unsigned int sensors_fanCurrent = 0,
+ sensors_hpumpCurrent = 0,
+ sensors_gearCurrent = 0,
+ sensors_fuelCurrent = 0,
+ sensors_clutchCurrent = 0,
+ sensors_drsCurrent = 0,
+ sensors_gcuTemp = 0;
+
 unsigned int getTempSensor()
 {
  unsigned int analogValue = 0;
  unsigned int voltTempSensor = 0;
- unsigned int tempSensor = 0;
+ unsigned int convTempSensor = 0;
  analogValue = ADC1_Read( 10 );
- voltTempSensor = ((float)(analogValue * 5)/4095.0)*1000.0;
- tempSensor = (unsigned int)((voltTempSensor - 100)*0.1-40);
- return tempSensor;
+ sensors_gcuTemp = sensors_gcuTemp * 0.95 + analogValue * 0.05;
+ voltTempSensor = ((float)(sensors_gcuTemp * 5)/4095.0)*1000.0;
+ convTempSensor = (unsigned int)((voltTempSensor - 100)*0.1-40);
+ return convTempSensor;
+}
+unsigned int getDRSSensor()
+{
+ unsigned int convDrsSensor = 0;
+ unsigned int analogValue = 0;
+ analogValue = ADC1_Read( 8 );
+ sensors_drsCurrent = sensors_drsCurrent * 0.95 + analogValue * 0.05;
+ return convDrsSensor;
+}
+unsigned int getFuelSensor()
+{
+ unsigned int convFuelSensor = 0;
+ unsigned int analogValue = 0;
+ analogValue = ADC1_Read( 4 );
+ sensors_fuelCurrent = sensors_fuelCurrent * 0.95 + analogValue * 0.05;
+ return convFuelSensor;
+}
+unsigned int getGearSensor()
+{
+ unsigned int convGearSensor = 0;
+ unsigned int analogValue = 0;
+ analogValue = ADC1_Read( 11 );
+ sensors_gearCurrent = sensors_gearCurrent * 0.95 + analogValue * 0.05;
+ return convGearSensor;
+}
+unsigned int getClutchSensor()
+{
+ unsigned int convClutchSensor = 0;
+ unsigned int analogValue = 0;
+ analogValue = ADC1_Read( 2 );
+ sensors_clutchCurrent = sensors_clutchCurrent * 0.95 + analogValue * 0.05;
+ return convClutchSensor;
+}
+unsigned int getHPumpSensor()
+{
+ unsigned int convHPumpSensor = 0;
+ unsigned int analogValue = 0;
+ analogValue = ADC1_Read( 5 );
+ sensors_hpumpCurrent = sensors_hpumpCurrent * 0.95 + analogValue * 0.05;
+ return convHPumpSensor;
+}
+unsigned int getFanSensor()
+{
+ unsigned int convFanSensor = 0;
+ unsigned int analogValue = 0;
+ analogValue = ADC1_Read( 3 );
+ sensors_fanCurrent = sensors_fanCurrent * 0.95 + analogValue * 0.05;
+ return convFanSensor;
 }
 
-void sendTempSensor(void)
+void sendSensorsDebug1(void)
 {
  unsigned int temp = 0;
+ unsigned int drs = 0;
+ unsigned int fuel = 0;
  temp = getTempSensor();
+ drs = getDRSSensor();
+ fuel = getFuelSensor();
  Can_resetWritePacket();
  Can_addIntToWritePacket(temp);
+ Can_addIntToWritePacket(drs);
+ Can_addIntToWritePacket(fuel);
+ Can_addIntToWritePacket(0);
  Can_write( 0b01100010110 );
+}
+
+void sendSensorsDebug2(void)
+{
+ unsigned int gear = 0;
+ unsigned int clutch = 0;
+ unsigned int hPump = 0;
+ unsigned int fan = 0;
+ gear = getGearSensor();
+ clutch = getClutchSensor();
+ hPump = getHPumpSensor();
+ fan = getFanSensor();
+ Can_resetWritePacket();
+ Can_addIntToWritePacket(gear);
+ Can_addIntToWritePacket(clutch);
+ Can_addIntToWritePacket(hPump);
+ Can_addIntToWritePacket(fan);
+ Can_write( 0b01100010111 );
 }

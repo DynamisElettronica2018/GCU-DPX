@@ -360,9 +360,7 @@ char isSteeringWheelAvailable;
 unsigned int gearShift_timings[ TIMES_LAST ];
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
-
-
-
+#line 32 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 void GCU_isAlive(void) {
  Can_resetWritePacket();
  Can_addIntToWritePacket((unsigned int) 99 );
@@ -413,11 +411,8 @@ void main() {
  timer1_counter2 += 1;
  timer1_counter3 += 1;
  timer1_counter4 += 1;
-
-
-
-
- if (timer1_counter0 > 25) {
+#line 90 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+ if (timer1_counter0 >= 25) {
  if (!EngineControl_isStarting()) {
  EngineControl_stop();
 
@@ -435,11 +430,11 @@ void main() {
 
  timer1_counter2 = 0;
  }
+
  if (timer1_counter3 >= 10) {
  timer1_counter3 = 0;
  }
-
-
+#line 128 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 }
 
  void CAN_Interrupt() iv IVT_ADDR_C1INTERRUPT {
