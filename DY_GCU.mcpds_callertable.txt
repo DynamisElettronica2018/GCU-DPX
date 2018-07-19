@@ -60,8 +60,13 @@ main
 			setTimer
 			setInterruptPriority
 		DrsMotor_init
-			setTimer
 			DrsMotorDX_setupPWM
+				getTimerPeriod
+				_Long2Float
+				_Mul_FP
+				_Float2Longint
+				_Div_FP
+			DrsMotorSX_setupPWM
 				getTimerPeriod
 				_Long2Float
 				_Mul_FP
@@ -116,6 +121,32 @@ CAN_Interrupt
 		Efi_unsetRPMLimiter
 	Clutch_setBiased
 		Clutch_set
+	Drs_open
+		Drs_setDX
+			DrsMotor_setPositionDX
+				_Long2Float
+				_Mul_FP
+				_AddSub_FP
+				_Float2Longint
+		Drs_setSX
+			DrsMotor_setPositionSX
+				_Long2Float
+				_Mul_FP
+				_AddSub_FP
+				_Float2Longint
+		sendUpdatesSW
+			Can_resetWritePacket
+			Can_addIntToWritePacket
+				Can_addByteToWritePacket
+			Can_write
+				CAN1Write
+					CAN1IDToRegs
+				Can_getWriteFlags
+	Buzzer_Bip
+	Drs_close
+		Drs_setDX
+		Drs_setSX
+		sendUpdatesSW
 timer4_interrupt
 	Buzzer_tick
 timer3_interrupt
@@ -129,10 +160,6 @@ timer1_interrupt
 	GCU_isAlive
 		Can_resetWritePacket
 		Can_addIntToWritePacket
-			Can_addByteToWritePacket
 		Clutch_get
 		Can_write
-			CAN1Write
-				CAN1IDToRegs
-			Can_getWriteFlags
 	dSignalLed_switch

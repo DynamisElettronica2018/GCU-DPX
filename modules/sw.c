@@ -1,4 +1,5 @@
 #include "sw.h"
+#include "drs.h"
 
 void sendUpdatesSW(unsigned int valCode)
 {
@@ -32,5 +33,5 @@ void sendUpdatesSW(unsigned int valCode)
       default:
            break;
     }
-    Can_write(GCU_DEBUG_2_ID);
+    Can_write(GCU_FEEDBACK_ID);
 }

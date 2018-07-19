@@ -114,15 +114,50 @@ void Can_clearInterrupt(void);
 void Can_initInterrupt(void);
 #line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
 void sendUpdatesSW(unsigned int valCode);
-#line 3 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/sw.c"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drs.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drsmotor.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drsmotor.h"
+void DrsMotor_init(void);
+
+void DrsMotorDX_setupPWM(void);
+
+void DrsMotorSX_setupPWM(void);
+
+void DrsMotor_setPositionDX(unsigned char percentage);
+
+void DrsMotor_setPositionSX(unsigned char percentage);
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drs.h"
+extern unsigned int drsFb;
+
+void Drs_open(void);
+
+void Drs_close(void);
+
+void Drs_setDX(unsigned char percentage);
+
+void Drs_setSX(unsigned char percentage);
+
+unsigned char Drs_getDX(void);
+
+unsigned char Drs_getSX(void);
+
+unsigned char Drs_get(void);
+#line 4 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/sw.c"
 void sendUpdatesSW(unsigned int valCode)
 {
  Can_resetWritePacket();
  switch (valCode)
  {
-#line 32 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/sw.c"
+#line 28 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/sw.c"
+ case  4 :
+ Can_addIntToWritePacket( 4 );
+ Can_addIntToWritePacket(drsFb);
+ break;
+
  default:
  break;
  }
- Can_write( 0b01100010111 );
+ Can_write( 0b01100011001 );
 }

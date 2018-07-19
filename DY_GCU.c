@@ -15,6 +15,7 @@
 #include "stoplight.h"
 #include "drsmotor.h"
 #include "drs.h"
+#include "sw.h"
 //*/
 
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
@@ -23,7 +24,7 @@ char isSteeringWheelAvailable;
 unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� spazio e cos� possiamo fare fino a 30 step di cambiata, molto powa
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
-
+int x = 0;
 #ifdef DRS_H
   extern unsigned int drs_currentState;
   extern unsigned int drsFb = 0;
@@ -102,7 +103,23 @@ onTimer1Interrupt{
         
         timer1_counter2 = 0;
       }
-    if (timer1_counter3 >= 10) {
+    if (timer1_counter3 >= 1000) {
+       if (x == 0)
+       {
+          //DrsMotor_setPositionDX(100);
+          //DrsMotor_setPositionSX(0);
+          //Drs_setSX(0);
+          //Drs_open();
+          x = 1;
+       }
+       else if (x == 1)
+       {
+          //DrsMotor_setPositionDX(0);
+          //DrsMotor_setPositionSX(100);
+          //Drs_setSX(100);
+          //Drs_close();
+          x = 0;
+       }
         timer1_counter3 = 0;
     }
 

@@ -91,17 +91,17 @@ unsigned int DRSMOTOR_PWM_MIN_VALUE;
 }
 
 void DrsMotor_init(void) {
- setTimer( 3 ,  0.020 );
+
  DrsMotorDX_setupPWM();
- DrsMotorDX_setupPWM();
+ DrsMotorSX_setupPWM();
 }
 
 void DrsMotorDX_setupPWM(void) {
  OC1CON = 0x6;
- DRSMOTOR_PWM_PERIOD_VALUE = getTimerPeriod( 0.020 ,  T3CONbits.TCKPS );
+ DRSMOTOR_PWM_PERIOD_VALUE = getTimerPeriod( 0.020 ,  T2CONbits.TCKPS );
 
  DRSMOTOR_PWM_MAX_VALUE = (unsigned int) (DRSMOTOR_PWM_PERIOD_VALUE *
- ( 10  / 100.0));
+ ( 11  / 100.0));
  DRSMOTOR_PWM_MIN_VALUE = (unsigned int) (DRSMOTOR_PWM_PERIOD_VALUE *
  ( 5  / 100.0));
  DRSMOTOR_PERCENTAGE_STEP = (DRSMOTOR_PWM_MAX_VALUE - DRSMOTOR_PWM_MIN_VALUE) / 100.0;
@@ -111,26 +111,15 @@ void DrsMotorDX_setupPWM(void) {
 
 void DrsMotorSX_setupPWM(void) {
  OC2CON = 0x6;
- DRSMOTOR_PWM_PERIOD_VALUE = getTimerPeriod( 0.020 ,  T3CONbits.TCKPS );
+ DRSMOTOR_PWM_PERIOD_VALUE = getTimerPeriod( 0.020 ,  T2CONbits.TCKPS );
 
  DRSMOTOR_PWM_MAX_VALUE = (unsigned int) (DRSMOTOR_PWM_PERIOD_VALUE *
- ( 10  / 100.0));
+ ( 11  / 100.0));
  DRSMOTOR_PWM_MIN_VALUE = (unsigned int) (DRSMOTOR_PWM_PERIOD_VALUE *
  ( 5  / 100.0));
  DRSMOTOR_PERCENTAGE_STEP = (DRSMOTOR_PWM_MAX_VALUE - DRSMOTOR_PWM_MIN_VALUE) / 100.0;
  OC2R = DRSMOTOR_PWM_MIN_VALUE;
 
-}
-
-void DrshMotor_setPositionDX(unsigned char percentage) {
- unsigned int pwmValue;
- pwmValue = (unsigned int) ((percentage * DRSMOTOR_PERCENTAGE_STEP) + DRSMOTOR_PWM_MIN_VALUE);
- if (pwmValue > DRSMOTOR_PWM_MAX_VALUE) {
- pwmValue = DRSMOTOR_PWM_MAX_VALUE;
- } else if (pwmValue < DRSMOTOR_PWM_MIN_VALUE) {
- pwmValue = DRSMOTOR_PWM_MIN_VALUE;
- }
- OC1R = pwmValue;
 }
 
 void DrsMotor_setPositionDX(unsigned char percentage) {
@@ -141,5 +130,16 @@ void DrsMotor_setPositionDX(unsigned char percentage) {
  } else if (pwmValue < DRSMOTOR_PWM_MIN_VALUE) {
  pwmValue = DRSMOTOR_PWM_MIN_VALUE;
  }
- OC2R = pwmValue;
+ OC1RS = pwmValue;
+}
+
+void DrsMotor_setPositionSX(unsigned char percentage) {
+ unsigned int pwmValue;
+ pwmValue = (unsigned int) ((percentage * DRSMOTOR_PERCENTAGE_STEP) + DRSMOTOR_PWM_MIN_VALUE);
+ if (pwmValue > DRSMOTOR_PWM_MAX_VALUE) {
+ pwmValue = DRSMOTOR_PWM_MAX_VALUE;
+ } else if (pwmValue < DRSMOTOR_PWM_MIN_VALUE) {
+ pwmValue = DRSMOTOR_PWM_MIN_VALUE;
+ }
+ OC2RS = pwmValue;
 }

@@ -4,8 +4,9 @@
 
 #include "drs.h"
 #include "sw.h"
+#include "buzzer.h"
 
-unsigned char drs_currentValue = 0;
+unsigned int drs_currentValue = 0;
 unsigned char drs_currentValueSX = 0;
 unsigned char drs_currentValueDX = 0;
 unsigned int drsFb = 0;
@@ -14,18 +15,22 @@ void Drs_open(void)
 {
     Drs_setDX(DRS_SERVO_DX_OPEN);
     Drs_setSX(DRS_SERVO_SX_OPEN);
-    drs_currentValue = Drs_get();
+    drs_currentValue = 1;
+    //drs_currentValue = Drs_get();
     drsFb = (unsigned int)drs_currentValue;
     sendUpdatesSW(DRS_CODE);
+    //Buzzer_bip();
 }
 
 void Drs_close(void)
 {
     Drs_setDX(DRS_SERVO_DX_CLOSE);
     Drs_setSX(DRS_SERVO_SX_CLOSE);
-    drs_currentValue = Drs_get();
+    drs_currentValue = 0;
+    //drs_currentValue = Drs_get();
     drsFb = (unsigned int)drs_currentValue;
     sendUpdatesSW(DRS_CODE);
+    //Buzzer_bip();
 }
 
 void Drs_setDX(unsigned char percentageDX) {
@@ -67,8 +72,14 @@ unsigned char Drs_get(void)
     currentValueDX = Drs_getDX();
     if (currentValueSX > DRS_SERVO_CENTRAL_POSITION
         && currentValueDX < DRS_SERVO_CENTRAL_POSITION )
-        return 1; //DRS open
+        {
+           return 1; //DRS open
+           //Buzzer_bip();
+        }
     else if (currentValueSX < DRS_SERVO_CENTRAL_POSITION
         && currentValueDX > DRS_SERVO_CENTRAL_POSITION )
-        return 0; //DRS close
+        {
+           return 0; //DRS close
+           //Buzzer_bip();
+        }
 }

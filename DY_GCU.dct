@@ -2501,13 +2501,13 @@ drs_open
 drs_setdx
 drs_setsx
 drsfb
-drshmotor_setpositiondx
 drsmotor_init
 drsmotor_percentage_step
 drsmotor_pwm_max_value
 drsmotor_pwm_min_value
 drsmotor_pwm_period_value
 drsmotor_setpositiondx
+drsmotor_setpositionsx
 drsmotordx_setuppwm
 drsmotorsx_setuppwm
 dsignalled_init
@@ -12616,6 +12616,7 @@ ws2
 ws3
 wwidth
 wworkbits
+x
 xb
 xb_0
 xb_0_bit

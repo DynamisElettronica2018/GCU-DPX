@@ -24,23 +24,12 @@ L_end_timer3_interrupt:
 _DrsMotor_init:
 
 ;drsmotor.c,17 :: 		void DrsMotor_init(void) {
-;drsmotor.c,18 :: 		setTimer(TIMER3_DEVICE, DRSMOTOR_PWM_PERIOD);
-	PUSH	W10
-	PUSH	W11
-	PUSH	W12
-	MOV	#55050, W11
-	MOV	#15523, W12
-	MOV.B	#3, W10
-	CALL	_setTimer
 ;drsmotor.c,19 :: 		DrsMotorDX_setupPWM();
 	CALL	_DrsMotorDX_setupPWM
-;drsmotor.c,20 :: 		DrsMotorDX_setupPWM();
-	CALL	_DrsMotorDX_setupPWM
+;drsmotor.c,20 :: 		DrsMotorSX_setupPWM();
+	CALL	_DrsMotorSX_setupPWM
 ;drsmotor.c,21 :: 		}
 L_end_DrsMotor_init:
-	POP	W12
-	POP	W11
-	POP	W10
 	RETURN
 ; end of _DrsMotor_init
 
@@ -53,8 +42,8 @@ _DrsMotorDX_setupPWM:
 	PUSH	W12
 	MOV	#6, W0
 	MOV	WREG, OC1CON
-;drsmotor.c,25 :: 		DRSMOTOR_PWM_PERIOD_VALUE = getTimerPeriod(DRSMOTOR_PWM_PERIOD, TIMER3_PRESCALER);   //PRESCALER calcolato 256
-	MOV	#lo_addr(T3CONbits), W0
+;drsmotor.c,25 :: 		DRSMOTOR_PWM_PERIOD_VALUE = getTimerPeriod(DRSMOTOR_PWM_PERIOD, TIMER2_PRESCALER);   //PRESCALER calcolato 256
+	MOV	#lo_addr(T2CONbits), W0
 	MOV.B	[W0], W0
 	MOV.B	W0, W1
 	MOV.B	#48, W0
@@ -69,8 +58,8 @@ _DrsMotorDX_setupPWM:
 ;drsmotor.c,28 :: 		(DRSMOTOR_MAX_PWM_PERCENTAGE / 100.0));
 	CLR	W1
 	CALL	__Long2Float
-	MOV	#52429, W2
-	MOV	#15820, W3
+	MOV	#18350, W2
+	MOV	#15841, W3
 	CALL	__Mul_FP
 	CALL	__Float2Longint
 	MOV	W0, _DRSMOTOR_PWM_MAX_VALUE
@@ -113,8 +102,8 @@ _DrsMotorSX_setupPWM:
 	PUSH	W12
 	MOV	#6, W0
 	MOV	WREG, OC2CON
-;drsmotor.c,38 :: 		DRSMOTOR_PWM_PERIOD_VALUE = getTimerPeriod(DRSMOTOR_PWM_PERIOD, TIMER3_PRESCALER);   //PRESCALER calcolato 256
-	MOV	#lo_addr(T3CONbits), W0
+;drsmotor.c,38 :: 		DRSMOTOR_PWM_PERIOD_VALUE = getTimerPeriod(DRSMOTOR_PWM_PERIOD, TIMER2_PRESCALER);   //PRESCALER calcolato 256
+	MOV	#lo_addr(T2CONbits), W0
 	MOV.B	[W0], W0
 	MOV.B	W0, W1
 	MOV.B	#48, W0
@@ -129,8 +118,8 @@ _DrsMotorSX_setupPWM:
 ;drsmotor.c,41 :: 		(DRSMOTOR_MAX_PWM_PERCENTAGE / 100.0));
 	CLR	W1
 	CALL	__Long2Float
-	MOV	#52429, W2
-	MOV	#15820, W3
+	MOV	#18350, W2
+	MOV	#15841, W3
 	CALL	__Mul_FP
 	CALL	__Float2Longint
 	MOV	W0, _DRSMOTOR_PWM_MAX_VALUE
@@ -164,10 +153,10 @@ L_end_DrsMotorSX_setupPWM:
 	RETURN
 ; end of _DrsMotorSX_setupPWM
 
-_DrshMotor_setPositionDX:
+_DrsMotor_setPositionDX:
 	LNK	#4
 
-;drsmotor.c,49 :: 		void DrshMotor_setPositionDX(unsigned char percentage) {
+;drsmotor.c,49 :: 		void DrsMotor_setPositionDX(unsigned char percentage) {
 ;drsmotor.c,51 :: 		pwmValue = (unsigned int) ((percentage * DRSMOTOR_PERCENTAGE_STEP) + DRSMOTOR_PWM_MIN_VALUE);
 	ZE	W10, W0
 	CLR	W1
@@ -189,52 +178,52 @@ _DrshMotor_setPositionDX:
 ;drsmotor.c,52 :: 		if (pwmValue > DRSMOTOR_PWM_MAX_VALUE) {
 	MOV	#lo_addr(_DRSMOTOR_PWM_MAX_VALUE), W1
 	CP	W0, [W1]
-	BRA GTU	L__DrshMotor_setPositionDX13
-	GOTO	L_DrshMotor_setPositionDX0
-L__DrshMotor_setPositionDX13:
+	BRA GTU	L__DrsMotor_setPositionDX13
+	GOTO	L_DrsMotor_setPositionDX0
+L__DrsMotor_setPositionDX13:
 ; pwmValue end address is: 4 (W2)
 ;drsmotor.c,53 :: 		pwmValue = DRSMOTOR_PWM_MAX_VALUE;
 ; pwmValue start address is: 0 (W0)
 	MOV	_DRSMOTOR_PWM_MAX_VALUE, W0
 ;drsmotor.c,54 :: 		} else if (pwmValue < DRSMOTOR_PWM_MIN_VALUE) {
 ; pwmValue end address is: 0 (W0)
-	GOTO	L_DrshMotor_setPositionDX1
-L_DrshMotor_setPositionDX0:
+	GOTO	L_DrsMotor_setPositionDX1
+L_DrsMotor_setPositionDX0:
 ; pwmValue start address is: 4 (W2)
 	MOV	#lo_addr(_DRSMOTOR_PWM_MIN_VALUE), W0
 	CP	W2, [W0]
-	BRA LTU	L__DrshMotor_setPositionDX14
-	GOTO	L__DrshMotor_setPositionDX6
-L__DrshMotor_setPositionDX14:
+	BRA LTU	L__DrsMotor_setPositionDX14
+	GOTO	L__DrsMotor_setPositionDX6
+L__DrsMotor_setPositionDX14:
 ; pwmValue end address is: 4 (W2)
 ;drsmotor.c,55 :: 		pwmValue = DRSMOTOR_PWM_MIN_VALUE;
 ; pwmValue start address is: 0 (W0)
 	MOV	_DRSMOTOR_PWM_MIN_VALUE, W0
 ; pwmValue end address is: 0 (W0)
 ;drsmotor.c,56 :: 		}
-	GOTO	L_DrshMotor_setPositionDX2
-L__DrshMotor_setPositionDX6:
+	GOTO	L_DrsMotor_setPositionDX2
+L__DrsMotor_setPositionDX6:
 ;drsmotor.c,54 :: 		} else if (pwmValue < DRSMOTOR_PWM_MIN_VALUE) {
 	MOV	W2, W0
 ;drsmotor.c,56 :: 		}
-L_DrshMotor_setPositionDX2:
+L_DrsMotor_setPositionDX2:
 ; pwmValue start address is: 0 (W0)
 ; pwmValue end address is: 0 (W0)
-L_DrshMotor_setPositionDX1:
-;drsmotor.c,57 :: 		OC1R = pwmValue;   //DX DRS SERVO
+L_DrsMotor_setPositionDX1:
+;drsmotor.c,57 :: 		OC1RS = pwmValue;   //DX DRS SERVO
 ; pwmValue start address is: 0 (W0)
-	MOV	WREG, OC1R
+	MOV	WREG, OC1RS
 ; pwmValue end address is: 0 (W0)
 ;drsmotor.c,58 :: 		}
-L_end_DrshMotor_setPositionDX:
+L_end_DrsMotor_setPositionDX:
 	ULNK
 	RETURN
-; end of _DrshMotor_setPositionDX
+; end of _DrsMotor_setPositionDX
 
-_DrsMotor_setPositionDX:
+_DrsMotor_setPositionSX:
 	LNK	#4
 
-;drsmotor.c,60 :: 		void DrsMotor_setPositionDX(unsigned char percentage) {
+;drsmotor.c,60 :: 		void DrsMotor_setPositionSX(unsigned char percentage) {
 ;drsmotor.c,62 :: 		pwmValue = (unsigned int) ((percentage * DRSMOTOR_PERCENTAGE_STEP) + DRSMOTOR_PWM_MIN_VALUE);
 	ZE	W10, W0
 	CLR	W1
@@ -256,44 +245,44 @@ _DrsMotor_setPositionDX:
 ;drsmotor.c,63 :: 		if (pwmValue > DRSMOTOR_PWM_MAX_VALUE) {
 	MOV	#lo_addr(_DRSMOTOR_PWM_MAX_VALUE), W1
 	CP	W0, [W1]
-	BRA GTU	L__DrsMotor_setPositionDX16
-	GOTO	L_DrsMotor_setPositionDX3
-L__DrsMotor_setPositionDX16:
+	BRA GTU	L__DrsMotor_setPositionSX16
+	GOTO	L_DrsMotor_setPositionSX3
+L__DrsMotor_setPositionSX16:
 ; pwmValue end address is: 4 (W2)
 ;drsmotor.c,64 :: 		pwmValue = DRSMOTOR_PWM_MAX_VALUE;
 ; pwmValue start address is: 0 (W0)
 	MOV	_DRSMOTOR_PWM_MAX_VALUE, W0
 ;drsmotor.c,65 :: 		} else if (pwmValue < DRSMOTOR_PWM_MIN_VALUE) {
 ; pwmValue end address is: 0 (W0)
-	GOTO	L_DrsMotor_setPositionDX4
-L_DrsMotor_setPositionDX3:
+	GOTO	L_DrsMotor_setPositionSX4
+L_DrsMotor_setPositionSX3:
 ; pwmValue start address is: 4 (W2)
 	MOV	#lo_addr(_DRSMOTOR_PWM_MIN_VALUE), W0
 	CP	W2, [W0]
-	BRA LTU	L__DrsMotor_setPositionDX17
-	GOTO	L__DrsMotor_setPositionDX7
-L__DrsMotor_setPositionDX17:
+	BRA LTU	L__DrsMotor_setPositionSX17
+	GOTO	L__DrsMotor_setPositionSX7
+L__DrsMotor_setPositionSX17:
 ; pwmValue end address is: 4 (W2)
 ;drsmotor.c,66 :: 		pwmValue = DRSMOTOR_PWM_MIN_VALUE;
 ; pwmValue start address is: 0 (W0)
 	MOV	_DRSMOTOR_PWM_MIN_VALUE, W0
 ; pwmValue end address is: 0 (W0)
 ;drsmotor.c,67 :: 		}
-	GOTO	L_DrsMotor_setPositionDX5
-L__DrsMotor_setPositionDX7:
+	GOTO	L_DrsMotor_setPositionSX5
+L__DrsMotor_setPositionSX7:
 ;drsmotor.c,65 :: 		} else if (pwmValue < DRSMOTOR_PWM_MIN_VALUE) {
 	MOV	W2, W0
 ;drsmotor.c,67 :: 		}
-L_DrsMotor_setPositionDX5:
+L_DrsMotor_setPositionSX5:
 ; pwmValue start address is: 0 (W0)
 ; pwmValue end address is: 0 (W0)
-L_DrsMotor_setPositionDX4:
-;drsmotor.c,68 :: 		OC2R = pwmValue;   //SX DRS SERVO
+L_DrsMotor_setPositionSX4:
+;drsmotor.c,68 :: 		OC2RS = pwmValue;   //SX DRS SERVO
 ; pwmValue start address is: 0 (W0)
-	MOV	WREG, OC2R
+	MOV	WREG, OC2RS
 ; pwmValue end address is: 0 (W0)
 ;drsmotor.c,69 :: 		}
-L_end_DrsMotor_setPositionDX:
+L_end_DrsMotor_setPositionSX:
 	ULNK
 	RETURN
-; end of _DrsMotor_setPositionDX
+; end of _DrsMotor_setPositionSX

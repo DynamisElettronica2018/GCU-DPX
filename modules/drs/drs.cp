@@ -80,7 +80,7 @@ void DrsMotorSX_setupPWM(void);
 void DrsMotor_setPositionDX(unsigned char percentage);
 
 void DrsMotor_setPositionSX(unsigned char percentage);
-#line 15 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drs.h"
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drs.h"
 extern unsigned int drsFb;
 
 void Drs_open(void);
@@ -144,28 +144,41 @@ void Can_clearInterrupt(void);
 void Can_initInterrupt(void);
 #line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
 void sendUpdatesSW(unsigned int valCode);
-#line 8 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/drs/drs.c"
-unsigned char drs_currentValue = 0;
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 17 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
+void Buzzer_init(void);
+
+void Buzzer_tick(void);
+
+void Buzzer_Bip(void);
+#line 9 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/drs/drs.c"
+unsigned int drs_currentValue = 0;
 unsigned char drs_currentValueSX = 0;
 unsigned char drs_currentValueDX = 0;
 unsigned int drsFb = 0;
 
 void Drs_open(void)
 {
- Drs_setDX( 40 );
- Drs_setSX( 60 );
- drs_currentValue = Drs_get();
+ Drs_setDX( 100 );
+ Drs_setSX( 0 );
+ drs_currentValue = 1;
+
  drsFb = (unsigned int)drs_currentValue;
  sendUpdatesSW( 4 );
+
 }
 
 void Drs_close(void)
 {
- Drs_setDX( 60 );
- Drs_setSX( 40 );
- drs_currentValue = Drs_get();
+ Drs_setDX( 0 );
+ Drs_setSX( 100 );
+ drs_currentValue = 0;
+
  drsFb = (unsigned int)drs_currentValue;
  sendUpdatesSW( 4 );
+
 }
 
 void Drs_setDX(unsigned char percentageDX) {
@@ -207,8 +220,14 @@ unsigned char Drs_get(void)
  currentValueDX = Drs_getDX();
  if (currentValueSX >  50 
  && currentValueDX <  50  )
+ {
  return 1;
+
+ }
  else if (currentValueSX <  50 
  && currentValueDX >  50  )
+ {
  return 0;
+
+ }
 }
