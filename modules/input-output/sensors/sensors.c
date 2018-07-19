@@ -40,6 +40,7 @@ unsigned int getDRSSensor()
     unsigned int analogValue = 0;
     analogValue = ADC1_Read(DRS_SENSE_PIN);
     sensors_drsCurrent = sensors_drsCurrent * 0.95 + analogValue * 0.05;
+    convDrsSensor = (((sensors_drsCurrent * 5.05 / 4095) * 1000) / 0.2);
     return convDrsSensor;
 }
 unsigned int getFuelSensor()
@@ -48,6 +49,7 @@ unsigned int getFuelSensor()
     unsigned int analogValue = 0;
     analogValue = ADC1_Read(FUEL_SENSE_PIN);
     sensors_fuelCurrent = sensors_fuelCurrent * 0.95 + analogValue * 0.05;
+    convFuelSensor = (((sensors_fuelCurrent * 5.05 / 4095) * 1000) / 0.2);
     return  convFuelSensor;
 }
 unsigned int getGearSensor()
@@ -56,6 +58,7 @@ unsigned int getGearSensor()
     unsigned int analogValue = 0;
     analogValue = ADC1_Read(GEAR_IS1_SENSE_PIN);
     sensors_gearCurrent = sensors_gearCurrent * 0.95 + analogValue * 0.05;
+    convGearSensor = sensors_gearCurrent;
     return convGearSensor;
 }
 unsigned int getClutchSensor()
@@ -64,6 +67,7 @@ unsigned int getClutchSensor()
     unsigned int analogValue = 0;
     analogValue = ADC1_Read(CLUTCH_SENSE_PIN);
     sensors_clutchCurrent = sensors_clutchCurrent * 0.95 + analogValue * 0.05;
+    convClutchSensor = (((sensors_clutchCurrent * 5.05 / 4095) * 1000) / 0.2);
     return convClutchSensor;
 }
 unsigned int getHPumpSensor()
@@ -72,6 +76,7 @@ unsigned int getHPumpSensor()
     unsigned int analogValue = 0;
     analogValue = ADC1_Read(HPUMP_SENSE_PIN);
     sensors_hpumpCurrent = sensors_hpumpCurrent * 0.95 + analogValue * 0.05;
+    convHPumpSensor = (((sensors_hPumpCurrent * 5.05 / 4095) * 1000) / 0.2);
     return convHPumpSensor;
 }
 unsigned int getFanSensor()
@@ -80,6 +85,7 @@ unsigned int getFanSensor()
     unsigned int analogValue = 0;
     analogValue = ADC1_Read(FANS_SENSE_PIN);
     sensors_fanCurrent = sensors_fanCurrent * 0.95 + analogValue * 0.05;
+    convFanSensor = (((sensors_fanCurrent * 5.05 / 4095) * 1000) / 0.2);
     return convFanSensor;
 }
 
