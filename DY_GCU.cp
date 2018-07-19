@@ -381,7 +381,11 @@ void tractionLoadDefaultsSettings(void);
 setTraction(unsigned int codeValue, unsigned int tractionValue);
 
 Efi_setTraction(unsigned int setState);
-#line 18 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
+#line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
+void sendUpdatesSW(unsigned int valCode);
+#line 19 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;

@@ -121,6 +121,7 @@ CAN_Interrupt
 				Can_getWriteFlags
 		sendUpdatesSW
 			Can_resetWritePacket
+			Can_addIntToWritePacket
 			Can_write
 timer4_interrupt
 	Buzzer_tick
