@@ -34,25 +34,25 @@ _aac_execute:
 L_aac_execute2:
 ;aac.c,33 :: 		Efi_setRPMLimiter();
 	CALL	_Efi_setRPMLimiter
-;aac.c,35 :: 		aac_currentState = READY;
-	MOV	#lo_addr(_aac_currentState), W1
-	MOV.B	#2, W0
-	MOV.B	W0, [W1]
-;aac.c,36 :: 		aac_clutchValue = 100;
+;aac.c,35 :: 		aac_clutchValue = 100;
 	MOV	#0, W0
 	MOV	#17096, W1
 	MOV	W0, _aac_clutchValue
 	MOV	W1, _aac_clutchValue+2
-;aac.c,37 :: 		Clutch_set((unsigned int)aac_clutchValue);
+;aac.c,36 :: 		Clutch_set((unsigned int)aac_clutchValue);
 	MOV	#0, W0
 	MOV	#17096, W1
 	CALL	__Float2Longint
 	MOV.B	W0, W10
 	CALL	_Clutch_set
+;aac.c,37 :: 		aac_currentState = READY;
+	MOV	#lo_addr(_aac_currentState), W1
+	MOV.B	#2, W0
+	MOV.B	W0, [W1]
 ;aac.c,38 :: 		accelerationFb = 1;
 	MOV	#1, W0
 	MOV	W0, _accelerationFb
-;aac.c,39 :: 		sendUpdatesSW(ACC_CODE);
+;aac.c,39 :: 		sendUpdatesSW(1);
 	MOV	#1, W10
 	CALL	_sendUpdatesSW
 ;aac.c,40 :: 		return;
@@ -295,28 +295,28 @@ _aac_loadDefaultParams:
 	MOV	#250, W0
 	MOV	W0, _aac_parameters+4
 ;aac.c,125 :: 		aac_parameters[RPM_LIMIT_1_2]   = DEF_RPM_LIMIT_1_2;
-	MOV	#11300, W0
+	MOV	#11647, W0
 	MOV	W0, _aac_parameters+6
 ;aac.c,126 :: 		aac_parameters[RPM_LIMIT_2_3]   = DEF_RPM_LIMIT_2_3;
-	MOV	#11300, W0
+	MOV	#11506, W0
 	MOV	W0, _aac_parameters+8
 ;aac.c,127 :: 		aac_parameters[RPM_LIMIT_3_4]   = DEF_RPM_LIMIT_3_4;
-	MOV	#11300, W0
+	MOV	#11383, W0
 	MOV	W0, _aac_parameters+10
 ;aac.c,128 :: 		aac_parameters[RPM_LIMIT_4_5]   = DEF_RPM_LIMIT_4_5;
-	MOV	#11300, W0
+	MOV	#11362, W0
 	MOV	W0, _aac_parameters+12
 ;aac.c,129 :: 		aac_parameters[SPEED_LIMIT_1_2] = DEF_SPEED_LIMIT_1_2;
-	MOV	#47, W0
+	MOV	#46, W0
 	MOV	W0, _aac_parameters+14
 ;aac.c,130 :: 		aac_parameters[SPEED_LIMIT_2_3] = DEF_SPEED_LIMIT_2_3;
-	MOV	#65, W0
+	MOV	#61, W0
 	MOV	W0, _aac_parameters+16
 ;aac.c,131 :: 		aac_parameters[SPEED_LIMIT_3_4] = DEF_SPEED_LIMIT_3_4;
-	MOV	#80, W0
+	MOV	#77, W0
 	MOV	W0, _aac_parameters+18
 ;aac.c,132 :: 		aac_parameters[SPEED_LIMIT_4_5] = DEF_SPEED_LIMIT_4_5;
-	MOV	#80, W0
+	MOV	#113, W0
 	MOV	W0, _aac_parameters+20
 ;aac.c,134 :: 		}
 L_end_aac_loadDefaultParams:
@@ -367,7 +367,7 @@ _aac_getParam:
 
 ;aac.c,152 :: 		int aac_getParam(const aac_params id){
 ;aac.c,153 :: 		if(id < AAC_NUM_PARAMS)
-	CP.B	W10, #9
+	CP.B	W10, #11
 	BRA LTU	L__aac_getParam46
 	GOTO	L_aac_getParam18
 L__aac_getParam46:

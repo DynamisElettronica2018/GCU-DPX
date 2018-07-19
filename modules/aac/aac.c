@@ -32,11 +32,11 @@ void aac_execute(void){
         case START:
             Efi_setRPMLimiter();
 //            Activate acceleration mode
-            aac_currentState = READY;
             aac_clutchValue = 100;
             Clutch_set((unsigned int)aac_clutchValue);
+            aac_currentState = READY;
             accelerationFb = 1;
-            sendUpdatesSW(ACC_CODE);
+            sendUpdatesSW(1);
             return;
         case READY:
             Clutch_set(100);

@@ -284,7 +284,7 @@ int Gearshift_get_time(shiftStep step);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
 #line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
-void sendUpdatesSW(unsigned int valCode);
+void sendUpdatesSW(int valCode);
 #line 28 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
 extern unsigned int accelerationFb;
 
@@ -356,7 +356,7 @@ int aac_getExternValue(const aac_values id);
 void aac_forceState(const aac_states newState);
 #line 3 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 aac_states aac_currentState;
-int aac_parameters[ 9 ];
+int aac_parameters[ 11 ];
 int aac_externValues[ 3 ];
 int aac_dtRelease;
 char aac_sendingAll =  0 ;
@@ -382,11 +382,11 @@ void aac_execute(void){
  case START:
  Efi_setRPMLimiter();
 
- aac_currentState = READY;
  aac_clutchValue = 100;
  Clutch_set((unsigned int)aac_clutchValue);
+ aac_currentState = READY;
  accelerationFb = 1;
- sendUpdatesSW( 1 );
+ sendUpdatesSW(1);
  return;
  case READY:
  Clutch_set(100);
@@ -442,14 +442,14 @@ void aac_loadDefaultParams(void){
  aac_parameters[RAMP_START] =  70 ;
  aac_parameters[RAMP_END] =  0 ;
  aac_parameters[RAMP_TIME] =  250 ;
- aac_parameters[RPM_LIMIT_1_2] =  11300 ;
- aac_parameters[RPM_LIMIT_2_3] =  11300 ;
- aac_parameters[RPM_LIMIT_3_4] =  11300 ;
- aac_parameters[RPM_LIMIT_4_5] =  11300 ;
- aac_parameters[SPEED_LIMIT_1_2] =  47 ;
- aac_parameters[SPEED_LIMIT_2_3] =  65 ;
- aac_parameters[SPEED_LIMIT_3_4] =  80 ;
- aac_parameters[SPEED_LIMIT_4_5] =  80 ;
+ aac_parameters[RPM_LIMIT_1_2] =  11647 ;
+ aac_parameters[RPM_LIMIT_2_3] =  11506 ;
+ aac_parameters[RPM_LIMIT_3_4] =  11383 ;
+ aac_parameters[RPM_LIMIT_4_5] =  11362 ;
+ aac_parameters[SPEED_LIMIT_1_2] =  46 ;
+ aac_parameters[SPEED_LIMIT_2_3] =  61 ;
+ aac_parameters[SPEED_LIMIT_3_4] =  77 ;
+ aac_parameters[SPEED_LIMIT_4_5] =  113 ;
 
 }
 #line 142 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
@@ -464,7 +464,7 @@ void aac_updateExternValue(const aac_values id, const int value){
 }
 
 int aac_getParam(const aac_params id){
- if(id <  9 )
+ if(id <  11 )
  return aac_parameters[id];
  return -1;
 }

@@ -114,6 +114,7 @@ CAN_Interrupt
 	Clutch_setBiased
 		Clutch_set
 	Buzzer_Bip
+	Clutch_release
 timer4_interrupt
 	Buzzer_tick
 timer2_interrupt
@@ -138,6 +139,7 @@ timer1_interrupt
 		Clutch_set
 		sendUpdatesSW
 			Can_resetWritePacket
+			Can_addIntToWritePacket
 			Can_write
 		Clutch_get
 		Efi_unsetRPMLimiter

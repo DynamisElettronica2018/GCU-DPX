@@ -15,8 +15,8 @@
 #include "enginecontrol.h"
 #include "gearshift.h"
 #include "stoplight.h"
-#include "sw.h"
 #include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
+#include "sw.h"
 
 //*/
 
@@ -131,7 +131,8 @@ onTimer1Interrupt{
 
   #ifdef AAC_H
     timer1_aac_counter += 1;
-    if(timer1_aac_counter == AAC_WORK_RATE_ms){
+    if(timer1_aac_counter == AAC_WORK_RATE_ms)
+    {
         aac_execute();
         timer1_aac_counter = 0;
     }
@@ -178,7 +179,7 @@ onCanInterrupt{
             if (Clutch_get() != 100
                   &&(firstInt == GEAR_COMMAND_NEUTRAL_DOWN
                      || firstInt == GEAR_COMMAND_NEUTRAL_UP
-                     || firstInt == GEAR_COMMAND_DOWN) 
+                     || firstInt == GEAR_COMMAND_DOWN)
                   && accelerationFb > 0)
                 aac_stop();
           #endif
@@ -209,17 +210,17 @@ onCanInterrupt{
                 {
                   aac_stop();
                 }
-
           #endif
-            if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) 
-            {
-              //Buzzer_Bip();
-              Clutch_setBiased(dataBuffer[0]);
-              //Clutch_set(dataBuffer[0]);
-            }
+                if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral)
+                {
+                   //Buzzer_Bip();
+                   Clutch_setBiased(dataBuffer[0]);
+                   //Clutch_set(dataBuffer[0]);
+                }
           #ifdef AAC_H
             }
           #endif
+
             break;
 
         case EFI_HALL_ID:
@@ -235,18 +236,22 @@ onCanInterrupt{
    //             && aac_externValues[WHEEL_SPEED] <= 1
               {
                 aac_currentState = START;   //comment to disable AAC
-                Buzzer_bip(); //for testing
+                //Buzzer_bip(); //for testing
               }
               else if(aac_currentState == READY && firstInt == 2)
               {
                 aac_currentState = START_RELEASE; //comment to disable AAC
-                Buzzer_bip(); //for testing
+                //Buzzer_bip(); //for testing
               }
               //If none of the previous conditions are met, the aac is stopped
-              else
+              else if (firstInt == 0)
               {
                 if (accelerationFb > 0)
+                {
                    aac_stop();
+                   Clutch_release();
+                }
+                   
               }
           #endif
             break;

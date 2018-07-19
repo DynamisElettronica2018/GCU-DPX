@@ -39,7 +39,7 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=11
+Count=18
 File0=DY_GCU.c
 File1=modules\aac\aac.c
 File2=modules\aac\aac_defaults.h
@@ -51,6 +51,13 @@ File7=modules\input-output\efi.c
 File8=modules\aac\aac.h
 File9=modules\gcu_rio.h
 File10=modules\sw.c
+File11=modules\clutch.c
+File12=modules\clutch.h
+File13=modules\input-output\clutchmotor.c
+File14=libs\eeprom.c
+File15=libs\eeprom.h
+File16=modules\sw.h
+File17=modules\gearshift.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

@@ -20,7 +20,7 @@
 #define AAC_MAX_SHIFT_TIMES    22      //maximum number of tries to insert a new gear
 #define AAC_INTER_GEAR_TIME    500     //time after which a gearshift is considered succesful or failed
 
-#define AAC_NUM_PARAMS    9            //Number of aac_params enum elements
+#define AAC_NUM_PARAMS    11           //Number of aac_params enum elements
 #define AAC_NUM_VALUES    3            //Number of aac_values enum elements
 
 //float AAC_WORK_RATE_ms = 25;

@@ -1,13 +1,15 @@
 #include "sw.h"
+#include "buzzer.h"
+#include "aac.h"
 
-void sendUpdatesSW(unsigned int valCode)
+void sendUpdatesSW(int valCode)
 {
     Can_resetWritePacket();
     switch (valCode)
     {
     #ifdef AAC_H
-      case ACC_CODE:
-           Can_addIntToWritePacket(ACC_CODE);
+      case 1:
+           Can_addIntToWritePacket(1);
            Can_addIntToWritePacket(accelerationFb);
            break;
     #endif
@@ -32,5 +34,7 @@ void sendUpdatesSW(unsigned int valCode)
       default:
            break;
     }
-    Can_write(GCU_DEBUG_2_ID);
+    Can_addIntToWritePacket(0);
+    Can_addIntToWritePacket(0);
+    Can_write(GCU_FEEDBACK_ID);
 }

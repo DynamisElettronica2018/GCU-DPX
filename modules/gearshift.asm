@@ -428,7 +428,7 @@ L_GearShift_nextStep_A34:
 	GOTO	L_GearShift_nextStep_A25
 ;gearshift.c,233 :: 		case STEP_DOWN_START:
 L_GearShift_nextStep_A35:
-;gearshift.c,234 :: 		if (gearShift_isSettingNeutral  && Clutch_get() <= 80) {
+;gearshift.c,234 :: 		if (gearShift_isSettingNeutral  && Clutch_get() <= 80)            //sto facendo 2--->N
 	MOV	#lo_addr(_gearShift_isSettingNeutral), W0
 	CP0.B	[W0]
 	BRA NZ	L__GearShift_nextStep_A130
@@ -441,15 +441,15 @@ L__GearShift_nextStep_A130:
 	GOTO	L__GearShift_nextStep_A88
 L__GearShift_nextStep_A131:
 L__GearShift_nextStep_A87:
-;gearshift.c,235 :: 		Clutch_set(80);
+;gearshift.c,236 :: 		Clutch_set(80);
 	MOV.B	#80, W10
 	CALL	_Clutch_set
-;gearshift.c,236 :: 		} else {
+;gearshift.c,237 :: 		}
 	GOTO	L_GearShift_nextStep_A39
-;gearshift.c,234 :: 		if (gearShift_isSettingNeutral  && Clutch_get() <= 80) {
+;gearshift.c,234 :: 		if (gearShift_isSettingNeutral  && Clutch_get() <= 80)            //sto facendo 2--->N
 L__GearShift_nextStep_A89:
 L__GearShift_nextStep_A88:
-;gearshift.c,238 :: 		if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60) {
+;gearshift.c,241 :: 		if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60)      //non sto facendo N--->1 quindi sto facendo tutte le scalate normali
 	MOV	#lo_addr(_gearShift_isUnsettingNeutral), W0
 	CP0.B	[W0]
 	BRA Z	L__GearShift_nextStep_A132
@@ -462,113 +462,113 @@ L__GearShift_nextStep_A132:
 	GOTO	L__GearShift_nextStep_A90
 L__GearShift_nextStep_A133:
 L__GearShift_nextStep_A86:
-;gearshift.c,239 :: 		Clutch_set(90);
-	MOV.B	#90, W10
+;gearshift.c,243 :: 		Clutch_set(60);
+	MOV.B	#60, W10
 	CALL	_Clutch_set
-;gearshift.c,238 :: 		if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60) {
+;gearshift.c,241 :: 		if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60)      //non sto facendo N--->1 quindi sto facendo tutte le scalate normali
 L__GearShift_nextStep_A91:
 L__GearShift_nextStep_A90:
-;gearshift.c,241 :: 		Efi_setBlip();
+;gearshift.c,245 :: 		Efi_setBlip();
 	CALL	_Efi_setBlip
-;gearshift.c,242 :: 		Buzzer_Bip();
+;gearshift.c,246 :: 		Buzzer_Bip();
 	CALL	_Buzzer_Bip
-;gearshift.c,243 :: 		}
+;gearshift.c,247 :: 		}
 L_GearShift_nextStep_A39:
-;gearshift.c,244 :: 		GearShift_setNextStep_A(STEP_DOWN_PUSH);
+;gearshift.c,248 :: 		GearShift_setNextStep_A(STEP_DOWN_PUSH);
 	MOV.B	#5, W10
 	CALL	_GearShift_setNextStep_A
-;gearshift.c,245 :: 		GearShift_setMsTicks_A(Gearshift_get_time(STEP_DOWN_START));
+;gearshift.c,249 :: 		GearShift_setMsTicks_A(Gearshift_get_time(STEP_DOWN_START));
 	MOV.B	#4, W10
 	CALL	_Gearshift_get_time
 	MOV	W0, W10
 	CALL	_GearShift_setMsTicks_A
-;gearshift.c,246 :: 		break;
+;gearshift.c,250 :: 		break;
 	GOTO	L_GearShift_nextStep_A25
-;gearshift.c,247 :: 		case STEP_DOWN_PUSH:
+;gearshift.c,251 :: 		case STEP_DOWN_PUSH:
 L_GearShift_nextStep_A43:
-;gearshift.c,248 :: 		if (!gearShift_isSettingNeutral) {
+;gearshift.c,252 :: 		if (!gearShift_isSettingNeutral) {
 	MOV	#lo_addr(_gearShift_isSettingNeutral), W0
 	CP0.B	[W0]
 	BRA Z	L__GearShift_nextStep_A134
 	GOTO	L_GearShift_nextStep_A44
 L__GearShift_nextStep_A134:
-;gearshift.c,249 :: 		Efi_unsetBlip();
+;gearshift.c,253 :: 		Efi_unsetBlip();
 	CALL	_Efi_unsetBlip
-;gearshift.c,250 :: 		}
+;gearshift.c,254 :: 		}
 L_GearShift_nextStep_A44:
-;gearshift.c,251 :: 		GearShift_downPush();
+;gearshift.c,255 :: 		GearShift_downPush();
 	CALL	_GearMotor_turnLeft
-;gearshift.c,252 :: 		GearShift_setNextStep_A(STEP_DOWN_REBOUND);
+;gearshift.c,256 :: 		GearShift_setNextStep_A(STEP_DOWN_REBOUND);
 	MOV.B	#6, W10
 	CALL	_GearShift_setNextStep_A
-;gearshift.c,253 :: 		GearShift_setMsTicks_A(Gearshift_get_time(STEP_DOWN_PUSH));
+;gearshift.c,257 :: 		GearShift_setMsTicks_A(Gearshift_get_time(STEP_DOWN_PUSH));
 	MOV.B	#5, W10
 	CALL	_Gearshift_get_time
 	MOV	W0, W10
 	CALL	_GearShift_setMsTicks_A
-;gearshift.c,254 :: 		break;
+;gearshift.c,258 :: 		break;
 	GOTO	L_GearShift_nextStep_A25
-;gearshift.c,255 :: 		case STEP_DOWN_REBOUND:
+;gearshift.c,259 :: 		case STEP_DOWN_REBOUND:
 L_GearShift_nextStep_A45:
-;gearshift.c,256 :: 		GearShift_rebound();
+;gearshift.c,260 :: 		GearShift_rebound();
 	CALL	_GearMotor_release
-;gearshift.c,257 :: 		GearShift_setNextStep_A(STEP_DOWN_BRAKE);
+;gearshift.c,261 :: 		GearShift_setNextStep_A(STEP_DOWN_BRAKE);
 	MOV.B	#7, W10
 	CALL	_GearShift_setNextStep_A
-;gearshift.c,258 :: 		GearShift_setMsTicks_A(Gearshift_get_time(STEP_DOWN_REBOUND));
+;gearshift.c,262 :: 		GearShift_setMsTicks_A(Gearshift_get_time(STEP_DOWN_REBOUND));
 	MOV.B	#6, W10
 	CALL	_Gearshift_get_time
 	MOV	W0, W10
 	CALL	_GearShift_setMsTicks_A
-;gearshift.c,259 :: 		break;
+;gearshift.c,263 :: 		break;
 	GOTO	L_GearShift_nextStep_A25
-;gearshift.c,260 :: 		case STEP_DOWN_BRAKE:
+;gearshift.c,264 :: 		case STEP_DOWN_BRAKE:
 L_GearShift_nextStep_A46:
-;gearshift.c,261 :: 		if (Clutch_get() <= 81)
+;gearshift.c,265 :: 		if (Clutch_get() <= 81)
 	CALL	_Clutch_get
 	MOV.B	#81, W1
 	CP.B	W0, W1
 	BRA LEU	L__GearShift_nextStep_A135
 	GOTO	L_GearShift_nextStep_A47
 L__GearShift_nextStep_A135:
-;gearshift.c,262 :: 		Clutch_release();
+;gearshift.c,266 :: 		Clutch_release();
 	CALL	_Clutch_release
 L_GearShift_nextStep_A47:
-;gearshift.c,263 :: 		GearShift_brake();
+;gearshift.c,267 :: 		GearShift_brake();
 	CALL	_GearMotor_brake
-;gearshift.c,264 :: 		GearShift_setNextStep_A(STEP_DOWN_END);
+;gearshift.c,268 :: 		GearShift_setNextStep_A(STEP_DOWN_END);
 	MOV.B	#9, W10
 	CALL	_GearShift_setNextStep_A
-;gearshift.c,265 :: 		GearShift_setMsTicks_A(Gearshift_get_time(STEP_DOWN_BRAKE));
+;gearshift.c,269 :: 		GearShift_setMsTicks_A(Gearshift_get_time(STEP_DOWN_BRAKE));
 	MOV.B	#7, W10
 	CALL	_Gearshift_get_time
 	MOV	W0, W10
 	CALL	_GearShift_setMsTicks_A
-;gearshift.c,266 :: 		break;
+;gearshift.c,270 :: 		break;
 	GOTO	L_GearShift_nextStep_A25
-;gearshift.c,267 :: 		case STEP_DOWN_END:
+;gearshift.c,271 :: 		case STEP_DOWN_END:
 L_GearShift_nextStep_A48:
-;gearshift.c,268 :: 		GearShift_free();
+;gearshift.c,272 :: 		GearShift_free();
 	CALL	_GearMotor_release
-;gearshift.c,269 :: 		gearShift_isShiftingDown = FALSE;
+;gearshift.c,273 :: 		gearShift_isShiftingDown = FALSE;
 	MOV	#lo_addr(_gearShift_isShiftingDown), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;gearshift.c,270 :: 		gearShift_isSettingNeutral = FALSE;
+;gearshift.c,274 :: 		gearShift_isSettingNeutral = FALSE;
 	MOV	#lo_addr(_gearShift_isSettingNeutral), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;gearshift.c,271 :: 		gearShift_isUnsettingNeutral = FALSE;
+;gearshift.c,275 :: 		gearShift_isUnsettingNeutral = FALSE;
 	MOV	#lo_addr(_gearShift_isUnsettingNeutral), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;gearshift.c,273 :: 		break;
+;gearshift.c,277 :: 		break;
 	GOTO	L_GearShift_nextStep_A25
-;gearshift.c,274 :: 		default:
+;gearshift.c,278 :: 		default:
 L_GearShift_nextStep_A49:
-;gearshift.c,275 :: 		break;
+;gearshift.c,279 :: 		break;
 	GOTO	L_GearShift_nextStep_A25
-;gearshift.c,276 :: 		}
+;gearshift.c,280 :: 		}
 L_GearShift_nextStep_A24:
 	MOV	#lo_addr(_gearShift_nextStepValue_A), W0
 	MOV.B	[W0], W0
@@ -632,7 +632,7 @@ L__GearShift_nextStep_A144:
 L__GearShift_nextStep_A145:
 	GOTO	L_GearShift_nextStep_A49
 L_GearShift_nextStep_A25:
-;gearshift.c,277 :: 		}
+;gearshift.c,281 :: 		}
 L_end_GearShift_nextStep_A:
 	POP	W10
 	RETURN
@@ -640,60 +640,60 @@ L_end_GearShift_nextStep_A:
 
 _GearShift_nextStep_B:
 
-;gearshift.c,280 :: 		void GearShift_nextStep_B(void) {
-;gearshift.c,281 :: 		switch (gearShift_nextStepValue_B) {
+;gearshift.c,284 :: 		void GearShift_nextStep_B(void) {
+;gearshift.c,285 :: 		switch (gearShift_nextStepValue_B) {
 	GOTO	L_GearShift_nextStep_B50
-;gearshift.c,282 :: 		default:
+;gearshift.c,286 :: 		default:
 L_GearShift_nextStep_B52:
-;gearshift.c,283 :: 		break;
+;gearshift.c,287 :: 		break;
 	GOTO	L_GearShift_nextStep_B51
-;gearshift.c,284 :: 		}
+;gearshift.c,288 :: 		}
 L_GearShift_nextStep_B50:
 	GOTO	L_GearShift_nextStep_B52
 L_GearShift_nextStep_B51:
-;gearshift.c,285 :: 		}
+;gearshift.c,289 :: 		}
 L_end_GearShift_nextStep_B:
 	RETURN
 ; end of _GearShift_nextStep_B
 
 _GearShift_setMsTicks_A:
 
-;gearshift.c,287 :: 		void GearShift_setMsTicks_A(unsigned int ticks) {
-;gearshift.c,288 :: 		gearShift_ticksCounter1 = (int) ticks + 1;
+;gearshift.c,291 :: 		void GearShift_setMsTicks_A(unsigned int ticks) {
+;gearshift.c,292 :: 		gearShift_ticksCounter1 = (int) ticks + 1;
 	MOV	#lo_addr(_gearShift_ticksCounter1), W0
 	ADD	W10, #1, [W0]
-;gearshift.c,289 :: 		}
+;gearshift.c,293 :: 		}
 L_end_GearShift_setMsTicks_A:
 	RETURN
 ; end of _GearShift_setMsTicks_A
 
 _GearShift_setMsTicks_B:
 
-;gearshift.c,291 :: 		void GearShift_setMsTicks_B(unsigned int ticks) {
-;gearshift.c,292 :: 		gearShift_ticksCounter2 = (int) ticks + 1;
+;gearshift.c,295 :: 		void GearShift_setMsTicks_B(unsigned int ticks) {
+;gearshift.c,296 :: 		gearShift_ticksCounter2 = (int) ticks + 1;
 	MOV	#lo_addr(_gearShift_ticksCounter2), W0
 	ADD	W10, #1, [W0]
-;gearshift.c,293 :: 		}
+;gearshift.c,297 :: 		}
 L_end_GearShift_setMsTicks_B:
 	RETURN
 ; end of _GearShift_setMsTicks_B
 
 _GearShift_msTick:
 
-;gearshift.c,295 :: 		void GearShift_msTick(void) {
-;gearshift.c,296 :: 		gearShift_ticksCounter1 -= 1;
+;gearshift.c,299 :: 		void GearShift_msTick(void) {
+;gearshift.c,300 :: 		gearShift_ticksCounter1 -= 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_gearShift_ticksCounter1), W0
 	SUBR	W1, [W0], [W0]
-;gearshift.c,297 :: 		if (gearShift_ticksCounter1 == 0) {
+;gearshift.c,301 :: 		if (gearShift_ticksCounter1 == 0) {
 	MOV	_gearShift_ticksCounter1, W0
 	CP	W0, #0
 	BRA Z	L__GearShift_msTick150
 	GOTO	L_GearShift_msTick53
 L__GearShift_msTick150:
-;gearshift.c,298 :: 		GearShift_nextStep_A();
+;gearshift.c,302 :: 		GearShift_nextStep_A();
 	CALL	_GearShift_nextStep_A
-;gearshift.c,299 :: 		} else if (gearShift_ticksCounter1 < 0) {
+;gearshift.c,303 :: 		} else if (gearShift_ticksCounter1 < 0) {
 	GOTO	L_GearShift_msTick54
 L_GearShift_msTick53:
 	MOV	_gearShift_ticksCounter1, W0
@@ -701,25 +701,25 @@ L_GearShift_msTick53:
 	BRA LT	L__GearShift_msTick151
 	GOTO	L_GearShift_msTick55
 L__GearShift_msTick151:
-;gearshift.c,300 :: 		gearShift_ticksCounter1 = 0;
+;gearshift.c,304 :: 		gearShift_ticksCounter1 = 0;
 	CLR	W0
 	MOV	W0, _gearShift_ticksCounter1
-;gearshift.c,301 :: 		}
+;gearshift.c,305 :: 		}
 L_GearShift_msTick55:
 L_GearShift_msTick54:
-;gearshift.c,303 :: 		gearShift_ticksCounter2 -= 1;
+;gearshift.c,307 :: 		gearShift_ticksCounter2 -= 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_gearShift_ticksCounter2), W0
 	SUBR	W1, [W0], [W0]
-;gearshift.c,304 :: 		if (gearShift_ticksCounter2 == 0) {
+;gearshift.c,308 :: 		if (gearShift_ticksCounter2 == 0) {
 	MOV	_gearShift_ticksCounter2, W0
 	CP	W0, #0
 	BRA Z	L__GearShift_msTick152
 	GOTO	L_GearShift_msTick56
 L__GearShift_msTick152:
-;gearshift.c,305 :: 		GearShift_nextStep_B();
+;gearshift.c,309 :: 		GearShift_nextStep_B();
 	CALL	_GearShift_nextStep_B
-;gearshift.c,306 :: 		} else if (gearShift_ticksCounter2 < 0) {
+;gearshift.c,310 :: 		} else if (gearShift_ticksCounter2 < 0) {
 	GOTO	L_GearShift_msTick57
 L_GearShift_msTick56:
 	MOV	_gearShift_ticksCounter2, W0
@@ -727,65 +727,65 @@ L_GearShift_msTick56:
 	BRA LT	L__GearShift_msTick153
 	GOTO	L_GearShift_msTick58
 L__GearShift_msTick153:
-;gearshift.c,307 :: 		gearShift_ticksCounter2 = 0;
+;gearshift.c,311 :: 		gearShift_ticksCounter2 = 0;
 	CLR	W0
 	MOV	W0, _gearShift_ticksCounter2
-;gearshift.c,308 :: 		}
+;gearshift.c,312 :: 		}
 L_GearShift_msTick58:
 L_GearShift_msTick57:
-;gearshift.c,309 :: 		}
+;gearshift.c,313 :: 		}
 L_end_GearShift_msTick:
 	RETURN
 ; end of _GearShift_msTick
 
 _Gearshift_get_time:
 
-;gearshift.c,343 :: 		int Gearshift_get_time(shiftStep step)
-;gearshift.c,345 :: 		if(gearShift_isSettingNeutral == TRUE){
+;gearshift.c,347 :: 		int Gearshift_get_time(shiftStep step)
+;gearshift.c,349 :: 		if(gearShift_isSettingNeutral == TRUE){
 	MOV	#lo_addr(_gearShift_isSettingNeutral), W0
 	MOV.B	[W0], W0
 	CP.B	W0, #1
 	BRA Z	L__Gearshift_get_time155
 	GOTO	L_Gearshift_get_time59
 L__Gearshift_get_time155:
-;gearshift.c,346 :: 		switch(step){
+;gearshift.c,350 :: 		switch(step){
 	GOTO	L_Gearshift_get_time60
-;gearshift.c,347 :: 		case STEP_UP_START:
+;gearshift.c,351 :: 		case STEP_UP_START:
 L_Gearshift_get_time62:
-;gearshift.c,348 :: 		return gearShift_timings[NT_CLUTCH_DELAY];
+;gearshift.c,352 :: 		return gearShift_timings[NT_CLUTCH_DELAY];
 	MOV	_gearShift_timings+38, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,349 :: 		case STEP_UP_PUSH:
+;gearshift.c,353 :: 		case STEP_UP_PUSH:
 L_Gearshift_get_time63:
-;gearshift.c,350 :: 		return gearShift_timings[NT_PUSH_1_N];
+;gearshift.c,354 :: 		return gearShift_timings[NT_PUSH_1_N];
 	MOV	_gearShift_timings, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,351 :: 		case STEP_UP_REBOUND:
+;gearshift.c,355 :: 		case STEP_UP_REBOUND:
 L_Gearshift_get_time64:
-;gearshift.c,352 :: 		return gearShift_timings[NT_REBOUND_1_N];
+;gearshift.c,356 :: 		return gearShift_timings[NT_REBOUND_1_N];
 	MOV	_gearShift_timings+4, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,353 :: 		case STEP_UP_BRAKE:
+;gearshift.c,357 :: 		case STEP_UP_BRAKE:
 L_Gearshift_get_time65:
-;gearshift.c,354 :: 		return gearShift_timings[NT_BRAKE_1_N];
+;gearshift.c,358 :: 		return gearShift_timings[NT_BRAKE_1_N];
 	MOV	_gearShift_timings+6, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,357 :: 		case STEP_DOWN_PUSH:
+;gearshift.c,361 :: 		case STEP_DOWN_PUSH:
 L_Gearshift_get_time66:
-;gearshift.c,358 :: 		return gearShift_timings[NT_PUSH_2_N];
+;gearshift.c,362 :: 		return gearShift_timings[NT_PUSH_2_N];
 	MOV	_gearShift_timings+8, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,359 :: 		case STEP_DOWN_REBOUND:
+;gearshift.c,363 :: 		case STEP_DOWN_REBOUND:
 L_Gearshift_get_time67:
-;gearshift.c,360 :: 		return gearShift_timings[NT_REBOUND_2_N];
+;gearshift.c,364 :: 		return gearShift_timings[NT_REBOUND_2_N];
 	MOV	_gearShift_timings+12, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,361 :: 		case STEP_DOWN_BRAKE:
+;gearshift.c,365 :: 		case STEP_DOWN_BRAKE:
 L_Gearshift_get_time68:
-;gearshift.c,362 :: 		return gearShift_timings[NT_BRAKE_2_N];
+;gearshift.c,366 :: 		return gearShift_timings[NT_BRAKE_2_N];
 	MOV	_gearShift_timings+14, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,363 :: 		}
+;gearshift.c,367 :: 		}
 L_Gearshift_get_time60:
 	CP.B	W10, #0
 	BRA NZ	L__Gearshift_get_time156
@@ -815,45 +815,45 @@ L__Gearshift_get_time161:
 	BRA NZ	L__Gearshift_get_time162
 	GOTO	L_Gearshift_get_time68
 L__Gearshift_get_time162:
-;gearshift.c,364 :: 		}
+;gearshift.c,368 :: 		}
 L_Gearshift_get_time59:
-;gearshift.c,365 :: 		switch(step){
+;gearshift.c,369 :: 		switch(step){
 	GOTO	L_Gearshift_get_time69
-;gearshift.c,366 :: 		case STEP_UP_START:
+;gearshift.c,370 :: 		case STEP_UP_START:
 L_Gearshift_get_time71:
-;gearshift.c,367 :: 		return gearShift_timings[DELAY];
+;gearshift.c,371 :: 		return gearShift_timings[DELAY];
 	MOV	_gearShift_timings+32, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,370 :: 		case STEP_UP_PUSH:
+;gearshift.c,374 :: 		case STEP_UP_PUSH:
 L_Gearshift_get_time72:
-;gearshift.c,371 :: 		switch(gearShift_currentGear){
+;gearshift.c,375 :: 		switch(gearShift_currentGear){
 	GOTO	L_Gearshift_get_time73
-;gearshift.c,372 :: 		case 1:
+;gearshift.c,376 :: 		case 1:
 L_Gearshift_get_time75:
-;gearshift.c,373 :: 		return gearShift_timings[UP_PUSH_1_2];
+;gearshift.c,377 :: 		return gearShift_timings[UP_PUSH_1_2];
 	MOV	_gearShift_timings+24, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,374 :: 		case 2:
+;gearshift.c,378 :: 		case 2:
 L_Gearshift_get_time76:
-;gearshift.c,375 :: 		return gearShift_timings[UP_PUSH_2_3];
+;gearshift.c,379 :: 		return gearShift_timings[UP_PUSH_2_3];
 	MOV	_gearShift_timings+26, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,376 :: 		case 3:
+;gearshift.c,380 :: 		case 3:
 L_Gearshift_get_time77:
-;gearshift.c,377 :: 		return gearShift_timings[UP_PUSH_3_4];
+;gearshift.c,381 :: 		return gearShift_timings[UP_PUSH_3_4];
 	MOV	_gearShift_timings+28, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,378 :: 		case 4:
+;gearshift.c,382 :: 		case 4:
 L_Gearshift_get_time78:
-;gearshift.c,379 :: 		return gearShift_timings[UP_PUSH_4_5];
+;gearshift.c,383 :: 		return gearShift_timings[UP_PUSH_4_5];
 	MOV	_gearShift_timings+30, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,380 :: 		default:
+;gearshift.c,384 :: 		default:
 L_Gearshift_get_time79:
-;gearshift.c,381 :: 		return gearShift_timings[UP_PUSH_2_3];
+;gearshift.c,385 :: 		return gearShift_timings[UP_PUSH_2_3];
 	MOV	_gearShift_timings+26, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,382 :: 		}
+;gearshift.c,386 :: 		}
 L_Gearshift_get_time73:
 	MOV	_gearShift_currentGear, W0
 	CP	W0, #1
@@ -876,37 +876,37 @@ L__Gearshift_get_time165:
 	GOTO	L_Gearshift_get_time78
 L__Gearshift_get_time166:
 	GOTO	L_Gearshift_get_time79
-;gearshift.c,383 :: 		case STEP_UP_REBOUND:
+;gearshift.c,387 :: 		case STEP_UP_REBOUND:
 L_Gearshift_get_time80:
-;gearshift.c,384 :: 		return gearShift_timings[UP_REBOUND];
+;gearshift.c,388 :: 		return gearShift_timings[UP_REBOUND];
 	MOV	_gearShift_timings+34, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,385 :: 		case STEP_UP_BRAKE:
+;gearshift.c,389 :: 		case STEP_UP_BRAKE:
 L_Gearshift_get_time81:
-;gearshift.c,386 :: 		return gearShift_timings[UP_BRAKE];
+;gearshift.c,390 :: 		return gearShift_timings[UP_BRAKE];
 	MOV	_gearShift_timings+36, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,387 :: 		case STEP_DOWN_START:
+;gearshift.c,391 :: 		case STEP_DOWN_START:
 L_Gearshift_get_time82:
-;gearshift.c,388 :: 		return gearShift_timings[CLUTCH];
+;gearshift.c,392 :: 		return gearShift_timings[CLUTCH];
 	MOV	_gearShift_timings+18, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,390 :: 		case STEP_DOWN_PUSH:
+;gearshift.c,394 :: 		case STEP_DOWN_PUSH:
 L_Gearshift_get_time83:
-;gearshift.c,391 :: 		return gearShift_timings[DN_PUSH];
+;gearshift.c,395 :: 		return gearShift_timings[DN_PUSH];
 	MOV	_gearShift_timings+16, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,392 :: 		case STEP_DOWN_REBOUND:
+;gearshift.c,396 :: 		case STEP_DOWN_REBOUND:
 L_Gearshift_get_time84:
-;gearshift.c,393 :: 		return gearShift_timings[DN_REBOUND];
+;gearshift.c,397 :: 		return gearShift_timings[DN_REBOUND];
 	MOV	_gearShift_timings+20, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,394 :: 		case STEP_DOWN_BRAKE:
+;gearshift.c,398 :: 		case STEP_DOWN_BRAKE:
 L_Gearshift_get_time85:
-;gearshift.c,395 :: 		return gearShift_timings[DN_BRAKE];
+;gearshift.c,399 :: 		return gearShift_timings[DN_BRAKE];
 	MOV	_gearShift_timings+22, W0
 	GOTO	L_end_Gearshift_get_time
-;gearshift.c,396 :: 		}
+;gearshift.c,400 :: 		}
 L_Gearshift_get_time69:
 	CP.B	W10, #0
 	BRA NZ	L__Gearshift_get_time167
@@ -940,84 +940,84 @@ L__Gearshift_get_time173:
 	BRA NZ	L__Gearshift_get_time174
 	GOTO	L_Gearshift_get_time85
 L__Gearshift_get_time174:
-;gearshift.c,397 :: 		}
+;gearshift.c,401 :: 		}
 L_end_Gearshift_get_time:
 	RETURN
 ; end of _Gearshift_get_time
 
 _GearShift_loadDefaultTimings:
 
-;gearshift.c,399 :: 		void GearShift_loadDefaultTimings(void) {
-;gearshift.c,400 :: 		gearShift_timings[DELAY] = DEFAULT_DELAY;
+;gearshift.c,403 :: 		void GearShift_loadDefaultTimings(void) {
+;gearshift.c,404 :: 		gearShift_timings[DELAY] = DEFAULT_DELAY;
 	MOV	#20, W0
 	MOV	W0, _gearShift_timings+32
-;gearshift.c,401 :: 		gearShift_timings[UP_REBOUND] = DEFAULT_UP_REBOUND;
+;gearshift.c,405 :: 		gearShift_timings[UP_REBOUND] = DEFAULT_UP_REBOUND;
 	MOV	#15, W0
 	MOV	W0, _gearShift_timings+34
-;gearshift.c,402 :: 		gearShift_timings[UP_BRAKE] = DEFAULT_UP_BRAKE;
+;gearshift.c,406 :: 		gearShift_timings[UP_BRAKE] = DEFAULT_UP_BRAKE;
 	MOV	#20, W0
 	MOV	W0, _gearShift_timings+36
-;gearshift.c,403 :: 		gearShift_timings[UP_PUSH_1_2] = DEFAULT_UP_PUSH_1_2;
+;gearshift.c,407 :: 		gearShift_timings[UP_PUSH_1_2] = DEFAULT_UP_PUSH_1_2;
 	MOV	#115, W0
 	MOV	W0, _gearShift_timings+24
-;gearshift.c,404 :: 		gearShift_timings[UP_PUSH_2_3] = DEFAULT_UP_PUSH_2_3;
+;gearshift.c,408 :: 		gearShift_timings[UP_PUSH_2_3] = DEFAULT_UP_PUSH_2_3;
 	MOV	#100, W0
 	MOV	W0, _gearShift_timings+26
-;gearshift.c,405 :: 		gearShift_timings[UP_PUSH_3_4] = DEFAULT_UP_PUSH_3_4;
+;gearshift.c,409 :: 		gearShift_timings[UP_PUSH_3_4] = DEFAULT_UP_PUSH_3_4;
 	MOV	#100, W0
 	MOV	W0, _gearShift_timings+28
-;gearshift.c,406 :: 		gearShift_timings[UP_PUSH_4_5] = DEFAULT_UP_PUSH_4_5;
+;gearshift.c,410 :: 		gearShift_timings[UP_PUSH_4_5] = DEFAULT_UP_PUSH_4_5;
 	MOV	#100, W0
 	MOV	W0, _gearShift_timings+30
-;gearshift.c,408 :: 		gearShift_timings[CLUTCH] = DEFAULT_CLUTCH;
+;gearshift.c,412 :: 		gearShift_timings[CLUTCH] = DEFAULT_CLUTCH;
 	MOV	#70, W0
 	MOV	W0, _gearShift_timings+18
-;gearshift.c,409 :: 		gearShift_timings[DN_PUSH] = DEFAULT_DN_PUSH;
+;gearshift.c,413 :: 		gearShift_timings[DN_PUSH] = DEFAULT_DN_PUSH;
 	MOV	#100, W0
 	MOV	W0, _gearShift_timings+16
-;gearshift.c,410 :: 		gearShift_timings[DN_BRAKE] = DEFAULT_DN_BRAKE;
+;gearshift.c,414 :: 		gearShift_timings[DN_BRAKE] = DEFAULT_DN_BRAKE;
 	MOV	#15, W0
 	MOV	W0, _gearShift_timings+22
-;gearshift.c,411 :: 		gearShift_timings[DN_REBOUND] = DEFAULT_DN_REBOUND;
+;gearshift.c,415 :: 		gearShift_timings[DN_REBOUND] = DEFAULT_DN_REBOUND;
 	MOV	#20, W0
 	MOV	W0, _gearShift_timings+20
-;gearshift.c,413 :: 		gearShift_timings[NT_CLUTCH_DELAY] = DEFAULT_NT_CLUTCH_DELAY;
+;gearshift.c,417 :: 		gearShift_timings[NT_CLUTCH_DELAY] = DEFAULT_NT_CLUTCH_DELAY;
 	MOV	#20, W0
 	MOV	W0, _gearShift_timings+38
-;gearshift.c,414 :: 		gearShift_timings[NT_REBOUND_1_N] = DEFAULT_NT_REBOUND_1_N;
+;gearshift.c,418 :: 		gearShift_timings[NT_REBOUND_1_N] = DEFAULT_NT_REBOUND_1_N;
 	MOV	#15, W0
 	MOV	W0, _gearShift_timings+4
-;gearshift.c,415 :: 		gearShift_timings[NT_REBOUND_2_N] = DEFAULT_NT_REBOUND_2_N;
+;gearshift.c,419 :: 		gearShift_timings[NT_REBOUND_2_N] = DEFAULT_NT_REBOUND_2_N;
 	MOV	#15, W0
 	MOV	W0, _gearShift_timings+12
-;gearshift.c,416 :: 		gearShift_timings[NT_BRAKE_1_N] = DEFAULT_NT_BRAKE_1_N;
+;gearshift.c,420 :: 		gearShift_timings[NT_BRAKE_1_N] = DEFAULT_NT_BRAKE_1_N;
 	MOV	#35, W0
 	MOV	W0, _gearShift_timings+6
-;gearshift.c,417 :: 		gearShift_timings[NT_BRAKE_2_N] = DEFAULT_NT_BRAKE_2_N;
+;gearshift.c,421 :: 		gearShift_timings[NT_BRAKE_2_N] = DEFAULT_NT_BRAKE_2_N;
 	MOV	#35, W0
 	MOV	W0, _gearShift_timings+14
-;gearshift.c,418 :: 		gearShift_timings[NT_PUSH_1_N] = DEFAULT_NT_PUSH_1_N;
+;gearshift.c,422 :: 		gearShift_timings[NT_PUSH_1_N] = DEFAULT_NT_PUSH_1_N;
 	MOV	#22, W0
 	MOV	W0, _gearShift_timings
-;gearshift.c,419 :: 		gearShift_timings[NT_PUSH_2_N] = DEFAULT_NT_PUSH_2_N;
+;gearshift.c,423 :: 		gearShift_timings[NT_PUSH_2_N] = DEFAULT_NT_PUSH_2_N;
 	MOV	#25, W0
 	MOV	W0, _gearShift_timings+8
-;gearshift.c,420 :: 		gearShift_timings[NT_CLUTCH_1_N] = DEFAULT_NT_CLUTCH_1_N;
+;gearshift.c,424 :: 		gearShift_timings[NT_CLUTCH_1_N] = DEFAULT_NT_CLUTCH_1_N;
 	MOV	#300, W0
 	MOV	W0, _gearShift_timings+2
-;gearshift.c,421 :: 		gearShift_timings[NT_CLUTCH_2_N] = DEFAULT_NT_CLUTCH_2_N;
+;gearshift.c,425 :: 		gearShift_timings[NT_CLUTCH_2_N] = DEFAULT_NT_CLUTCH_2_N;
 	MOV	#300, W0
 	MOV	W0, _gearShift_timings+10
-;gearshift.c,424 :: 		gearShift_timings[DOWN_TIME_CHECK] = DEFAULT_DOWN_TIME_CHECK;
+;gearshift.c,428 :: 		gearShift_timings[DOWN_TIME_CHECK] = DEFAULT_DOWN_TIME_CHECK;
 	MOV	#500, W0
 	MOV	W0, _gearShift_timings+40
-;gearshift.c,425 :: 		gearShift_timings[UP_TIME_CHECK] = DEFAULT_UP_TIME_CHECK;
+;gearshift.c,429 :: 		gearShift_timings[UP_TIME_CHECK] = DEFAULT_UP_TIME_CHECK;
 	MOV	#500, W0
 	MOV	W0, _gearShift_timings+42
-;gearshift.c,426 :: 		gearShift_timings[MAX_TRIES] = DEFAULT_MAX_TRIES;
+;gearshift.c,430 :: 		gearShift_timings[MAX_TRIES] = DEFAULT_MAX_TRIES;
 	MOV	#2, W0
 	MOV	W0, _gearShift_timings+44
-;gearshift.c,427 :: 		}
+;gearshift.c,431 :: 		}
 L_end_GearShift_loadDefaultTimings:
 	RETURN
 ; end of _GearShift_loadDefaultTimings

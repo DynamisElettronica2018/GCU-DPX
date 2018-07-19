@@ -15,8 +15,16 @@
 /************************ GCU *****************************/
 #define GCU_TRACTION_CONTROL_EFI_ID     0b10100000000 //1280       MANDATO SOLO DA GCU AD EFI!!!!
 #define GCU_LAUNCH_CONTROL_EFI_ID       0b10100000001 //1281       MANDATO SOLO DA GCU AD EFI!!!!
-#define GCU_CLUTCH_FB_SW_ID             0b01100010000 //784        //solo clutch
+#define GCU_CLUTCH_FB_SW_ID             0b01100010000 //784
 #define GCU_GEAR_TIMING_TELEMETRY_ID    0b11100001101 //1624
+#define GCU_FEEDBACK_ID                 0b01100011001 //793                  /**FEEDBACK CODES**/
+/**FEEDBACK CODES**/
+#define ACC_CODE        1
+#define AUTOX_CODE      2
+#define TRACTION_CODE   3
+#define DRS_CODE        4
+#define ANTISTALL_CODE  5
+
 
 /***** COMANDI GCU ****/
 #define CAN_COMMAND_GCU_IS_ALIVE                99
@@ -34,7 +42,6 @@
 #define SW_TRACTION_CONTROL_GCU_ID      0b01000000011 //515
 #define SW_BRAKE_BIAS_EBB_ID            0b10000000000 //1024
 #define SW_DRS_GCU_ID                   0b01000000101 //517
-                                                                 
 
 
 /************************** DCU ***************************/
@@ -70,23 +77,13 @@
 #define SW_DEBUG_ID                     0b01100010100 //788
 #define EBB_DEBUG_ID                    0b01100010101 //789
 #define GCU_DEBUG_1_ID                  0b01100010110 //790
-/***used to send feedbacks to SW***/
 #define GCU_DEBUG_2_ID                  0b01100010111 //791
-#define ACC_CODE                        1
-#define AUTOX_CODE                      2
-#define TRACTION_CODE                   3
-#define DRS_CODE                        4
-/*****/
 #define DCU_DEBUG_ID                    0b01100011000 //792
 
 
 /************************** AUX ***************************/
 #define SW_AUX_ID                       0b11111110000 //2032
-#define GCU_AUX_ID                      0b11111110001 //2033         //1 coppia: traction feedback
-                                                                     //2 coppia: acceleration feedback
-                                                                     //3 coppia: DRS feedback
-                                                                     //4 coppia:
-
+#define GCU_AUX_ID                      0b11111110001 //2033
 #define EBB_AUX_ID                      0b11111110010 //2034
 #define DAU_FR_AUX_ID                   0b11111110011 //2035
 #define DAU_FL_AUX_ID                   0b11111110100 //2036

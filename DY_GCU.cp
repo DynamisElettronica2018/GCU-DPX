@@ -325,10 +325,6 @@ void StopLight_init(void);
 void StopLight_setupPWM(void);
 
 void StopLight_setBrightness(unsigned char percentage);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
-#line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
-void sendUpdatesSW(unsigned int valCode);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac_defaults.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
@@ -338,7 +334,7 @@ void sendUpdatesSW(unsigned int valCode);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
 #line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
-void sendUpdatesSW(unsigned int valCode);
+void sendUpdatesSW(int valCode);
 #line 28 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
 extern unsigned int accelerationFb;
 
@@ -408,6 +404,10 @@ int aac_getParam(const aac_params id);
 int aac_getExternValue(const aac_values id);
 
 void aac_forceState(const aac_states newState);
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
+#line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
+void sendUpdatesSW(int valCode);
 #line 23 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
@@ -424,7 +424,7 @@ char isSteeringWheelAvailable;
  extern unsigned int accelerationFb;
  extern aac_states aac_currentState;
  extern int aac_externValues[ 3 ];
- extern int aac_parameters[ 9  ];
+ extern int aac_parameters[ 11  ];
 
  extern int aac_timesCounter;
  int timer1_aac_counter = 0;
@@ -517,7 +517,8 @@ void main() {
 
 
  timer1_aac_counter += 1;
- if(timer1_aac_counter ==  25 ){
+ if(timer1_aac_counter ==  25 )
+ {
  aac_execute();
  timer1_aac_counter = 0;
  }
@@ -576,7 +577,7 @@ void main() {
  aac_updateExternValue(WHEEL_SPEED, firstInt / 10);
 
  break;
-#line 204 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 205 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
  case  0b01000000001 :
 
  if(dataBuffer[0] >  40 )
@@ -586,7 +587,6 @@ void main() {
  aac_stop();
  }
 
-
  if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral)
  {
 
@@ -595,6 +595,7 @@ void main() {
  }
 
  }
+
 
  break;
 
@@ -619,10 +620,14 @@ void main() {
  Buzzer_bip();
  }
 
- else
+ else if (firstInt == 0)
  {
  if (accelerationFb > 0)
+ {
  aac_stop();
+ Clutch_release();
+ }
+
  }
 
  break;

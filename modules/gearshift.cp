@@ -414,12 +414,16 @@ void GearShift_nextStep_A(void) {
  break;
 
  case STEP_DOWN_START:
- if (gearShift_isSettingNeutral && Clutch_get() <= 80) {
+ if (gearShift_isSettingNeutral && Clutch_get() <= 80)
+ {
  Clutch_set(80);
- } else {
+ }
+ else
+ {
 
- if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60) {
- Clutch_set(90);
+ if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60)
+ {
+ Clutch_set(60);
  }
  Efi_setBlip();
  Buzzer_Bip();
@@ -490,7 +494,7 @@ void GearShift_msTick(void) {
  gearShift_ticksCounter2 = 0;
  }
 }
-#line 343 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/gearshift.c"
+#line 347 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/gearshift.c"
 int Gearshift_get_time(shiftStep step)
 {
  if(gearShift_isSettingNeutral ==  1 ){
