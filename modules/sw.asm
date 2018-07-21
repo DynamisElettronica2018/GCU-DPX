@@ -10,9 +10,9 @@ _sendUpdatesSW:
 	POP	W10
 ;sw.c,8 :: 		switch (valCode)
 	GOTO	L_sendUpdatesSW0
-;sw.c,11 :: 		case 1:
+;sw.c,11 :: 		case ACC_CODE:
 L_sendUpdatesSW2:
-;sw.c,12 :: 		Can_addIntToWritePacket(1);
+;sw.c,12 :: 		Can_addIntToWritePacket(ACC_CODE);
 	MOV	#1, W10
 	CALL	_Can_addIntToWritePacket
 ;sw.c,13 :: 		Can_addIntToWritePacket(accelerationFb);

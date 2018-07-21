@@ -36,7 +36,7 @@ void aac_execute(void){
             Clutch_set((unsigned int)aac_clutchValue);
             aac_currentState = READY;
             accelerationFb = 1;
-            sendUpdatesSW(1);
+            sendUpdatesSW(ACC_CODE);
             return;
         case READY:
             Clutch_set(100);

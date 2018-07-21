@@ -277,6 +277,21 @@ a
 a10m
 a10m
 a10m_bit
+aac_clutchstep
+aac_clutchvalue
+aac_currentstate
+aac_dtrelease
+aac_execute
+aac_externvalues
+aac_getexternvalue
+aac_getparam
+aac_init
+aac_loaddefaultparams
+aac_parameters
+aac_sendingall
+aac_stop
+aac_timescounter
+aac_updateexternvalue
 abat
 abat
 abat
@@ -468,6 +483,7 @@ accbu_22
 accbu_22_bit
 accbu_23
 accbu_23_bit
+accelerationfb
 accsat
 accsat
 accsat_bit
@@ -1762,6 +1778,7 @@ clutchmotor_pwm_min_value
 clutchmotor_pwm_period_value
 clutchmotor_setposition
 clutchmotor_setuppwm
+clutchpulled
 cn0ie
 cn0ie
 cn0ie_bit
@@ -3721,6 +3738,7 @@ gearshift_timings
 gearshift_up
 get_fosc_khz
 get_fosc_per_cyc
+getaccelerationfb
 getanalogvalue
 getexacttimerprescaler
 getexternalinterruptedge
@@ -7411,6 +7429,7 @@ seg2phts_c2cfg2_bit
 sen
 sen
 sen_bit
+sendupdatessw
 setallpinasdigital
 setanalogdataoutputformat
 setanaloginterrupt
@@ -9075,6 +9094,7 @@ time_datediff
 time_datetoepoch
 time_epochtodate
 time_jd1970
+timer1_aac_counter
 timer1_counter0
 timer1_counter1
 timer1_counter2

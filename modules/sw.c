@@ -8,8 +8,8 @@ void sendUpdatesSW(int valCode)
     switch (valCode)
     {
     #ifdef AAC_H
-      case 1:
-           Can_addIntToWritePacket(1);
+      case ACC_CODE:
+           Can_addIntToWritePacket(ACC_CODE);
            Can_addIntToWritePacket(accelerationFb);
            break;
     #endif

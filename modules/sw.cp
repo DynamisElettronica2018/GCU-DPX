@@ -366,8 +366,8 @@ void sendUpdatesSW(int valCode)
  switch (valCode)
  {
 
- case 1:
- Can_addIntToWritePacket(1);
+ case  1 :
+ Can_addIntToWritePacket( 1 );
  Can_addIntToWritePacket(accelerationFb);
  break;
 #line 34 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/sw.c"

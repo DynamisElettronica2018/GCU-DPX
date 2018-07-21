@@ -52,7 +52,7 @@ L_aac_execute2:
 ;aac.c,38 :: 		accelerationFb = 1;
 	MOV	#1, W0
 	MOV	W0, _accelerationFb
-;aac.c,39 :: 		sendUpdatesSW(1);
+;aac.c,39 :: 		sendUpdatesSW(ACC_CODE);
 	MOV	#1, W10
 	CALL	_sendUpdatesSW
 ;aac.c,40 :: 		return;

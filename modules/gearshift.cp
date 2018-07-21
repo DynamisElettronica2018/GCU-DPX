@@ -216,40 +216,12 @@ typedef enum {
  TIMES_LAST
  }time_id;
 
- typedef enum{
 
- H2O_DC,
- TH2O_ENGINE,
- TH2O_IN,
- TH2O_OUT,
-
- POIL,
- TOIL_IN,
- TOIL_OUT,
- BATTERY,
-
- P_FUEL,
- FAN,
- INJ1,
- INJ2,
-
- DATA_LAST
- }efi_dataIds;
 
 
 
 
 extern unsigned int gearShift_timings[ TIMES_LAST ];
-
-void rio_init(void);
-
-extern void rio_sendOneTime(time_id pos);
-
-extern void rio_sendAllTimes(void);
-
-extern void rio_sendTimes(void);
-
-extern void rio_send(void);
 #line 17 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
 typedef enum {
  STEP_UP_START,
@@ -442,12 +414,16 @@ void GearShift_nextStep_A(void) {
  break;
 
  case STEP_DOWN_START:
- if (gearShift_isSettingNeutral && Clutch_get() <= 80) {
+ if (gearShift_isSettingNeutral && Clutch_get() <= 80)
+ {
  Clutch_set(80);
- } else {
+ }
+ else
+ {
 
- if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60) {
- Clutch_set(90);
+ if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60)
+ {
+ Clutch_set(60);
  }
  Efi_setBlip();
  Buzzer_Bip();
@@ -518,7 +494,7 @@ void GearShift_msTick(void) {
  gearShift_ticksCounter2 = 0;
  }
 }
-#line 343 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/gearshift.c"
+#line 347 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/gearshift.c"
 int Gearshift_get_time(shiftStep step)
 {
  if(gearShift_isSettingNeutral ==  1 ){
@@ -581,7 +557,7 @@ void GearShift_loadDefaultTimings(void) {
  gearShift_timings[UP_BRAKE] =  20 ;
  gearShift_timings[UP_PUSH_1_2] =  115 ;
  gearShift_timings[UP_PUSH_2_3] =  100 ;
- gearShift_timings[UP_PUSH_3_4] =  170 ;
+ gearShift_timings[UP_PUSH_3_4] =  100 ;
  gearShift_timings[UP_PUSH_4_5] =  100 ;
 
  gearShift_timings[CLUTCH] =  70 ;
