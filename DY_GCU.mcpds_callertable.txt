@@ -113,7 +113,6 @@ CAN_Interrupt
 		Efi_unsetRPMLimiter
 	Clutch_setBiased
 		Clutch_set
-	Buzzer_Bip
 	Clutch_release
 timer4_interrupt
 	Buzzer_tick

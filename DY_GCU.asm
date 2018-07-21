@@ -469,8 +469,6 @@ L__CAN_Interrupt45:
 	MOV	#lo_addr(_aac_currentState), W1
 	MOV.B	#1, W0
 	MOV.B	W0, [W1]
-;DY_GCU.c,239 :: 		Buzzer_bip(); //for testing
-	CALL	_Buzzer_Bip
 ;DY_GCU.c,240 :: 		}
 	GOTO	L_CAN_Interrupt36
 ;DY_GCU.c,234 :: 		if(aac_currentState == OFF && firstInt == 1)                                 //FOR TESTING
@@ -493,8 +491,6 @@ L__CAN_Interrupt44:
 	MOV	#lo_addr(_aac_currentState), W1
 	MOV.B	#3, W0
 	MOV.B	W0, [W1]
-;DY_GCU.c,244 :: 		Buzzer_bip(); //for testing
-	CALL	_Buzzer_Bip
 ;DY_GCU.c,245 :: 		}
 	GOTO	L_CAN_Interrupt40
 ;DY_GCU.c,241 :: 		else if(aac_currentState == READY && firstInt == 2)

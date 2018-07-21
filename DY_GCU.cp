@@ -612,12 +612,12 @@ void main() {
 
  {
  aac_currentState = START;
- Buzzer_bip();
+
  }
  else if(aac_currentState == READY && firstInt == 2)
  {
  aac_currentState = START_RELEASE;
- Buzzer_bip();
+
  }
 
  else if (firstInt == 0)
