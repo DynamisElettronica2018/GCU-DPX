@@ -1,3 +1,3 @@
 #include "can.h"
 
-void sendUpdatesSW(int valCode);
+void sendUpdatesSW(unsigned int valCode);

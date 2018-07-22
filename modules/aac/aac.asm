@@ -173,9 +173,9 @@ L_aac_execute8:
 	GOTO	L_end_aac_execute
 ;aac.c,67 :: 		case RUNNING:
 L_aac_execute9:
-;aac.c,69 :: 		if(gearShift_currentGear == 4){
+;aac.c,69 :: 		if(gearShift_currentGear == 5){
 	MOV	_gearShift_currentGear, W0
-	CP	W0, #4
+	CP	W0, #5
 	BRA Z	L__aac_execute31
 	GOTO	L_aac_execute10
 L__aac_execute31:
@@ -225,18 +225,20 @@ L_aac_execute14:
 	MOV	#lo_addr(_aac_currentState), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;aac.c,81 :: 		accelerationFb = 0;
+;aac.c,81 :: 		Efi_unsetRPMLimiter();
+	CALL	_Efi_unsetRPMLimiter
+;aac.c,82 :: 		accelerationFb = 0;
 	CLR	W0
 	MOV	W0, _accelerationFb
-;aac.c,82 :: 		sendUpdatesSW(ACC_CODE);
+;aac.c,83 :: 		sendUpdatesSW(ACC_CODE);
 	MOV	#1, W10
 	CALL	_sendUpdatesSW
-;aac.c,83 :: 		return;
+;aac.c,84 :: 		return;
 	GOTO	L_end_aac_execute
-;aac.c,85 :: 		default: return;
+;aac.c,86 :: 		default: return;
 L_aac_execute15:
 	GOTO	L_end_aac_execute
-;aac.c,86 :: 		}
+;aac.c,87 :: 		}
 L_aac_execute0:
 	MOV	#lo_addr(_aac_currentState), W0
 	MOV.B	[W0], W0
@@ -275,7 +277,7 @@ L__aac_execute38:
 	GOTO	L_aac_execute14
 L__aac_execute39:
 	GOTO	L_aac_execute15
-;aac.c,87 :: 		}
+;aac.c,88 :: 		}
 L_end_aac_execute:
 	POP	W10
 	ULNK
@@ -284,94 +286,94 @@ L_end_aac_execute:
 
 _aac_loadDefaultParams:
 
-;aac.c,119 :: 		void aac_loadDefaultParams(void){
-;aac.c,122 :: 		aac_parameters[RAMP_START]      = DEF_RAMP_START;
+;aac.c,120 :: 		void aac_loadDefaultParams(void){
+;aac.c,123 :: 		aac_parameters[RAMP_START]      = DEF_RAMP_START;
 	MOV	#70, W0
 	MOV	W0, _aac_parameters
-;aac.c,123 :: 		aac_parameters[RAMP_END]        = DEF_RAMP_END;
+;aac.c,124 :: 		aac_parameters[RAMP_END]        = DEF_RAMP_END;
 	CLR	W0
 	MOV	W0, _aac_parameters+2
-;aac.c,124 :: 		aac_parameters[RAMP_TIME]       = DEF_RAMP_TIME;
+;aac.c,125 :: 		aac_parameters[RAMP_TIME]       = DEF_RAMP_TIME;
 	MOV	#250, W0
 	MOV	W0, _aac_parameters+4
-;aac.c,125 :: 		aac_parameters[RPM_LIMIT_1_2]   = DEF_RPM_LIMIT_1_2;
+;aac.c,126 :: 		aac_parameters[RPM_LIMIT_1_2]   = DEF_RPM_LIMIT_1_2;
 	MOV	#11647, W0
 	MOV	W0, _aac_parameters+6
-;aac.c,126 :: 		aac_parameters[RPM_LIMIT_2_3]   = DEF_RPM_LIMIT_2_3;
+;aac.c,127 :: 		aac_parameters[RPM_LIMIT_2_3]   = DEF_RPM_LIMIT_2_3;
 	MOV	#11506, W0
 	MOV	W0, _aac_parameters+8
-;aac.c,127 :: 		aac_parameters[RPM_LIMIT_3_4]   = DEF_RPM_LIMIT_3_4;
+;aac.c,128 :: 		aac_parameters[RPM_LIMIT_3_4]   = DEF_RPM_LIMIT_3_4;
 	MOV	#11383, W0
 	MOV	W0, _aac_parameters+10
-;aac.c,128 :: 		aac_parameters[RPM_LIMIT_4_5]   = DEF_RPM_LIMIT_4_5;
+;aac.c,129 :: 		aac_parameters[RPM_LIMIT_4_5]   = DEF_RPM_LIMIT_4_5;
 	MOV	#11362, W0
 	MOV	W0, _aac_parameters+12
-;aac.c,129 :: 		aac_parameters[SPEED_LIMIT_1_2] = DEF_SPEED_LIMIT_1_2;
+;aac.c,130 :: 		aac_parameters[SPEED_LIMIT_1_2] = DEF_SPEED_LIMIT_1_2;
 	MOV	#46, W0
 	MOV	W0, _aac_parameters+14
-;aac.c,130 :: 		aac_parameters[SPEED_LIMIT_2_3] = DEF_SPEED_LIMIT_2_3;
+;aac.c,131 :: 		aac_parameters[SPEED_LIMIT_2_3] = DEF_SPEED_LIMIT_2_3;
 	MOV	#61, W0
 	MOV	W0, _aac_parameters+16
-;aac.c,131 :: 		aac_parameters[SPEED_LIMIT_3_4] = DEF_SPEED_LIMIT_3_4;
+;aac.c,132 :: 		aac_parameters[SPEED_LIMIT_3_4] = DEF_SPEED_LIMIT_3_4;
 	MOV	#77, W0
 	MOV	W0, _aac_parameters+18
-;aac.c,132 :: 		aac_parameters[SPEED_LIMIT_4_5] = DEF_SPEED_LIMIT_4_5;
+;aac.c,133 :: 		aac_parameters[SPEED_LIMIT_4_5] = DEF_SPEED_LIMIT_4_5;
 	MOV	#113, W0
 	MOV	W0, _aac_parameters+20
-;aac.c,134 :: 		}
+;aac.c,135 :: 		}
 L_end_aac_loadDefaultParams:
 	RETURN
 ; end of _aac_loadDefaultParams
 
 _aac_stop:
 
-;aac.c,142 :: 		void aac_stop(void){
-;aac.c,143 :: 		if(aac_currentState != OFF)
+;aac.c,143 :: 		void aac_stop(void){
+;aac.c,144 :: 		if(aac_currentState != OFF)
 	MOV	#lo_addr(_aac_currentState), W0
 	MOV.B	[W0], W0
 	CP.B	W0, #0
 	BRA NZ	L__aac_stop42
 	GOTO	L_aac_stop16
 L__aac_stop42:
-;aac.c,144 :: 		aac_currentState = STOPPING;
+;aac.c,145 :: 		aac_currentState = STOPPING;
 	MOV	#lo_addr(_aac_currentState), W1
 	MOV.B	#6, W0
 	MOV.B	W0, [W1]
 L_aac_stop16:
-;aac.c,145 :: 		}
+;aac.c,146 :: 		}
 L_end_aac_stop:
 	RETURN
 ; end of _aac_stop
 
 _aac_updateExternValue:
 
-;aac.c,147 :: 		void aac_updateExternValue(const aac_values id, const int value){
-;aac.c,148 :: 		if(id < AAC_NUM_VALUES)
+;aac.c,148 :: 		void aac_updateExternValue(const aac_values id, const int value){
+;aac.c,149 :: 		if(id < AAC_NUM_VALUES)
 	CP.B	W10, #3
 	BRA LTU	L__aac_updateExternValue44
 	GOTO	L_aac_updateExternValue17
 L__aac_updateExternValue44:
-;aac.c,149 :: 		aac_externValues[id] = value;
+;aac.c,150 :: 		aac_externValues[id] = value;
 	ZE	W10, W0
 	SL	W0, #1, W1
 	MOV	#lo_addr(_aac_externValues), W0
 	ADD	W0, W1, W0
 	MOV	W11, [W0]
 L_aac_updateExternValue17:
-;aac.c,150 :: 		}
+;aac.c,151 :: 		}
 L_end_aac_updateExternValue:
 	RETURN
 ; end of _aac_updateExternValue
 
 _aac_getParam:
 
-;aac.c,152 :: 		int aac_getParam(const aac_params id){
-;aac.c,153 :: 		if(id < AAC_NUM_PARAMS)
+;aac.c,153 :: 		int aac_getParam(const aac_params id){
+;aac.c,154 :: 		if(id < AAC_NUM_PARAMS)
 	CP.B	W10, #11
 	BRA LTU	L__aac_getParam46
 	GOTO	L_aac_getParam18
 L__aac_getParam46:
-;aac.c,154 :: 		return aac_parameters[id];
+;aac.c,155 :: 		return aac_parameters[id];
 	ZE	W10, W0
 	SL	W0, #1, W1
 	MOV	#lo_addr(_aac_parameters), W0
@@ -379,22 +381,22 @@ L__aac_getParam46:
 	MOV	[W0], W0
 	GOTO	L_end_aac_getParam
 L_aac_getParam18:
-;aac.c,155 :: 		return -1;
+;aac.c,156 :: 		return -1;
 	MOV	#65535, W0
-;aac.c,156 :: 		}
+;aac.c,157 :: 		}
 L_end_aac_getParam:
 	RETURN
 ; end of _aac_getParam
 
 _aac_getExternValue:
 
-;aac.c,158 :: 		int aac_getExternValue(const aac_params id){
-;aac.c,159 :: 		if(id < AAC_NUM_VALUES)
+;aac.c,159 :: 		int aac_getExternValue(const aac_params id){
+;aac.c,160 :: 		if(id < AAC_NUM_VALUES)
 	CP.B	W10, #3
 	BRA LTU	L__aac_getExternValue48
 	GOTO	L_aac_getExternValue19
 L__aac_getExternValue48:
-;aac.c,160 :: 		return aac_externValues[id];
+;aac.c,161 :: 		return aac_externValues[id];
 	ZE	W10, W0
 	SL	W0, #1, W1
 	MOV	#lo_addr(_aac_externValues), W0
@@ -402,9 +404,9 @@ L__aac_getExternValue48:
 	MOV	[W0], W0
 	GOTO	L_end_aac_getExternValue
 L_aac_getExternValue19:
-;aac.c,161 :: 		return -1;
+;aac.c,162 :: 		return -1;
 	MOV	#65535, W0
-;aac.c,162 :: 		}
+;aac.c,163 :: 		}
 L_end_aac_getExternValue:
 	RETURN
 ; end of _aac_getExternValue

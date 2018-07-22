@@ -1,8 +1,9 @@
 #include "sw.h"
 #include "buzzer.h"
 #include "aac.h"
+#include "traction.h"
 
-void sendUpdatesSW(int valCode)
+void sendUpdatesSW(unsigned int valCode)
 {
     Can_resetWritePacket();
     switch (valCode)

@@ -2527,6 +2527,7 @@ efi_init
 efi_setblip
 efi_setcut
 efi_setrpmlimiter
+efi_settraction
 efi_unsetblip
 efi_unsetcut
 efi_unsetrpmlimiter
@@ -7440,6 +7441,7 @@ setexternalinterrupt
 setinterruptpriority
 setjmp
 settimer
+settraction
 setupanalogsampling
 shorttohex
 shorttostr
@@ -9373,6 +9375,12 @@ tp_tft_rotate_180
 tp_tft_set_adc_threshold
 tp_tft_set_calibration_consts
 tp_tft_set_default_mode
+traction_currentstate
+traction_init
+traction_parameters
+tractionfb
+tractionloaddefaultssettings
+tractionvariable
 trapr
 trapr
 trapr_bit

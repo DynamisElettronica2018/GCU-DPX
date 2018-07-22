@@ -284,7 +284,7 @@ int Gearshift_get_time(shiftStep step);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
 #line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
-void sendUpdatesSW(int valCode);
+void sendUpdatesSW(unsigned int valCode);
 #line 28 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
 extern unsigned int accelerationFb;
 
@@ -416,7 +416,7 @@ void aac_execute(void){
  return;
  case RUNNING:
 
- if(gearShift_currentGear == 4){
+ if(gearShift_currentGear == 5){
  aac_stop();
  return;
  }
@@ -428,6 +428,7 @@ void aac_execute(void){
  return;
  case STOPPING:
  aac_currentState = OFF;
+ Efi_unsetRPMLimiter();
  accelerationFb = 0;
  sendUpdatesSW( 1 );
  return;
@@ -435,7 +436,7 @@ void aac_execute(void){
  default: return;
  }
 }
-#line 119 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+#line 120 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 void aac_loadDefaultParams(void){
 
 
@@ -452,7 +453,7 @@ void aac_loadDefaultParams(void){
  aac_parameters[SPEED_LIMIT_4_5] =  113 ;
 
 }
-#line 142 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+#line 143 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 void aac_stop(void){
  if(aac_currentState != OFF)
  aac_currentState = STOPPING;

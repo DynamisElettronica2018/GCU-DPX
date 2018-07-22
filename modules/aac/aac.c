@@ -66,7 +66,7 @@ void aac_execute(void){
             return;
         case RUNNING:
         //Check condizioni e cambio
-            if(gearShift_currentGear == 4){
+            if(gearShift_currentGear == 5){
                 aac_stop();
                 return;
             }
@@ -78,6 +78,7 @@ void aac_execute(void){
             return;
         case STOPPING:
             aac_currentState = OFF;
+            Efi_unsetRPMLimiter();
             accelerationFb = 0;
             sendUpdatesSW(ACC_CODE);
             return;

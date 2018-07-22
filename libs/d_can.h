@@ -17,13 +17,13 @@
 #define GCU_LAUNCH_CONTROL_EFI_ID       0b10100000001 //1281       MANDATO SOLO DA GCU AD EFI!!!!
 #define GCU_CLUTCH_FB_SW_ID             0b01100010000 //784
 #define GCU_GEAR_TIMING_TELEMETRY_ID    0b11100001101 //1624
-#define GCU_FEEDBACK_ID					0b01100011001 //793		  /**FEEDBACK CODES**/
+#define GCU_FEEDBACK_ID                                        0b01100011001 //793                  /**FEEDBACK CODES**/
 /**FEEDBACK CODES**/
 #define ACC_CODE        1
 #define AUTOX_CODE      2
 #define TRACTION_CODE   3
 #define DRS_CODE        4
-#define ANTISTALL_CODE	5
+#define ANTISTALL_CODE  5
 
 
 /***** COMANDI GCU ****/
@@ -94,27 +94,27 @@
 
 /******************* MASKS & FILTERS **********************/
 //MASK
-#define SW_MASK_EFI_DEBUG_IMU_EBB		0b11111100000
+#define SW_MASK_EFI_DEBUG_IMU_EBB                0b11111100000
 //FILTERS
-#define SW_FILTER_EFI_DEBUG				0b01100000000
-#define SW_FILTER_IMU_EBB				0b11100000000
+#define SW_FILTER_EFI_DEBUG                                0b01100000000
+#define SW_FILTER_IMU_EBB                                0b11100000000
 
 //MASK
-#define GCU_MASK_EFI_SW_EBB				0b11111110100
+#define GCU_MASK_EFI_SW_EBB                                0b11111110100
 //FILTERS
-#define GCU_FILTER_EFI					0b01100000100
-#define GCU_FILTER_SW_DCU				0b01000000000
+#define GCU_FILTER_EFI                                        0b01100000100
+#define GCU_FILTER_SW_DCU                                0b01000000000
 
 //MASK
-#define ALL_MASK_AUX					0b11111110000
+#define ALL_MASK_AUX                                        0b11111110000
 //FILTER
-#define ALL_FILTER_AUX					0b11111110000
+#define ALL_FILTER_AUX                                        0b11111110000
 
 //MASK
-#define EBB_MASK_SW_DAUFR				0b11111111111
+#define EBB_MASK_SW_DAUFR                                0b11111111111
 //FILTERS
-#define EBB_FILTER_SW					0b10000000000
-#define EBB_FILTER_DAUFR				0b11001010000
+#define EBB_FILTER_SW                                        0b10000000000
+#define EBB_FILTER_DAUFR                                0b11001010000
 
 
 #endif //DD_CAN_H

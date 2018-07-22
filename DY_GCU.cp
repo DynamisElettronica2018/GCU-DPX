@@ -334,7 +334,7 @@ void StopLight_setBrightness(unsigned char percentage);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
 #line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
-void sendUpdatesSW(int valCode);
+void sendUpdatesSW(unsigned int valCode);
 #line 28 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
 extern unsigned int accelerationFb;
 
@@ -404,11 +404,39 @@ int aac_getParam(const aac_params id);
 int aac_getExternValue(const aac_values id);
 
 void aac_forceState(const aac_states newState);
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/traction/traction.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
+#line 20 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/traction/traction.h"
+extern unsigned int tractionFb;
+extern unsigned int tractionVariable[11];
+
+typedef enum{
+ TRACTION_0,
+ TRACTION_1,
+ TRACTION_2,
+ TRACTION_3,
+ TRACTION_4,
+ TRACTION_5,
+ TRACTION_6,
+ TRACTION_7
+}traction_params;
+
+void traction_init(void);
+
+void tractionLoadDefaultsSettings(void);
+
+setTraction(unsigned int codeValue, unsigned int tractionValue);
+
+Efi_setTraction(unsigned int setState);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
 #line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
-void sendUpdatesSW(int valCode);
-#line 22 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+void sendUpdatesSW(unsigned int valCode);
+#line 20 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
@@ -435,6 +463,11 @@ unsigned int gearShift_timings[ TIMES_LAST ];
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
+
+ extern unsigned int traction_currentState;
+ extern int traction_parameters[ 8 ];
+
+
 void GCU_isAlive(void) {
  Can_resetWritePacket();
  Can_addIntToWritePacket((unsigned int) 99 );
@@ -454,6 +487,11 @@ void init(void) {
  GearShift_init();
  StopLight_init();
  Buzzer_init();
+
+
+ traction_init();
+
+
 
  setTimer( 1 , 0.001);
  setInterruptPriority( 1 ,  4 );
@@ -639,7 +677,18 @@ void main() {
 
  }
 
+
+ case  0b01000000011 :
+
+ tractionFb = firstInt;
+
+ traction_currentState = tractionFb * 100;
+ setTraction( 3 , traction_currentState);
+
+
  break;
+
+
  default:
  break;
  }
