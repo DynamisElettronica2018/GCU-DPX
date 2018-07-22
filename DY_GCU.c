@@ -16,6 +16,7 @@
 #include "traction.h"
 #include "drsmotor.h"
 #include "drs.h"
+#include "sensors.h"
 #include "sw.h"
 //*/
 
@@ -25,10 +26,6 @@ char isSteeringWheelAvailable;
 
 //TODO///////
 //uncommentare il led 14 nel main e commentarlo/rimuoverl in onCanInterrupt
-
-
-
-
 
 #ifdef AAC_H
   extern unsigned int accelerationFb;
@@ -46,6 +43,7 @@ extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
 
+
 #ifdef TRACTION_H
   extern unsigned int traction_currentState;
   extern int traction_parameters[TRACTION_NUM_PARAM];
@@ -56,6 +54,10 @@ int x = 0;
 #ifdef DRS_H
   extern unsigned int drs_currentState;
   extern unsigned int drsFb = 0;
+#endif
+#ifdef SENSORS_H
+    int timer1_sensors_counter = 0;
+    int timer2_sensors_counter = 0;
 #endif
 
 void GCU_isAlive(void) {
@@ -92,6 +94,7 @@ void init(void) {
   #ifdef DRS_H
     DRSMotor_init();
     Drs_close();
+    //LATGbits.LATG12 = 0;
   #endif
     //Generic 1ms timer
     setTimer(TIMER1_DEVICE, 0.001);
@@ -101,6 +104,8 @@ void init(void) {
 
 
 void main() {
+    //TRISGbits.TRISG12 = 0;
+    //LATGbits.LATG12 = 1;
     init();
     Buzzer_Bip();
     //ShiftTimings_load();
@@ -122,11 +127,15 @@ onTimer1Interrupt{
     timer1_counter2 += 1;
     timer1_counter3 += 1;
     timer1_counter4 += 1;
+    #ifdef SENSORS_H
+           timer2_sensors_counter += 1;
+           //timer1e_sensors_counter += 1;
+    #endif
     //STUFF FOR REPEATED SHIFT
 
     //*/
 
-    if (timer1_counter0 > 25) {
+    if (timer1_counter0 >= 25) {
         if (!EngineControl_isStarting()) {
             EngineControl_stop();
             //Buzzer_Bip();
@@ -145,6 +154,7 @@ onTimer1Interrupt{
         
         timer1_counter2 = 0;
       }
+
     if (timer1_counter3 >= 1000) {
        if (x == 0)
        {
@@ -173,6 +183,28 @@ onTimer1Interrupt{
         timer1_aac_counter = 0;
     }
   #endif
+
+
+    if (timer1_counter3 >= 10) {
+        timer1_counter3 = 0;
+    }
+
+    #ifdef SENSORS_H
+    if (timer2_sensors_counter >= 10)
+    {
+        sendSensorsDebug1();
+        sendSensorsDebug2();
+        timer2_sensors_counter = 0;
+    }
+
+    /*
+    if (timer1_sensors_counter >= 100)
+    {
+        sendSensorsDebug1();
+    }
+    */
+    #endif
+
 }
 
 onCanInterrupt{
@@ -304,12 +336,14 @@ onCanInterrupt{
         case SW_DRS_GCU_ID:
             if(firstInt == 1)
             {
+                //LATGbits.LATG12 = 1;
                 Drs_open();
                 //Buzzer_Bip();
             }
             else if(firstInt == 0)
             {
                 Drs_close();
+                //LATGbits.LATG12 = 0;
                 //Buzzer_Bip();
             }
             break;

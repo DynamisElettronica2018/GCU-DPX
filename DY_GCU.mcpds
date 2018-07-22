@@ -16,7 +16,7 @@ Value=2000
 [EEPROM_DEFINITION]
 Value=
 [FILES]
-Count=19
+Count=20
 File0=DY_GCU.c
 File1=modules\clutch.c
 File2=modules\enginecontrol.c
@@ -36,13 +36,14 @@ File15=modules\traction\traction.c
 File16=modules\sw.c
 File17=modules\drs\drs.c
 File18=modules\drs\drsmotor.c
+File19=modules\input-output\sensors\sensors.c
 [BINARIES]
 Count=0
 [IMAGES]
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=22
+Count=24
 File0=DY_GCU.c
 File1=modules\aac\aac.c
 File2=modules\aac\aac_defaults.h
@@ -65,6 +66,8 @@ File18=modules\traction\traction.c
 File19=modules\drs\drsmotor.c
 File20=modules\drs\drsmotor.h
 File21=modules\drs\drs.h
+File22=modules\input-output\sensors\sensors.h
+File23=modules\drs\drs.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -72,7 +75,7 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=19
+Count=20
 Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\defs\
 Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\uses\
 Path2=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\
@@ -92,8 +95,9 @@ Path15=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\libs\
 Path16=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\aac\
 Path17=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\traction\
 Path18=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\drs\
+Path19=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\input-output\sensors\
 [HEADER_PATH]
-Count=13
+Count=14
 Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\Defs\
 Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\uses\
 Path2=C:\Users\nicol\Desktop\git\GCU-DPX\
@@ -107,8 +111,9 @@ Path9=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\aac\
 Path10=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\libs\
 Path11=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\traction\
 Path12=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\drs\
+Path13=C:\Users\Salvatore\Desktop\git Repo\GCU-DPX\modules\input-output\sensors\
 [HEADERS]
-Count=12
+Count=15
 File0=modules\drs\drsmotor.h
 File1=modules\drs\drs.h
 File2=modules\sw.h
@@ -121,6 +126,9 @@ File8=modules\traction\traction_settings.h
 File9=modules\traction\traction.h
 File10=modules\input-output\gearmotor.h
 File11=modules\input-output\efi.h
+File12=modules\input-output\sensors\sensors.h
+File13=modules\aac\aac.h
+File14=modules\aac\aac_defaults.h
 [PLDS]
 Count=0
 [Useses]

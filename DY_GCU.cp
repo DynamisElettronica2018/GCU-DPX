@@ -463,18 +463,29 @@ unsigned char Drs_getDX(void);
 unsigned char Drs_getSX(void);
 
 unsigned char Drs_get(void);
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors/sensors.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 20 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors/sensors.h"
+unsigned int getTempSensor();
+unsigned int getDRSSensor();
+unsigned int getFuelSensor();
+unsigned int getGearSensor();
+unsigned int getClutchSensor();
+unsigned int getHPumpSensor();
+unsigned int getFanSensor();
+
+void sendSensorsDebug1(void);
+
+void sendSensorsDebug2(void);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
 #line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
 void sendUpdatesSW(unsigned int valCode);
-#line 22 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 23 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
-
-
-
-
 
 
 
@@ -496,6 +507,7 @@ extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettin
 
 
 
+
  extern unsigned int traction_currentState;
  extern int traction_parameters[ 8 ];
 
@@ -505,6 +517,10 @@ int x = 0;
 
  extern unsigned int drs_currentState;
  extern unsigned int drsFb = 0;
+
+
+ int timer1_sensors_counter = 0;
+ int timer2_sensors_counter = 0;
 
 
 void GCU_isAlive(void) {
@@ -543,6 +559,7 @@ void init(void) {
  Drs_close();
 
 
+
  setTimer( 1 , 0.001);
  setInterruptPriority( 1 ,  4 );
 
@@ -550,6 +567,8 @@ void init(void) {
 
 
 void main() {
+
+
  init();
  Buzzer_Bip();
 
@@ -572,10 +591,14 @@ void main() {
  timer1_counter3 += 1;
  timer1_counter4 += 1;
 
+ timer2_sensors_counter += 1;
 
 
 
- if (timer1_counter0 > 25) {
+
+
+
+ if (timer1_counter0 >= 25) {
  if (!EngineControl_isStarting()) {
  EngineControl_stop();
 
@@ -594,6 +617,7 @@ void main() {
 
  timer1_counter2 = 0;
  }
+
  if (timer1_counter3 >= 1000) {
  if (x == 0)
  {
@@ -622,6 +646,20 @@ void main() {
  timer1_aac_counter = 0;
  }
 
+
+
+ if (timer1_counter3 >= 10) {
+ timer1_counter3 = 0;
+ }
+
+
+ if (timer2_sensors_counter >= 10)
+ {
+ sendSensorsDebug1();
+ sendSensorsDebug2();
+ timer2_sensors_counter = 0;
+ }
+#line 208 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 }
 
  void CAN_Interrupt() iv IVT_ADDR_C1INTERRUPT {
@@ -710,8 +748,8 @@ void main() {
 
  break;
 
- case  0b01000000010 :
 
+ case  0b01000000010 :
 
  if(aac_currentState == OFF && firstInt == 1)
 
@@ -733,8 +771,9 @@ void main() {
  aac_stop();
  Clutch_release();
  }
-
  }
+ break;
+
 
 
  case  0b01000000011 :
@@ -752,12 +791,14 @@ void main() {
  case  0b01000000101 :
  if(firstInt == 1)
  {
+
  Drs_open();
 
  }
  else if(firstInt == 0)
  {
  Drs_close();
+
 
  }
  break;
