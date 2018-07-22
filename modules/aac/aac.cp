@@ -14,7 +14,7 @@ unsigned char getNumberDigitCount(unsigned char number);
 void emptyString(char* myString);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 177 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 187 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -354,7 +354,37 @@ int aac_getParam(const aac_params id);
 int aac_getExternValue(const aac_values id);
 
 void aac_forceState(const aac_states newState);
-#line 3 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drs.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drsmotor.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drsmotor.h"
+void DrsMotor_init(void);
+
+void DrsMotorDX_setupPWM(void);
+
+void DrsMotorSX_setupPWM(void);
+
+void DrsMotor_setPositionDX(unsigned char percentage);
+
+void DrsMotor_setPositionSX(unsigned char percentage);
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drs.h"
+extern unsigned int drsFb;
+
+void Drs_open(void);
+
+void Drs_close(void);
+
+void Drs_setDX(unsigned char percentage);
+
+void Drs_setSX(unsigned char percentage);
+
+unsigned char Drs_getDX(void);
+
+unsigned char Drs_getSX(void);
+
+unsigned char Drs_get(void);
+#line 4 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 aac_states aac_currentState;
 int aac_parameters[ 11 ];
 int aac_externValues[ 3 ];
@@ -362,7 +392,7 @@ int aac_dtRelease;
 char aac_sendingAll =  0 ;
 int aac_timesCounter;
 unsigned int accelerationFb = 0;
-#line 16 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+#line 17 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 float aac_clutchStep;
 float aac_clutchValue;
 
@@ -390,6 +420,7 @@ void aac_execute(void){
  return;
  case READY:
  Clutch_set(100);
+ Drs_open();
  return;
  case START_RELEASE:
  aac_clutchValue = aac_parameters[RAMP_START];
@@ -416,7 +447,7 @@ void aac_execute(void){
  return;
  case RUNNING:
 
- if(gearShift_currentGear == 5){
+ if(gearShift_currentGear == 3){
  aac_stop();
  return;
  }
@@ -429,6 +460,7 @@ void aac_execute(void){
  case STOPPING:
  aac_currentState = OFF;
  Efi_unsetRPMLimiter();
+ Drs_close();
  accelerationFb = 0;
  sendUpdatesSW( 1 );
  return;
@@ -436,24 +468,24 @@ void aac_execute(void){
  default: return;
  }
 }
-#line 120 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+#line 123 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 void aac_loadDefaultParams(void){
 
 
  aac_parameters[RAMP_START] =  70 ;
  aac_parameters[RAMP_END] =  0 ;
  aac_parameters[RAMP_TIME] =  250 ;
- aac_parameters[RPM_LIMIT_1_2] =  11647 ;
- aac_parameters[RPM_LIMIT_2_3] =  11506 ;
- aac_parameters[RPM_LIMIT_3_4] =  11383 ;
- aac_parameters[RPM_LIMIT_4_5] =  11362 ;
+ aac_parameters[RPM_LIMIT_1_2] =  11000 ;
+ aac_parameters[RPM_LIMIT_2_3] =  11000 ;
+ aac_parameters[RPM_LIMIT_3_4] =  11000 ;
+ aac_parameters[RPM_LIMIT_4_5] =  11000 ;
  aac_parameters[SPEED_LIMIT_1_2] =  46 ;
  aac_parameters[SPEED_LIMIT_2_3] =  61 ;
  aac_parameters[SPEED_LIMIT_3_4] =  77 ;
  aac_parameters[SPEED_LIMIT_4_5] =  113 ;
 
 }
-#line 143 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+#line 146 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
 void aac_stop(void){
  if(aac_currentState != OFF)
  aac_currentState = STOPPING;

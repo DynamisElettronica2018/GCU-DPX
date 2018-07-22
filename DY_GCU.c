@@ -14,6 +14,8 @@
 #include "stoplight.h"
 #include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
 #include "traction.h"
+#include "drsmotor.h"
+#include "drs.h"
 #include "sw.h"
 //*/
 
@@ -43,9 +45,17 @@ unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� 
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
+
 #ifdef TRACTION_H
   extern unsigned int traction_currentState;
   extern int traction_parameters[TRACTION_NUM_PARAM];
+#endif 
+
+int x = 0;
+
+#ifdef DRS_H
+  extern unsigned int drs_currentState;
+  extern unsigned int drsFb = 0;
 #endif
 
 void GCU_isAlive(void) {
@@ -78,6 +88,10 @@ void init(void) {
     
   #ifdef AAC_H
     aac_init();
+  #endif
+  #ifdef DRS_H
+    DRSMotor_init();
+    Drs_close();
   #endif
     //Generic 1ms timer
     setTimer(TIMER1_DEVICE, 0.001);
@@ -131,7 +145,23 @@ onTimer1Interrupt{
         
         timer1_counter2 = 0;
       }
-    if (timer1_counter3 >= 10) {
+    if (timer1_counter3 >= 1000) {
+       if (x == 0)
+       {
+          //DrsMotor_setPositionDX(100);
+          //DrsMotor_setPositionSX(0);
+          //Drs_setSX(0);
+          //Drs_open();
+          x = 1;
+       }
+       else if (x == 1)
+       {
+          //DrsMotor_setPositionDX(0);
+          //DrsMotor_setPositionSX(100);
+          //Drs_setSX(100);
+          //Drs_close();
+          x = 0;
+       }
         timer1_counter3 = 0;
     }
 
@@ -230,9 +260,9 @@ onCanInterrupt{
         case EFI_HALL_ID:
               //salvare dati in variabili globali
               break;
-
+              
+        #ifdef AAC_H
         case SW_ACCELERATION_GCU_ID:
-          #ifdef AAC_H
               //dSignalLed_switch(DSIGNAL_LED_RG12);
               if(aac_currentState == OFF && firstInt == 1)                                 //FOR TESTING
    //             && gearShift_currentGear == GEARSHIFT_NEUTRAL
@@ -254,9 +284,10 @@ onCanInterrupt{
                    aac_stop();
                    Clutch_release();
                 }
-                   
               }
-          #endif
+              break;
+        #endif
+        
         #ifdef TRACTION_H      
         case SW_TRACTION_CONTROL_GCU_ID:
             //set traction to EFI
@@ -269,6 +300,21 @@ onCanInterrupt{
             break;      
         #endif
 
+        #ifdef DRS_H    
+        case SW_DRS_GCU_ID:
+            if(firstInt == 1)
+            {
+                Drs_open();
+                //Buzzer_Bip();
+            }
+            else if(firstInt == 0)
+            {
+                Drs_close();
+                //Buzzer_Bip();
+            }
+            break;
+        #endif
+            
         default:
           break;
     }

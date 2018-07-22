@@ -9,7 +9,7 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 177 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 187 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -432,11 +432,42 @@ void tractionLoadDefaultsSettings(void);
 setTraction(unsigned int codeValue, unsigned int tractionValue);
 
 Efi_setTraction(unsigned int setState);
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drsmotor.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drsmotor.h"
+void DrsMotor_init(void);
+
+void DrsMotorDX_setupPWM(void);
+
+void DrsMotorSX_setupPWM(void);
+
+void DrsMotor_setPositionDX(unsigned char percentage);
+
+void DrsMotor_setPositionSX(unsigned char percentage);
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drs.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drsmotor.h"
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drs.h"
+extern unsigned int drsFb;
+
+void Drs_open(void);
+
+void Drs_close(void);
+
+void Drs_setDX(unsigned char percentage);
+
+void Drs_setSX(unsigned char percentage);
+
+unsigned char Drs_getDX(void);
+
+unsigned char Drs_getSX(void);
+
+unsigned char Drs_get(void);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
 #line 3 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/sw.h"
 void sendUpdatesSW(unsigned int valCode);
-#line 20 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 22 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
@@ -464,8 +495,16 @@ extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
 
+
  extern unsigned int traction_currentState;
  extern int traction_parameters[ 8 ];
+
+
+int x = 0;
+
+
+ extern unsigned int drs_currentState;
+ extern unsigned int drsFb = 0;
 
 
 void GCU_isAlive(void) {
@@ -498,6 +537,10 @@ void init(void) {
 
 
  aac_init();
+
+
+ DRSMotor_init();
+ Drs_close();
 
 
  setTimer( 1 , 0.001);
@@ -551,7 +594,23 @@ void main() {
 
  timer1_counter2 = 0;
  }
- if (timer1_counter3 >= 10) {
+ if (timer1_counter3 >= 1000) {
+ if (x == 0)
+ {
+
+
+
+
+ x = 1;
+ }
+ else if (x == 1)
+ {
+
+
+
+
+ x = 0;
+ }
  timer1_counter3 = 0;
  }
 
@@ -686,6 +745,21 @@ void main() {
  setTraction( 3 , traction_currentState);
 
 
+ break;
+
+
+
+ case  0b01000000101 :
+ if(firstInt == 1)
+ {
+ Drs_open();
+
+ }
+ else if(firstInt == 0)
+ {
+ Drs_close();
+
+ }
  break;
 
 

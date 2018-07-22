@@ -13,7 +13,7 @@ unsigned char getNumberDigitCount(unsigned char number);
 void emptyString(char* myString);
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 #line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 177 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 187 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -387,7 +387,37 @@ void tractionLoadDefaultsSettings(void);
 setTraction(unsigned int codeValue, unsigned int tractionValue);
 
 Efi_setTraction(unsigned int setState);
-#line 6 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/sw.c"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drs.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drsmotor.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drsmotor.h"
+void DrsMotor_init(void);
+
+void DrsMotorDX_setupPWM(void);
+
+void DrsMotorSX_setupPWM(void);
+
+void DrsMotor_setPositionDX(unsigned char percentage);
+
+void DrsMotor_setPositionSX(unsigned char percentage);
+#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/drs/drs.h"
+extern unsigned int drsFb;
+
+void Drs_open(void);
+
+void Drs_close(void);
+
+void Drs_setDX(unsigned char percentage);
+
+void Drs_setSX(unsigned char percentage);
+
+unsigned char Drs_getDX(void);
+
+unsigned char Drs_getSX(void);
+
+unsigned char Drs_get(void);
+#line 7 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/sw.c"
 void sendUpdatesSW(unsigned int valCode)
 {
  Can_resetWritePacket();
@@ -398,12 +428,18 @@ void sendUpdatesSW(unsigned int valCode)
  Can_addIntToWritePacket( 1 );
  Can_addIntToWritePacket(accelerationFb);
  break;
-#line 24 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/sw.c"
+#line 25 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/sw.c"
  case  3 :
  Can_addIntToWritePacket( 3 );
  Can_addIntToWritePacket(tractionFb);
  break;
-#line 35 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/sw.c"
+
+
+ case  4 :
+ Can_addIntToWritePacket( 4 );
+ Can_addIntToWritePacket(drsFb);
+ break;
+
  default:
  break;
  }

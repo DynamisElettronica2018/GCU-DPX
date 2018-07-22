@@ -2,6 +2,7 @@
 #include "buzzer.h"
 #include "aac.h"
 #include "traction.h"
+#include "drs.h"
 
 void sendUpdatesSW(unsigned int valCode)
 {

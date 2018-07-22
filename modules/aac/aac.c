@@ -1,4 +1,5 @@
 #include "aac.h"
+#include "drs.h"
 
 aac_states aac_currentState;
 int aac_parameters[AAC_NUM_PARAMS];
@@ -40,6 +41,7 @@ void aac_execute(void){
             return;
         case READY:
             Clutch_set(100);
+            Drs_open();
             return;
         case START_RELEASE:
             aac_clutchValue = aac_parameters[RAMP_START];
@@ -66,7 +68,7 @@ void aac_execute(void){
             return;
         case RUNNING:
         //Check condizioni e cambio
-            if(gearShift_currentGear == 5){
+            if(gearShift_currentGear == 3){
                 aac_stop();
                 return;
             }
@@ -79,6 +81,7 @@ void aac_execute(void){
         case STOPPING:
             aac_currentState = OFF;
             Efi_unsetRPMLimiter();
+            Drs_close();
             accelerationFb = 0;
             sendUpdatesSW(ACC_CODE);
             return;
