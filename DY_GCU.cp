@@ -353,14 +353,34 @@ void StopLight_init(void);
 void StopLight_setupPWM(void);
 
 void StopLight_setBrightness(unsigned char percentage);
-#line 20 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors/sensors.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
+#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 20 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/sensors/sensors.h"
+unsigned int getTempSensor();
+unsigned int getDRSSensor();
+unsigned int getFuelSensor();
+unsigned int getGearSensor();
+unsigned int getClutchSensor();
+unsigned int getHPumpSensor();
+unsigned int getFanSensor();
+
+void sendSensorsDebug1(void);
+
+void sendSensorsDebug2(void);
+#line 21 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
 unsigned int gearShift_timings[ TIMES_LAST ];
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
-#line 32 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
+
+ int timer1_sensors_counter = 0;
+ int timer2_sensors_counter = 0;
+
+
 void GCU_isAlive(void) {
  Can_resetWritePacket();
  Can_addIntToWritePacket((unsigned int) 99 );
@@ -411,7 +431,14 @@ void main() {
  timer1_counter2 += 1;
  timer1_counter3 += 1;
  timer1_counter4 += 1;
-#line 90 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
+ timer2_sensors_counter += 1;
+
+
+
+
+
+
  if (timer1_counter0 >= 25) {
  if (!EngineControl_isStarting()) {
  EngineControl_stop();
@@ -434,7 +461,15 @@ void main() {
  if (timer1_counter3 >= 10) {
  timer1_counter3 = 0;
  }
-#line 128 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
+
+
+ if (timer2_sensors_counter >= 10)
+ {
+ sendSensorsDebug1();
+ sendSensorsDebug2();
+ timer2_sensors_counter = 0;
+ }
+#line 129 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/DY_GCU.c"
 }
 
  void CAN_Interrupt() iv IVT_ADDR_C1INTERRUPT {

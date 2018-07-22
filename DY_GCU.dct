@@ -9097,7 +9097,9 @@ timer1_counter2
 timer1_counter3
 timer1_counter4
 timer1_interrupt
+timer1_sensors_counter
 timer2_interrupt
+timer2_sensors_counter
 timer4_interrupt
 tmode
 tmode
