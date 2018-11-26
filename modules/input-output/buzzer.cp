@@ -1,7 +1,7 @@
-#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/input-output/buzzer.c"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "C:/Users/sA/Desktop/GCU-DPX-OTTOBIANO-16-10/modules/input-output/buzzer.c"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/buzzer.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 16 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
 
 void signedIntToString(int number, char *text);
@@ -9,9 +9,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 177 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 187 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -69,13 +69,13 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 17 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
+#line 17 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/buzzer.h"
 void Buzzer_init(void);
 
 void Buzzer_tick(void);
 
 void Buzzer_Bip(void);
-#line 7 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/input-output/buzzer.c"
+#line 7 "C:/Users/sA/Desktop/GCU-DPX-OTTOBIANO-16-10/modules/input-output/buzzer.c"
 unsigned int buzzer_ticks = 0, buzzer_bipTicks;
 
  void timer4_interrupt() iv IVT_ADDR_T4INTERRUPT ics ICS_AUTO {
@@ -86,8 +86,8 @@ unsigned int buzzer_ticks = 0, buzzer_bipTicks;
 void Buzzer_init(void) {
   TRISG13_bit  =  0 ;
   RG13_bit  = 0;
- setTimer( 3 ,  0.0005 );
- setInterruptPriority( 3 ,  5 );
+ setTimer( 4 ,  0.0005 );
+ setInterruptPriority( 4 ,  5 );
  buzzer_bipTicks = (int)( 1  /  0.0005 );
 }
 

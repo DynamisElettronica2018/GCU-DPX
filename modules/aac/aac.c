@@ -1,11 +1,13 @@
 #include "aac.h"
+#include "drs.h"
 
 aac_states aac_currentState;
 int aac_parameters[AAC_NUM_PARAMS];
 int aac_externValues[AAC_NUM_VALUES];
 int aac_dtRelease;      //counter for clutch "slow" release
 char aac_sendingAll = FALSE;
-int aac_timesCounter;
+int aac_timesCounter;    
+unsigned int accelerationFb = 0;
 
 /*
 int aac_shiftTry = 0;
@@ -14,6 +16,11 @@ int aac_targetGear = -1;
 //*/
 float aac_clutchStep;   //step for each "frame" of aac
 float aac_clutchValue;
+
+unsigned int getAccelerationFb()
+{
+    return accelerationFb;
+}
 
 
 void aac_init(void){
@@ -24,15 +31,18 @@ void aac_init(void){
 void aac_execute(void){
     switch (aac_currentState) {
         case START:
-            Efi_setRPMLimiter();
-//            Activate Launch Control
-            Can_writeByte(SW_AUX_ID, MEX_READY);
-            aac_currentState = READY;
+            //Efi_setRPMLimiter();
+            Efi_setBlip();
+//            Activate acceleration mode
             aac_clutchValue = 100;
             Clutch_set((unsigned int)aac_clutchValue);
+            aac_currentState = READY;
+            accelerationFb = 1;
+            sendUpdatesSW(ACC_CODE);
             return;
         case READY:
             Clutch_set(100);
+            Drs_open();
             return;
         case START_RELEASE:
             aac_clutchValue = aac_parameters[RAMP_START];
@@ -40,6 +50,8 @@ void aac_execute(void){
             aac_dtRelease = aac_parameters[RAMP_TIME] / AAC_WORK_RATE_ms;
             aac_clutchStep = ((float)(aac_parameters[RAMP_START] - aac_parameters[RAMP_END]) * AAC_WORK_RATE_ms) / (float)aac_parameters[RAMP_TIME];
             aac_currentState = RELEASING;
+            accelerationFb = 2;
+            sendUpdatesSW(ACC_CODE);
             return;
         case RELEASING:
 //             Clutch_set(aac_parameters[RAMP_END] + (aac_clutchStep * aac_dtRelease));        //Works iff the cluth paddle is disabled
@@ -57,7 +69,7 @@ void aac_execute(void){
             return;
         case RUNNING:
         //Check condizioni e cambio
-            if(gearShift_currentGear == 4){
+            if(gearShift_currentGear == 3){
                 aac_stop();
                 return;
             }
@@ -69,17 +81,22 @@ void aac_execute(void){
             return;
         case STOPPING:
             aac_currentState = OFF;
-            Can_writeByte(SW_AUX_ID, MEX_OFF);
+            //Efi_unsetRPMLimiter();
+            Efi_unsetBlip();
+            Drs_close();
+            accelerationFb = 0;
+            sendUpdatesSW(ACC_CODE);
             return;
         //gearshift check
         default: return;
     }
 }
 
+/*
 void aac_sendOneTime(time_id pos){
     aac_timesCounter = pos;
-}
-
+}*/
+/*
 void aac_sendTimes(void)
 {
     if(aac_timesCounter >= 0){
@@ -95,15 +112,15 @@ void aac_sendTimes(void)
             aac_timesCounter = -1;
         }
     }
-}
-
+}*/
+/*
 void aac_sendAllTimes(void)
 {
     if(!aac_sendingAll){
         aac_timesCounter = AAC_NUM_PARAMS;
         aac_sendingAll = TRUE;
     }
-}
+}*/
 
 void aac_loadDefaultParams(void){
 //Use defaults only if eeprom unavailable
@@ -114,16 +131,19 @@ void aac_loadDefaultParams(void){
     aac_parameters[RPM_LIMIT_1_2]   = DEF_RPM_LIMIT_1_2;
     aac_parameters[RPM_LIMIT_2_3]   = DEF_RPM_LIMIT_2_3;
     aac_parameters[RPM_LIMIT_3_4]   = DEF_RPM_LIMIT_3_4;
+    aac_parameters[RPM_LIMIT_4_5]   = DEF_RPM_LIMIT_4_5;
     aac_parameters[SPEED_LIMIT_1_2] = DEF_SPEED_LIMIT_1_2;
     aac_parameters[SPEED_LIMIT_2_3] = DEF_SPEED_LIMIT_2_3;
     aac_parameters[SPEED_LIMIT_3_4] = DEF_SPEED_LIMIT_3_4;
+    aac_parameters[SPEED_LIMIT_4_5] = DEF_SPEED_LIMIT_4_5;
 #endif
 }
 
+/*
 void aac_updateParam(const aac_params id, const int value){
     if(id < AAC_NUM_PARAMS)
         aac_parameters[id] = value;
-}
+}*/
 
 void aac_stop(void){
     if(aac_currentState != OFF)

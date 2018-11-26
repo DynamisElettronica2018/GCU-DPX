@@ -1,9 +1,6 @@
 /*
  * Software GCU DPX
 */
-
-
-
 #include "dspic.h"
 #include "d_signalled.h"
 #include "eeprom.h"
@@ -11,20 +8,27 @@
 #include "clutchmotor.h"
 #include "efi.h"
 #include "buzzer.h"
-#include "sensors.h"
 #include "clutch.h"
 #include "enginecontrol.h"
 #include "gearshift.h"
 #include "stoplight.h"
-#include "sensors_2.h"
-//#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
+#include "aac.h"                //COMMENT THIS LINE TO DISABLE AAC
+#include "traction.h"
+#include "drsmotor.h"
+#include "drs.h"
+//#include "sensors.h"
+#include "sw.h"
 //*/
 
 int timer1_counter0 = 0, timer1_counter1 = 0, timer1_counter2 = 0, timer1_counter3 = 0, timer1_counter4 = 0;
 char bello = 0;
 char isSteeringWheelAvailable;
 
+//TODO///////
+//uncommentare il led 14 nel main e commentarlo/rimuoverl in onCanInterrupt
+
 #ifdef AAC_H
+  extern unsigned int accelerationFb;
   extern aac_states aac_currentState;
   extern int aac_externValues[AAC_NUM_VALUES];
   extern int aac_parameters[AAC_NUM_PARAMS ];
@@ -33,11 +37,29 @@ char isSteeringWheelAvailable;
   int timer1_aac_counter = 0;
 #endif
 
+short unsigned int clutchPulled = 0;
 unsigned int gearShift_timings[RIO_NUM_TIMES]; //30 tanto perch� su gcu c'� spazio e cos� possiamo fare fino a 30 step di cambiata, molto powa
 extern unsigned int gearShift_currentGear;
 extern char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
 
 
+
+#ifdef TRACTION_H
+  extern unsigned int traction_currentState;
+  extern int traction_parameters[TRACTION_NUM_PARAM];
+#endif 
+
+int x = 0;
+
+#ifdef DRS_H
+  extern unsigned int drs_currentValue;
+  extern unsigned int drsFb = 0;
+  extern unsigned int timer1_drsCounter = 0;
+#endif
+#ifdef SENSORS_H
+    int timer1_sensors_counter = 0;
+    int timer2_sensors_counter = 0;
+#endif
 
 void GCU_isAlive(void) {
     Can_resetWritePacket();
@@ -46,10 +68,7 @@ void GCU_isAlive(void) {
     Can_addIntToWritePacket(0);
     Can_addIntToWritePacket(0);
     Can_write(GCU_CLUTCH_FB_SW_ID);
-
 }
-
-
 
 void init(void) {
     EngineControl_init();
@@ -61,34 +80,39 @@ void init(void) {
     GearShift_init();
     StopLight_init();
     Buzzer_init();
-    //Sensors_init();
 
-
+    #ifdef TRACTION_H
+        traction_init();
+    #endif
+    
+    //Generic 1ms timer
+    setTimer(TIMER1_DEVICE, 0.001);
+    setInterruptPriority(TIMER1_DEVICE, MEDIUM_PRIORITY);
     
   #ifdef AAC_H
     aac_init();
   #endif
+  #ifdef DRS_H
+    DRSMotor_init();
+    Drs_initVoltReg();
+    Drs_close();
+  #endif
     //Generic 1ms timer
     setTimer(TIMER1_DEVICE, 0.001);
     setInterruptPriority(TIMER1_DEVICE, MEDIUM_PRIORITY);
-   /*
-    Can_resetWritePacket();
-    Can_addIntToWritePacket(test_launchActive);
-    Can_addIntToWritePacket(test_launchActive);
-    Can_addIntToWritePacket(test_launchActive);
-    Can_addIntToWritePacket(test_launchActive);
-    Can_write(GCU_LAUNCH_CONTROL_EFI_ID);
-    */
+
 }
 
+
 void main() {
+    //TRISGbits.TRISG12 = 0;
+    //LATGbits.LATG12 = 1;
     init();
     Buzzer_Bip();
     //ShiftTimings_load();
     while (1) 
     {
       //dSignalLed_switch(DSIGNAL_LED_RG14);
-      //Delay_ms(1000);
       bello += 1;
       //dSignalLed_switch(DSIGNAL_LED_RG14);
     }
@@ -98,17 +122,21 @@ void main() {
 onTimer1Interrupt{
     clearTimer1();
     GearShift_msTick();
-    //Sensors_tick();
     timer1_counter0 += 1;
     timer1_counter1 += 1;
     timer1_counter2 += 1;
     timer1_counter3 += 1;
     timer1_counter4 += 1;
+    timer1_drsCounter += 1;
+    #ifdef SENSORS_H
+           timer2_sensors_counter += 1;
+           //timer1e_sensors_counter += 1;
+    #endif
     //STUFF FOR REPEATED SHIFT
 
     //*/
 
-    if (timer1_counter0 > 25) {
+    if (timer1_counter0 >= 25) {
         if (!EngineControl_isStarting()) {
             EngineControl_stop();
             //Buzzer_Bip();
@@ -123,26 +151,51 @@ onTimer1Interrupt{
 //    if (timer1_counter2 >= 166) {
     if (timer1_counter2 >= 1000) {
         dSignalLed_switch(DSIGNAL_LED_RG14);
-        //Sensors_send();
-        sendTempSensor();
+
         
         timer1_counter2 = 0;
       }
-    if (timer1_counter3 >= 10) {
-        //rio_sendTimes();
-      #ifdef AAC_H
-        aac_sendTimes();
-      #endif
-        timer1_counter3 = 0;
+  #ifdef DRS_H
+    if (timer1_drsCounter >= 1000) 
+    {
+        if(drs_currentvalue == 0)
+        {
+           Drs_turnOffVoltReg();
+        }
+
+        timer1_drsCounter = 0;
     }
+  #endif
 
   #ifdef AAC_H
     timer1_aac_counter += 1;
-    if(timer1_aac_counter == AAC_WORK_RATE_ms){
+    if(timer1_aac_counter == AAC_WORK_RATE_ms)
+    {
         aac_execute();
         timer1_aac_counter = 0;
     }
   #endif
+
+
+    if (timer1_counter3 >= 10) {
+        timer1_counter3 = 0;
+    }
+
+    #ifdef SENSORS_H
+    if (timer2_sensors_counter >= 10)
+    {
+        sendSensorsDebug1();
+        sendSensorsDebug2();
+        timer2_sensors_counter = 0;
+    }
+
+    /*
+    if (timer1_sensors_counter >= 100)
+    {
+        sendSensorsDebug1();
+    }
+    */
+    #endif
 
 }
 
@@ -167,113 +220,133 @@ onCanInterrupt{
         fourthInt = (unsigned int) ((dataBuffer[6] << 8) | (dataBuffer[7] & 0xFF));
     }
 
-   //dSignalLed_switch(DSIGNAL_LED_RG12);              //switch led state on CAN receive
     switch (id) {
         case EFI_GEAR_RPM_TPS_APPS_ID:
             GearShift_setCurrentGear(firstInt);
+            #ifdef AAC_H
+               aac_updateExternValue(RPM, secondInt);
+            #endif
             break;
 
         case SW_FIRE_GCU_ID:
-
             EngineControl_resetStartCheck();           //resetCheckCounter = 0
             EngineControl_start();                     //debug on LED D2 board
-            //Buzzer_Bip();
             break;
 
-        /*
-        **** COMMENTATA PER RIFARE STRUTTURA CONTROLLO LAUNCH ****
-        case SW_RIO_GEAR_BRK_STEER_ID:
+        case SW_GEARSHIFT_ID:
+
           #ifdef AAC_H
             if (Clutch_get() != 100
                   &&(firstInt == GEAR_COMMAND_NEUTRAL_DOWN
                      || firstInt == GEAR_COMMAND_NEUTRAL_UP
-                     || firstInt == GEAR_COMMAND_DOWN))
+                     || firstInt == GEAR_COMMAND_DOWN)
+                  && accelerationFb > 0)
                 aac_stop();
           #endif
             GearShift_injectCommand(firstInt);
             break;
-         */
-
-        case SW_GEARSHIFT_ID:
-          GearShift_injectCommand(firstInt);
-          break;
-
-        /*
-        ***** COMMENTATA PER RIFARE STRUTTURA CONTROLLO LAUNCH *****    
-        case EFI_FUEL_RPM_ID:
+            
+        case EFI_TRACTION_CONTROL_ID:
           #ifdef AAC_H
-            aac_updateExternValue(WHEEL_SPEED, thirdInt / 10);
-            aac_updateExternValue(RPM, fourthInt);
+            aac_updateExternValue(WHEEL_SPEED, firstInt / 10);
           #endif
             break;
-        */
 
         case SW_CLUTCH_TARGET_GCU_ID:
           #ifdef AAC_H
-            if(dataBuffer[0] > AAC_CLUTCH_NOISE_LEVEL){
-                //aac_stop();
+            if(dataBuffer[0] > AAC_CLUTCH_NOISE_LEVEL && accelerationFb > 0)
+            {
+                if (accelerationFb > 0)
+                {
+                  aac_stop();
+                }
           #endif
-            if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral) {
-              //Buzzer_Bip();
-              Clutch_setBiased(dataBuffer[0]);
-              //Clutch_set(dataBuffer[0]);
-            }
+                if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral)
+                {
+                   //Buzzer_Bip();
+                   Clutch_setBiased(dataBuffer[0]);
+                   //Clutch_set(dataBuffer[0]);
+                   clutchPulled = 1;
+                }
           #ifdef AAC_H
             }
           #endif
-            break;
+          #ifdef AAC_H
+          if (clutchPulled == 0 && accelerationFb == 0)
+          {
+          #endif
+              if ((!gearShift_isShiftingDown && !gearShift_isSettingNeutral) || gearShift_isUnsettingNeutral)
+                {
+                   Clutch_setBiased(dataBuffer[0]);
+                }
+          #ifdef AAC_H
+          }
+          #endif
+          clutchPulled = 0;
 
-        /*
-        ***** COMMENTATA PER RIFARE STRUTTURA SET TIMINGS *****
-        case GCU_GEAR_TIMING_TELEMETRY_ID:
-            switch(firstInt){
-                case CODE_SET_TIME:
-                     gearShift_timings[secondInt] = thirdInt;
-                     rio_sendOneTime(secondInt);
-                     break;
-                case CODE_REFRESH:
-                     rio_sendAllTimes();
-                   #ifdef AAC_H
-                     aac_sendAllTimes();
-                   #endif
-                     break;
-              #ifdef AAC_H
-                case CODE_SET_AAC:
-                     aac_parameters[secondInt] = thirdInt;
-                     aac_sendOneTime(secondInt);
-              #endif
-                default:
-                     break;
-            }
             break;
-          */
 
         case EFI_HALL_ID:
               //salvare dati in variabili globali
               break;
-
-        /*
-        ***** COMMENTATA PER RIFARE STRUTTURA LAUNCH ****
-        case SW_AUX_ID:
-          #ifdef AAC_H
-            dSignalLed_switch(DSIGNAL_LED_RG12);
-            if(aac_currentState == OFF                                  //FOR TESTING
- //             && gearShift_currentGear == GEARSHIFT_NEUTRAL
- //             && aac_externValues[WHEEL_SPEED] <= 1
-              ){
-                aac_currentState = START; //comment to disable AAC
-            }
-            else if(aac_currentState == READY){
-                aac_currentState = START_RELEASE; //comment to disable AAC
-            }
-            //If none of the previous conditions are met, the aac is stopped
-            else
-                aac_stop();
-          #endif
-            break;
-        */
               
-        default:
+        #ifdef AAC_H
+        case SW_ACCELERATION_GCU_ID:
+              //dSignalLed_switch(DSIGNAL_LED_RG12);
+              if(aac_currentState == OFF && firstInt == 1)                                 //FOR TESTING
+   //             && gearShift_currentGear == GEARSHIFT_NEUTRAL
+   //             && aac_externValues[WHEEL_SPEED] <= 1
+              {
+                aac_currentState = START;   //comment to disable AAC
+                //Buzzer_bip(); //for testing
+              }
+              else if(aac_currentState == READY && firstInt == 2)
+              {
+                aac_currentState = START_RELEASE; //comment to disable AAC
+                //Buzzer_bip(); //for testing
+              }
+              //If none of the previous conditions are met, the aac is stopped
+              else if (firstInt == 0)
+              {
+                if (accelerationFb > 0)
+                {
+                   aac_stop();
+                   Clutch_release();
+                }
+              }
+              break;
+        #endif
+        
+        #ifdef TRACTION_H      
+        case SW_TRACTION_CONTROL_GCU_ID:
+            //set traction to EFI
+            tractionFb = firstInt;
+            //traction_state = tractionVariable[tractionFb];
+            traction_currentState = tractionFb * 100;
+            setTraction(TRACTION_CODE, traction_currentState);
+            //Buzzer_Bip();
+         
+            break;      
+        #endif
+
+        #ifdef DRS_H    
+        case SW_DRS_GCU_ID:
+            if(firstInt == 1)
+            {
+                //LATGbits.LATG12 = 1;
+                Drs_open();
+                //Buzzer_Bip();
+            }
+            else if(firstInt == 0)
+            {
+                Drs_close();
+                //LATGbits.LATG12 = 0;
+                //Buzzer_Bip();
+            }
             break;
+        #endif
+            
+        default:
+          break;
     }
 }

@@ -1,7 +1,7 @@
-#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/libs/dspic.c"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "C:/Users/sA/Desktop/GCU-DPX-OTTOBIANO-16-10/libs/dspic.c"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 16 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
 
 void signedIntToString(int number, char *text);
@@ -9,7 +9,7 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 177 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 187 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -67,7 +67,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 7 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/libs/dspic.c"
+#line 7 "C:/Users/sA/Desktop/GCU-DPX-OTTOBIANO-16-10/libs/dspic.c"
 const double INSTRUCTION_PERIOD = 4.0 /  80 ;
 const unsigned int PRESCALER_VALUES[] = {1, 8, 64, 256};
 
@@ -95,7 +95,7 @@ void setInterruptPriority(unsigned char device, unsigned char priority) {
  case  2 :
   IPC1bits.T2IP  = priority;
  break;
- case  3 :
+ case  4 :
   IPC5bits.T4IP  = priority;
  break;
  default:
@@ -216,7 +216,7 @@ void setTimer(unsigned char device, double timePeriod) {
   T2CONbits.TON  =  1 ;
   T2CONbits.TCKPS  = prescalerIndex;
  break;
- case  3 :
+ case  4 :
   PR4  = getTimerPeriod(timePeriod, prescalerIndex);
   IEC1bits.T4IE  =  1 ;
   T4CONbits.TON  =  1 ;
@@ -233,7 +233,7 @@ void clearTimer(unsigned char device) {
  case  2 :
   IFS0bits.T2IF  =  0 ;
  break;
- case  3 :
+ case  4 :
   IFS1bits.T4IF  =  0 ;
  break;
  }
@@ -247,7 +247,7 @@ void turnOnTimer(unsigned char device) {
  case  2 :
   T2CONbits.TON  =  1 ;
  break;
- case  3 :
+ case  4 :
   T4CONbits.TON  =  1 ;
  break;
  }
@@ -261,7 +261,7 @@ void turnOffTimer(unsigned char device) {
  case  2 :
   T2CONbits.TON  =  0 ;
  break;
- case  3 :
+ case  4 :
   T4CONbits.TON  =  0 ;
  break;
  }

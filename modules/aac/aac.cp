@@ -1,10 +1,10 @@
-#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac_defaults.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "C:/Users/sA/Desktop/GCU-DPX-OTTOBIANO-16-10/modules/aac/aac.c"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/aac/aac.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/aac/aac_defaults.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/clutch.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/clutchmotor.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 16 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
 
 void signedIntToString(int number, char *text);
@@ -12,9 +12,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 177 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 187 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -72,13 +72,13 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
+#line 16 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/clutchmotor.h"
 void ClutchMotor_init(void);
 
 void ClutchMotor_setupPWM(void);
 
 void ClutchMotor_setPosition(unsigned char percentage);
-#line 14 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
+#line 14 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/clutch.h"
 void Clutch_insert(void);
 
 void Clutch_release(void);
@@ -88,12 +88,12 @@ void Clutch_set(unsigned char percentage);
 unsigned char Clutch_get(void);
 
 void Clutch_setBiased(unsigned char value);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/gearmotor.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 26 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/gearmotor.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/gearshift.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/gearmotor.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
+#line 26 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/gearmotor.h"
 void GearMotor_init(void);
 
 void GearMotor_turnLeft(void);
@@ -103,9 +103,9 @@ void GearMotor_turnRight(void);
 void GearMotor_brake(void);
 
 void GearMotor_release(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 23 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/efi.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
+#line 23 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/efi.h"
 void Efi_init(void);
 
 void Efi_setCut(void);
@@ -123,23 +123,23 @@ void Efi_unsetRPMLimiter(void);
 void Efi_setRPMLimiter_CAN(unsigned int limit);
 
 void Efi_unsetRPMLimiter_CAN(unsigned int limit);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 17 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/buzzer.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
+#line 17 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/buzzer.h"
 void Buzzer_init(void);
 
 void Buzzer_tick(void);
 
 void Buzzer_Bip(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/d_can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gcu_rio.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/d_signalled.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 22 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/d_signalled.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/clutch.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/d_can.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/gcu_rio.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/can.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/d_signalled.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
+#line 22 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);
@@ -147,8 +147,8 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/d_can.h"
-#line 60 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/d_can.h"
+#line 60 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/can.h"
 void Can_init(void);
 
 void Can_read(unsigned long int *id, char dataBuffer[], unsigned int *dataLength, unsigned int *inFlags);
@@ -180,8 +180,8 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
-#line 41 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gcu_rio.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/buzzer.h"
+#line 41 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/gcu_rio.h"
 typedef enum {
 
  NT_PUSH_1_N,
@@ -219,41 +219,13 @@ typedef enum {
  TIMES_LAST
  }time_id;
 
- typedef enum{
 
- H2O_DC,
- TH2O_ENGINE,
- TH2O_IN,
- TH2O_OUT,
-
- POIL,
- TOIL_IN,
- TOIL_OUT,
- BATTERY,
-
- P_FUEL,
- FAN,
- INJ1,
- INJ2,
-
- DATA_LAST
- }efi_dataIds;
 
 
 
 
 extern unsigned int gearShift_timings[ TIMES_LAST ];
-
-void rio_init(void);
-
-extern void rio_sendOneTime(time_id pos);
-
-extern void rio_sendAllTimes(void);
-
-extern void rio_sendTimes(void);
-
-extern void rio_send(void);
-#line 17 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
+#line 17 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/gearshift.h"
 typedef enum {
  STEP_UP_START,
 
@@ -268,7 +240,7 @@ typedef enum {
  STEP_UP_END,
  STEP_DOWN_END
  }shiftStep;
-#line 71 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
+#line 71 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/gearshift.h"
 extern unsigned int gearShift_timings[ TIMES_LAST ];
 
 
@@ -307,9 +279,17 @@ void GearShift_loadDefaultTimings(void);
 void GearShift_loadNeutralTimings(void);
 
 int Gearshift_get_time(shiftStep step);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
-#line 27 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/aac/aac.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/efi.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/can.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/sw.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/can.h"
+#line 3 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/sw.h"
+void sendUpdatesSW(unsigned int valCode);
+#line 28 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/aac/aac.h"
+extern unsigned int accelerationFb;
+
+unsigned int getAccelerationFb();
+
 typedef enum{
  OFF,
  START,
@@ -329,10 +309,13 @@ typedef enum{
  RPM_LIMIT_1_2,
  RPM_LIMIT_2_3,
  RPM_LIMIT_3_4,
+ RPM_LIMIT_4_5,
  SPEED_LIMIT_1_2,
  SPEED_LIMIT_2_3,
- SPEED_LIMIT_3_4
+ SPEED_LIMIT_3_4,
+ SPEED_LIMIT_4_5
 }aac_params;
+
 
 typedef enum{
  MEX_ON,
@@ -371,22 +354,58 @@ int aac_getParam(const aac_params id);
 int aac_getExternValue(const aac_values id);
 
 void aac_forceState(const aac_states newState);
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/drs/drs.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/drs/drsmotor.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
+#line 16 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/drs/drsmotor.h"
+void DrsMotor_init(void);
 
-void aac_sendTimes(void);
+void DrsMotorDX_setupPWM(void);
 
-void aac_sendOneTime(time_id pos);
+void DrsMotorSX_setupPWM(void);
 
-void aac_sendAllTimes(void);
-#line 3 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+void DrsMotor_setPositionDX(unsigned char percentage);
+
+void DrsMotor_setPositionSX(unsigned char percentage);
+#line 16 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/drs/drs.h"
+extern unsigned int drsFb;
+
+void Drs_initVoltReg(void);
+
+void Drs_turnOnVoltReg(void);
+
+void Drs_turnOffVoltReg(void);
+
+void Drs_open(void);
+
+void Drs_close(void);
+
+void Drs_setDX(unsigned char percentage);
+
+void Drs_setSX(unsigned char percentage);
+
+unsigned char Drs_getDX(void);
+
+unsigned char Drs_getSX(void);
+
+unsigned char Drs_get(void);
+#line 4 "C:/Users/sA/Desktop/GCU-DPX-OTTOBIANO-16-10/modules/aac/aac.c"
 aac_states aac_currentState;
-int aac_parameters[ 9 ];
+int aac_parameters[ 11 ];
 int aac_externValues[ 3 ];
 int aac_dtRelease;
 char aac_sendingAll =  0 ;
 int aac_timesCounter;
-#line 15 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/aac/aac.c"
+unsigned int accelerationFb = 0;
+#line 17 "C:/Users/sA/Desktop/GCU-DPX-OTTOBIANO-16-10/modules/aac/aac.c"
 float aac_clutchStep;
 float aac_clutchValue;
+
+unsigned int getAccelerationFb()
+{
+ return accelerationFb;
+}
 
 
 void aac_init(void){
@@ -397,15 +416,18 @@ void aac_init(void){
 void aac_execute(void){
  switch (aac_currentState) {
  case START:
- Efi_setRPMLimiter();
 
- Can_writeByte( 0b11111110000 , MEX_READY);
- aac_currentState = READY;
+ Efi_setBlip();
+
  aac_clutchValue = 100;
  Clutch_set((unsigned int)aac_clutchValue);
+ aac_currentState = READY;
+ accelerationFb = 1;
+ sendUpdatesSW( 1 );
  return;
  case READY:
  Clutch_set(100);
+ Drs_open();
  return;
  case START_RELEASE:
  aac_clutchValue = aac_parameters[RAMP_START];
@@ -413,6 +435,8 @@ void aac_execute(void){
  aac_dtRelease = aac_parameters[RAMP_TIME] /  25 ;
  aac_clutchStep = ((float)(aac_parameters[RAMP_START] - aac_parameters[RAMP_END]) *  25 ) / (float)aac_parameters[RAMP_TIME];
  aac_currentState = RELEASING;
+ accelerationFb = 2;
+ sendUpdatesSW( 1 );
  return;
  case RELEASING:
 
@@ -430,7 +454,7 @@ void aac_execute(void){
  return;
  case RUNNING:
 
- if(gearShift_currentGear == 4){
+ if(gearShift_currentGear == 3){
  aac_stop();
  return;
  }
@@ -442,62 +466,34 @@ void aac_execute(void){
  return;
  case STOPPING:
  aac_currentState = OFF;
- Can_writeByte( 0b11111110000 , MEX_OFF);
+
+ Efi_unsetBlip();
+ Drs_close();
+ accelerationFb = 0;
+ sendUpdatesSW( 1 );
  return;
 
  default: return;
  }
 }
-
-void aac_sendOneTime(time_id pos){
- aac_timesCounter = pos;
-}
-
-void aac_sendTimes(void)
-{
- if(aac_timesCounter >= 0){
- Can_resetWritePacket();
- Can_addIntToWritePacket( 2 );
- Can_addIntToWritePacket(aac_timesCounter);
- Can_addIntToWritePacket(aac_parameters[aac_timesCounter]);
- if(Can_write( 0b11100001101 ) < 0)
- Buzzer_Bip();
- aac_timesCounter -= 1;
- if(!aac_sendingAll || aac_timesCounter < 0){
- aac_sendingAll =  0 ;
- aac_timesCounter = -1;
- }
- }
-}
-
-void aac_sendAllTimes(void)
-{
- if(!aac_sendingAll){
- aac_timesCounter =  9 ;
- aac_sendingAll =  1 ;
- }
-}
-
+#line 125 "C:/Users/sA/Desktop/GCU-DPX-OTTOBIANO-16-10/modules/aac/aac.c"
 void aac_loadDefaultParams(void){
 
 
- aac_parameters[RAMP_START] =  70 ;
+ aac_parameters[RAMP_START] =  50 ;
  aac_parameters[RAMP_END] =  0 ;
  aac_parameters[RAMP_TIME] =  250 ;
- aac_parameters[RPM_LIMIT_1_2] =  11300 ;
- aac_parameters[RPM_LIMIT_2_3] =  11300 ;
- aac_parameters[RPM_LIMIT_3_4] =  11300 ;
- aac_parameters[SPEED_LIMIT_1_2] =  47 ;
- aac_parameters[SPEED_LIMIT_2_3] =  65 ;
- aac_parameters[SPEED_LIMIT_3_4] =  80 ;
+ aac_parameters[RPM_LIMIT_1_2] =  11000 ;
+ aac_parameters[RPM_LIMIT_2_3] =  11000 ;
+ aac_parameters[RPM_LIMIT_3_4] =  11000 ;
+ aac_parameters[RPM_LIMIT_4_5] =  11000 ;
+ aac_parameters[SPEED_LIMIT_1_2] =  46 ;
+ aac_parameters[SPEED_LIMIT_2_3] =  61 ;
+ aac_parameters[SPEED_LIMIT_3_4] =  77 ;
+ aac_parameters[SPEED_LIMIT_4_5] =  113 ;
 
 }
-
-void aac_updateParam(const aac_params id, const int value){
- if(id <  9 )
- aac_parameters[id] = value;
-}
-
+#line 148 "C:/Users/sA/Desktop/GCU-DPX-OTTOBIANO-16-10/modules/aac/aac.c"
 void aac_stop(void){
  if(aac_currentState != OFF)
  aac_currentState = STOPPING;
@@ -509,7 +505,7 @@ void aac_updateExternValue(const aac_values id, const int value){
 }
 
 int aac_getParam(const aac_params id){
- if(id <  9 )
+ if(id <  11 )
  return aac_parameters[id];
  return -1;
 }

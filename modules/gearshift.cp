@@ -1,7 +1,7 @@
-#line 1 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/gearshift.c"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
+#line 1 "C:/Users/sA/Desktop/GCU-DPX-OTTOBIANO-16-10/modules/gearshift.c"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/gearshift.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 16 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
 void unsignedIntToString(unsigned int number, char *text);
 
 void signedIntToString(int number, char *text);
@@ -9,11 +9,11 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/gearmotor.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 177 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/gearmotor.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 187 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -71,7 +71,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 26 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/gearmotor.h"
+#line 26 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/gearmotor.h"
 void GearMotor_init(void);
 
 void GearMotor_turnLeft(void);
@@ -81,9 +81,9 @@ void GearMotor_turnRight(void);
 void GearMotor_brake(void);
 
 void GearMotor_release(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 23 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/efi.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/efi.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
+#line 23 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/efi.h"
 void Efi_init(void);
 
 void Efi_setCut(void);
@@ -101,26 +101,26 @@ void Efi_unsetRPMLimiter(void);
 void Efi_setRPMLimiter_CAN(unsigned int limit);
 
 void Efi_unsetRPMLimiter_CAN(unsigned int limit);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 17 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/buzzer.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
+#line 17 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/buzzer.h"
 void Buzzer_init(void);
 
 void Buzzer_tick(void);
 
 void Buzzer_Bip(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 16 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/clutchmotor.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/clutch.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/clutchmotor.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
+#line 16 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/clutchmotor.h"
 void ClutchMotor_init(void);
 
 void ClutchMotor_setupPWM(void);
 
 void ClutchMotor_setPosition(unsigned char percentage);
-#line 14 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/clutch.h"
+#line 14 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/clutch.h"
 void Clutch_insert(void);
 
 void Clutch_release(void);
@@ -130,13 +130,13 @@ void Clutch_set(unsigned char percentage);
 unsigned char Clutch_get(void);
 
 void Clutch_setBiased(unsigned char value);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/d_can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gcu_rio.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/d_signalled.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/basic.h"
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/dspic.h"
-#line 22 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/d_signalled.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/d_can.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/gcu_rio.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/can.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/d_signalled.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/basic.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/dspic.h"
+#line 22 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);
@@ -144,8 +144,8 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/d_can.h"
-#line 60 "c:/users/salvatore/desktop/git repo/gcu-dpx/libs/can.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/d_can.h"
+#line 60 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/libs/can.h"
 void Can_init(void);
 
 void Can_read(unsigned long int *id, char dataBuffer[], unsigned int *dataLength, unsigned int *inFlags);
@@ -177,8 +177,8 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 1 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/input-output/buzzer.h"
-#line 41 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gcu_rio.h"
+#line 1 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/input-output/buzzer.h"
+#line 41 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/gcu_rio.h"
 typedef enum {
 
  NT_PUSH_1_N,
@@ -216,41 +216,13 @@ typedef enum {
  TIMES_LAST
  }time_id;
 
- typedef enum{
 
- H2O_DC,
- TH2O_ENGINE,
- TH2O_IN,
- TH2O_OUT,
-
- POIL,
- TOIL_IN,
- TOIL_OUT,
- BATTERY,
-
- P_FUEL,
- FAN,
- INJ1,
- INJ2,
-
- DATA_LAST
- }efi_dataIds;
 
 
 
 
 extern unsigned int gearShift_timings[ TIMES_LAST ];
-
-void rio_init(void);
-
-extern void rio_sendOneTime(time_id pos);
-
-extern void rio_sendAllTimes(void);
-
-extern void rio_sendTimes(void);
-
-extern void rio_send(void);
-#line 17 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
+#line 17 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/gearshift.h"
 typedef enum {
  STEP_UP_START,
 
@@ -265,7 +237,7 @@ typedef enum {
  STEP_UP_END,
  STEP_DOWN_END
  }shiftStep;
-#line 71 "c:/users/salvatore/desktop/git repo/gcu-dpx/modules/gearshift.h"
+#line 71 "c:/users/sa/desktop/gcu-dpx-ottobiano-16-10/modules/gearshift.h"
 extern unsigned int gearShift_timings[ TIMES_LAST ];
 
 
@@ -304,7 +276,7 @@ void GearShift_loadDefaultTimings(void);
 void GearShift_loadNeutralTimings(void);
 
 int Gearshift_get_time(shiftStep step);
-#line 7 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/gearshift.c"
+#line 7 "C:/Users/sA/Desktop/GCU-DPX-OTTOBIANO-16-10/modules/gearshift.c"
 unsigned int gearShift_currentGear, gearShift_targetGear;
 int gearShift_ticksCounter1, gearShift_ticksCounter2, gearShift_ticksCounterTries, gearShift_shiftTries;
 char gearShift_isShiftingUp, gearShift_isShiftingDown, gearShift_isSettingNeutral, gearShift_isUnsettingNeutral;
@@ -399,7 +371,7 @@ void GearShift_checkUp(void){
 
  }
 }
-#line 192 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/gearshift.c"
+#line 192 "C:/Users/sA/Desktop/GCU-DPX-OTTOBIANO-16-10/modules/gearshift.c"
 void GearShift_nextStep_A(void) {
  switch (gearShift_nextStepValue_A) {
  case STEP_UP_START:
@@ -442,14 +414,18 @@ void GearShift_nextStep_A(void) {
  break;
 
  case STEP_DOWN_START:
- if (gearShift_isSettingNeutral && Clutch_get() <= 80) {
+ if (gearShift_isSettingNeutral && Clutch_get() <= 80)
+ {
  Clutch_set(80);
- } else {
-
- if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60) {
- Clutch_set(90);
  }
- Efi_setBlip();
+ else
+ {
+
+ if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60)
+ {
+ Clutch_set(60);
+ }
+
  Buzzer_Bip();
  }
  GearShift_setNextStep_A(STEP_DOWN_PUSH);
@@ -457,7 +433,7 @@ void GearShift_nextStep_A(void) {
  break;
  case STEP_DOWN_PUSH:
  if (!gearShift_isSettingNeutral) {
- Efi_unsetBlip();
+
  }
   GearMotor_turnLeft ();
  GearShift_setNextStep_A(STEP_DOWN_REBOUND);
@@ -518,7 +494,7 @@ void GearShift_msTick(void) {
  gearShift_ticksCounter2 = 0;
  }
 }
-#line 343 "C:/Users/Salvatore/Desktop/git Repo/GCU-DPX/modules/gearshift.c"
+#line 347 "C:/Users/sA/Desktop/GCU-DPX-OTTOBIANO-16-10/modules/gearshift.c"
 int Gearshift_get_time(shiftStep step)
 {
  if(gearShift_isSettingNeutral ==  1 ){
@@ -581,7 +557,7 @@ void GearShift_loadDefaultTimings(void) {
  gearShift_timings[UP_BRAKE] =  20 ;
  gearShift_timings[UP_PUSH_1_2] =  115 ;
  gearShift_timings[UP_PUSH_2_3] =  100 ;
- gearShift_timings[UP_PUSH_3_4] =  170 ;
+ gearShift_timings[UP_PUSH_3_4] =  100 ;
  gearShift_timings[UP_PUSH_4_5] =  100 ;
 
  gearShift_timings[CLUTCH] =  70 ;

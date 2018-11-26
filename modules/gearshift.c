@@ -231,14 +231,18 @@ void GearShift_nextStep_A(void) {
             break;
             //////////////////////////////////////////////////////////
         case STEP_DOWN_START:
-            if (gearShift_isSettingNeutral  && Clutch_get() <= 80) {
+            if (gearShift_isSettingNeutral  && Clutch_get() <= 80)            //sto facendo 2--->N
+            {
                 Clutch_set(80);
-            } else {
+            } 
+            else 
+            {
 //                if (!gearShift_isUnsettingNeutral) {
-                if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60) {
-                    Clutch_set(90);
+                if (!gearShift_isUnsettingNeutral && Clutch_get() <= 60)      //non sto facendo N--->1 quindi sto facendo tutte le scalate normali
+                {
+                    Clutch_set(60);
                 }
-                Efi_setBlip();
+                //Efi_setBlip();
                 Buzzer_Bip();
             }
             GearShift_setNextStep_A(STEP_DOWN_PUSH);
@@ -246,7 +250,7 @@ void GearShift_nextStep_A(void) {
             break;
         case STEP_DOWN_PUSH:
             if (!gearShift_isSettingNeutral) {
-                Efi_unsetBlip();
+                //Efi_unsetBlip();
             }
             GearShift_downPush();
             GearShift_setNextStep_A(STEP_DOWN_REBOUND);

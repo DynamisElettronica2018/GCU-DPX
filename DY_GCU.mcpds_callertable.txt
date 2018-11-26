@@ -59,8 +59,47 @@ main
 		Buzzer_init
 			setTimer
 			setInterruptPriority
+		traction_init
+			tractionLoadDefaultsSettings
 		setTimer
 		setInterruptPriority
+		aac_init
+			aac_loadDefaultParams
+		DrsMotor_init
+			DrsMotorDX_setupPWM
+				getTimerPeriod
+				_Long2Float
+				_Mul_FP
+				_Float2Longint
+				_Div_FP
+			DrsMotorSX_setupPWM
+				getTimerPeriod
+				_Long2Float
+				_Mul_FP
+				_Float2Longint
+				_Div_FP
+		Drs_initVoltReg
+		Drs_close
+			Drs_setDX
+				DrsMotor_setPositionDX
+					_Long2Float
+					_Mul_FP
+					_AddSub_FP
+					_Float2Longint
+			Drs_setSX
+				DrsMotor_setPositionSX
+					_Long2Float
+					_Mul_FP
+					_AddSub_FP
+					_Float2Longint
+			sendUpdatesSW
+				Can_resetWritePacket
+				Can_addIntToWritePacket
+					Can_addByteToWritePacket
+				Can_write
+					CAN1Write
+						CAN1IDToRegs
+					Can_getWriteFlags
 	Buzzer_Bip
 CAN_Interrupt
 	Can_read
@@ -72,8 +111,11 @@ CAN_Interrupt
 		Can_clearB1Flag
 	Can_clearInterrupt
 	GearShift_setCurrentGear
+	aac_updateExternValue
 	EngineControl_resetStartCheck
 	EngineControl_start
+	Clutch_get
+	aac_stop
 	GearShift_injectCommand
 		GearShift_setNeutral
 			GearShift_down
@@ -94,8 +136,6 @@ CAN_Interrupt
 					GearMotor_release
 					GearMotor_brake
 					Clutch_get
-					Efi_setBlip
-					Efi_unsetBlip
 					GearMotor_turnLeft
 			GearShift_up
 				GearShift_isShifting
@@ -108,8 +148,22 @@ CAN_Interrupt
 		Efi_unsetRPMLimiter
 	Clutch_setBiased
 		Clutch_set
+	Clutch_release
+	setTraction
+		Efi_setTraction
+			Can_resetWritePacket
+			Can_addIntToWritePacket
+			Can_write
+		sendUpdatesSW
+	Drs_open
+		Drs_turnOnVoltReg
+		Drs_setDX
+		Drs_setSX
+		sendUpdatesSW
+	Drs_close
 timer4_interrupt
 	Buzzer_tick
+timer3_interrupt
 timer2_interrupt
 timer1_interrupt
 	GearShift_msTick
@@ -120,24 +174,25 @@ timer1_interrupt
 	GCU_isAlive
 		Can_resetWritePacket
 		Can_addIntToWritePacket
-			Can_addByteToWritePacket
 		Clutch_get
 		Can_write
-			CAN1Write
-				CAN1IDToRegs
-			Can_getWriteFlags
 	dSignalLed_switch
-	sendTempSensor
-		getTempSensor
-			ADC1_Read
-				ADC1_Init
-				ADC1_Get_Sample
-			_Long2Float
-			_Div_FP
-			_Mul_FP
-			_Float2Longint
-			_Sub_FP
-				_AddSub_FP
-		Can_resetWritePacket
-		Can_addIntToWritePacket
-		Can_write
+	Drs_turnOffVoltReg
+	aac_execute
+		Efi_setBlip
+		Clutch_set
+		sendUpdatesSW
+		Drs_open
+		Clutch_get
+		Efi_unsetRPMLimiter
+		Buzzer_Bip
+		aac_stop
+		GearShift_up
+		Efi_unsetBlip
+		Drs_close
+		_Float2Longint
+		_Long2Float
+		_Mul_FP
+		_Div_FP
+		_Sub_FP
+			_AddSub_FP
